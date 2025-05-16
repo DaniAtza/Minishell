@@ -1,5 +1,11 @@
+LIBFT_DIR := libft
+LIBFT := $(LIBFT_DIR)/libft.a
+
 CC := cc
-CFLAGS := -MMD -Wall -Wextra -Werror
+CFLAGS := -MMD -Wall -Wextra -Werror -I$(LIBFT_DIR)/includes -Iincludes
+
+LDFLAGS := -Llibft
+LDLIBS := -lft
 
 RM := rm -f
 RMDIR := rm -rf
@@ -16,8 +22,8 @@ DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $^ -o $@
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c $(BUILD_DIR)/%.d Makefile | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -31,10 +37,16 @@ $(BUILD_DIR):
 -include $(DEPS)
 
 
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+
 clean:
 	$(RMDIR) $(BUILD_DIR)
+	$(MAKE) clean -C $(LIBFT_DIR)
+
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
 re:	fclean all
