@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2024/12/19 12:58:09 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:06:56 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+/**
+ * Calculates the length of a string (excluding null terminator).
+ * Returns the number of characters in the string.
+ */
+size_t	ft_strlen(const char *s)
 {
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

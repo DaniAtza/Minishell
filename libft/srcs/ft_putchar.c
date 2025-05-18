@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2025/01/18 18:48:22 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:06:40 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+/**
+ * Writes a single character to the standard output.
+ * Return the number of characters printed, or -1 on error.
+ */
+int	ft_putchar(char c)
 {
-	return (0);
+	return ((int) write(STDOUT_FILENO, &c, 1));
 }

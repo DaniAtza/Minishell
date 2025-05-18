@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2024/12/27 11:51:19 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:06:46 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+/**
+ * Writes a string to the specified file descriptor.
+ * Stops at the null terminator of the string.
+ */
+void	ft_putstr_fd(char *s, int fd)
 {
-	return (0);
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

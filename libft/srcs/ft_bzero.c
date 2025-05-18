@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2024/12/19 16:08:09 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:05:18 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#include "libft.h"
+
+/**
+ * Fills a block of memory with zeros.
+ * Returns nothing (void).
+ */
+void	ft_bzero(void *s, size_t n)
 {
-	return (0);
+	ft_memset(s, 0, n);
 }

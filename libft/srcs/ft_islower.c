@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2025/03/12 21:20:25 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:05:34 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+/**
+ * Checks if a character is a lowercase letter (a-z).
+ * Returns 1 if lowercase, 0 otherwise.
+ */
+int	ft_islower(int c)
 {
-	return (0);
+	return (c >= 'a' && c <= 'z');
 }

@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/11 16:35:04 by dagredan         ###   ########.fr       */
+/*   Created: 2024/12/21 17:31:59 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/16 22:07:09 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+/**
+ * Converts an uppercase letter to lowercase.
+ * Returns lowercase letter if applicable, original character otherwise.
+ */
+int	ft_tolower(int c)
 {
-	return (0);
+	if ((c >= 'A' && c <= 'Z'))
+		return (c += ('a' - 'A'));
+	return (c);
 }
