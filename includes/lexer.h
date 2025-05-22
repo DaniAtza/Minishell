@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:42:43 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/17 12:52:06 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:20:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include "types.h"
 
 /* tokens.c */
-t_token	*create_token(char *line, t_lexer *lexer, t_token_type type);
-void	append_token(t_data *data, t_token *token);
-void	free_tokens(t_data *data);
+t_token	*create_token(char *line, t_lexer *lexer);
+void	append_token(t_token *new_token, t_token **tokens);
+void	free_tokens(t_token **tokens);
 
 /* lexer.c */
-void	tokenize_line(t_data *data, char *line);
+t_token	*tokenize_line(char *line);
 
 /* utils.c */
 int		is_operator(char c);

@@ -6,13 +6,13 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:48:13 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/17 13:59:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:18:25 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*create_token(char *line, t_lexer *lexer, t_token_type type)
+t_token	*create_token(char *line, t_lexer *lexer)
 {
 	t_token	*token;
 	size_t	len;
@@ -27,34 +27,34 @@ t_token	*create_token(char *line, t_lexer *lexer, t_token_type type)
 		free(token);
 		return (NULL);
 	}
-	token->type = type;
+	token->type = lexer->type;
 	token->next = NULL;
 	return (token);
 }
 
-void	append_token(t_data *data, t_token *token)
+void	append_token(t_token *new_token, t_token **tokens)
 {
 	t_token	*current;
 
-	if (!data->tokens)
+	if (!*tokens)
+		*tokens = new_token;
+	else
 	{
-		data->tokens = token;
-		return ;
+		current = *tokens;
+		while (current->next)
+			current = current->next;
+		current->next = new_token;
 	}
-	current = data->tokens;
-	while (current->next)
-		current = current->next;
-	current->next = token;
 }
 
-void	free_tokens(t_data *data)
+void	free_tokens(t_token **tokens)
 {
 	t_token	*current;
 	t_token	*next;
 
-	if (!data->tokens)
+	if (!*tokens)
 		return ;
-	current = data->tokens;
+	current = *tokens;
 	while (current)
 	{
 		next = current->next;
@@ -62,4 +62,5 @@ void	free_tokens(t_data *data)
 		free(current);
 		current = next;
 	}
+	*tokens = NULL;
 }
