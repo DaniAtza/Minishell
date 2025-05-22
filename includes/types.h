@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/17 13:54:57 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:19:38 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ typedef struct s_token
 
 typedef struct s_lexer
 {
-	size_t			i;				// Current index
+	size_t			i;				// Current index in the line being scanned
 	size_t			token_start;	// Index of the beginning of the new token
+	t_token_type	type;			// Type of the new token
+	t_token			*tokens;		// Provisional linked list of tokens
 }	t_lexer;
 
 typedef struct s_data
