@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:48:28 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/17 13:58:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:20:24 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,29 @@ static int	seek_next_quote(t_lexer *lexer, char *line, char quote)
 	while (line[lexer->i] != quote)
 	{
 		if (line[lexer->i] == '\0')
-			// TODO: Handle fail. "Syntax error: Unmatched quotes"
-			return (-1);
+		{
+			ft_putstr_fd("Syntax error: Unmatched quotes\n", 2);
+			return (0);
+		}
 		lexer->i++;
 	}
-	return (0);
+	return (1);
 }
 
-static int	tokenize_word(t_data *data, t_lexer *lexer, char *line)
+static t_token	*tokenize_word(t_lexer *lexer, char *line)
 {
-	t_token	*token;
-
 	lexer->token_start = lexer->i;
 	while (line[lexer->i] != '\0')
 	{
 		if (is_special(line[lexer->i]))
 			break ;
 		if (is_quote(line[lexer->i]))
-			seek_next_quote(lexer, line, line[lexer->i]); // TODO: Handle fail
+			if (!seek_next_quote(lexer, line, line[lexer->i]))
+				return (NULL);
 		lexer->i++;
 	}
-	token = create_token(line, lexer, WORD);
-	if (!token)
-		return (-1); // TODO: Handle fail
-	append_token(data, token);
-	return (0);
+	lexer->type = WORD;
+	return (create_token(line, lexer));
 }
 
 static void	discard_blank(t_lexer *lexer, char *line)
@@ -51,48 +49,49 @@ static void	discard_blank(t_lexer *lexer, char *line)
 		lexer->i++;
 }
 
-static int	tokenize_operator(t_data *data, t_lexer *lexer, char *line)
+static t_token	*tokenize_operator(t_lexer *lexer, char *line)
 {
-	t_token			*token;
-	t_token_type	type;
-
 	lexer->token_start = lexer->i;
 	if (line[lexer->i] == '<' && line[lexer->i + 1] == '<')
-		type = DLESS;
+		lexer->type = DLESS;
 	else if (line[lexer->i] == '<')
-		type = LESS;
+		lexer->type = LESS;
 	else if (line[lexer->i] == '>' && line[lexer->i + 1] == '>')
-		type = DGREAT;
+		lexer->type = DGREAT;
 	else if (line[lexer->i] == '>')
-		type = GREAT;
+		lexer->type = GREAT;
 	else if (line[lexer->i] == '|')
-		type = VLINE;
-	if (type == LESS || type == GREAT || type == VLINE)
+		lexer->type = VLINE;
+	if (lexer->type == LESS || lexer->type == GREAT || lexer->type == VLINE)
 		lexer->i++;
-	else if (type == DLESS || type == DGREAT)
+	else if (lexer->type == DLESS || lexer->type == DGREAT)
 		lexer->i += 2;
-	token = create_token(line, lexer, type);
-	if (!token)
-		return (-1); // TODO: Handle fail
-	append_token(data, token);
-	return (0);
+	return (create_token(line, lexer));
 }
 
-void	tokenize_line(t_data *data, char *line)
+t_token	*tokenize_line(char *line)
 {
 	t_lexer	lexer;
+	t_token	*new_token;
 
 	ft_memset(&lexer, 0, sizeof(t_lexer));
-	while (line[lexer.i] != '\0')
+	while (line[lexer.i] != '\0' && line[lexer.i] != '#')
 	{
-		if (is_operator(line[lexer.i]))
-			tokenize_operator(data, &lexer, line); // TODO: Handle fail
-		else if (is_blank(line[lexer.i]))
+		if (is_blank(line[lexer.i]))
+		{
 			discard_blank(&lexer, line);
-		else if (line[lexer.i] == '#')
-			break ;
+			continue ;
+		}
+		if (is_operator(line[lexer.i]))
+			new_token = tokenize_operator(&lexer, line);
 		else
-			tokenize_word(data, &lexer, line); // TODO: Handle fail
+			new_token = tokenize_word(&lexer, line);
+		if (!new_token)
+		{
+			free_tokens(&lexer.tokens);
+			return (NULL);
+		}
+		append_token(new_token, &lexer.tokens);
 	}
-	return ;
+	return (lexer.tokens);
 }
