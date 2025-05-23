@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <fcntl.h>
+
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:55 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/22 20:38:06 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:52:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_processes(t_process **processes)
 	{
 		next = current->next;
 		if (current->redirects)
-			//free_redirects(current->redirects); TODO: Implement
+			free_redirects(&current->redirects);
 		if (current->argv)
 			free(current->argv);
 		free(current);
