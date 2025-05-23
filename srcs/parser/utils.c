@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:26:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 08:06:38 by dagredan         ###   ########.fr       */
+/*   Created: 2025/05/22 19:23:00 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/22 19:23:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "minishell.h"
 
-#include "types.h"
+int	is_pipe(t_token *token)
+{
+	return (token->type == VLINE);
+}
 
-/* validation.c */
-int validate_syntax(t_data *data);
+int	is_redirection(t_token *token)
+{
+	return (token->type == LESS || token->type == GREAT
+		|| token->type == DLESS || token->type == DGREAT);
+}
 
-/* utils.c */
-int is_pipe(t_token *token);
-int is_redirection(t_token *token);
-int is_word(t_token *token);
-
-#endif
+int	is_word(t_token *token)
+{
+	return (token->type == WORD);
+}

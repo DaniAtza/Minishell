@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CFLAGS="-Wall -Werror -Wextra -Ilibft/includes -Iincludes"
-SRCS="srcs/parser/validation.c tests/parser/validation.c"
+SRCS="srcs/parser/validation.c srcs/parser/utils.c tests/parser/validation.c"
 OUTFILE="tests/parser/validation"
 
 # Compile

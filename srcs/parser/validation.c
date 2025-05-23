@@ -12,22 +12,6 @@
 
 #include "minishell.h"
 
-static int	is_redirection(t_token *token)
-{
-	return (token->type == LESS || token->type == GREAT
-		|| token->type == DLESS || token->type == DGREAT);
-}
-
-static int	is_pipe(t_token *token)
-{
-	return (token->type == VLINE);
-}
-
-static int	is_word(t_token *token)
-{
-	return (token->type == WORD);
-}
-
 int	validate_syntax(t_data *data)
 {
 	t_token	*tmp;
