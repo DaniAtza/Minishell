@@ -13,10 +13,7 @@ static void	print_tokens(t_token *tokens)
 	t_token	*current;
 
 	if (!tokens)
-	{
-		printf("(NULL)");
-		return ;
-	}
+		return;
 	current = tokens;
 	printf("%s ", current->value);
 	printf(GRAY "(%s)", types[current->type]);
@@ -30,37 +27,85 @@ static void	print_tokens(t_token *tokens)
 	}
 }
 
-static int count_processes(t_process *processes)
+static void print_redirect(t_redirect *redirect)
 {
-	int count = 0;
-	t_process *current = processes;
+	printf(GRAY "    filename: " RESET "%s\n", redirect->filename);
+	printf(GRAY "    flags: " RESET "%#o\n", redirect->flags);
+	printf(GRAY "    mode: " RESET "%#o\n", redirect->mode);
+	printf(GRAY "    target_fd: " RESET "%d\n", redirect->target_fd);
+	printf(GRAY "    is_heredoc: " RESET "%d\n", redirect->is_heredoc);
+	printf(GRAY "    heredoc delimiter: " RESET "%s\n", redirect->delimiter);
+}
+
+static void print_redirects(t_redirect *redirects)
+{
+	t_redirect	*current = redirects;
+	int			count = 0;
+	
+	printf(GRAY "  redirects:" RESET "\n");
+	if (!current)
+	{
+		printf("  %p\n", redirects);
+		return;
+	}
 	
 	while (current)
 	{
-		count++;
+		printf("  redirect [%d]:\n", count++);
+		print_redirect(current);
 		current = current->next;
 	}
-	
-	return (count);
 }
 
-static void run_test(char *desc, int expected, t_token *tokens)
+static void print_process(t_process *process, int index)
 {
-	t_process 	*processes;
-	int 		count;
+	printf("process [%d]:\n", index);
+	printf(GRAY "  pathname:" RESET " %s\n", process->pathname);
 	
-	printf(GRAY "Test:" RESET " %s\n", desc);
+	if (process->argv)
+	{
+		printf(GRAY "  argv:" RESET "\n");
+		for (int i = 0; process->argv[i]; i++)
+			printf("    [%d] %s\n", i, process->argv[i]);
+	}
+	else
+		printf(GRAY "  argv: " RESET "%p\n", process->argv);
+	
+	print_redirects(process->redirects);
+}
+
+static void print_processes(t_process *processes)
+{
+	t_process	*current = processes;
+	int			index = 0;
+	
+	if (!current)
+	{
+		printf("%p\n", processes);
+		return;
+	}
+	
+	while (current)
+	{
+		print_process(current, index++);
+		current = current->next;
+	}
+}
+
+static void run_test(char *desc, char *line, t_token *tokens)
+{
+	t_process	*processes;
+	
+	printf(CYAN "%s\n" RESET, desc);
+	printf(GRAY "Line: " RESET "%s\n", line);
 	printf(GRAY "Tokens: " RESET);
 	print_tokens(tokens);
 	printf("\n");
 	
 	processes = parse_tokens(tokens);
-	count = count_processes(processes);
 	
-	if (count == expected)
-		printf(GREEN "OK (Expected: %d, Got: %d)\n" RESET, expected, count);
-	else
-		printf(RED "KO (Expected: %d, Got: %d)\n" RESET, expected, count);
+	printf(GRAY "Results:" RESET "\n");
+	print_processes(processes);
 	
 	if (processes)
 		free_processes(&processes);
@@ -71,7 +116,7 @@ static void test_single_command(void)
 {
 	t_token tk1 = {.type = WORD, .value = "ls", .next = NULL};
 	
-	run_test("Single command", 1, &tk1);
+	run_test("Single command", "ls", &tk1);
 }
 
 static void test_two_commands_pipe(void)
@@ -83,7 +128,7 @@ static void test_two_commands_pipe(void)
 	tk1.next = &tk2;
 	tk2.next = &tk3;
 	
-	run_test("Two commands with pipe", 2, &tk1);
+	run_test("Two commands with pipe", "ls | grep", &tk1);
 }
 
 static void test_three_commands_pipes(void)
@@ -99,7 +144,7 @@ static void test_three_commands_pipes(void)
 	tk3.next = &tk4;
 	tk4.next = &tk5;
 	
-	run_test("Three commands with two pipes", 3, &tk1);
+	run_test("Three commands with two pipes", "ls | grep | wc", &tk1);
 }
 
 static void test_command_with_redirection(void)
@@ -111,7 +156,7 @@ static void test_command_with_redirection(void)
 	tk1.next = &tk2;
 	tk2.next = &tk3;
 	
-	run_test("Command with redirection", 1, &tk1);
+	run_test("Command with redirection", "echo > file.txt", &tk1);
 }
 
 static void test_complex_command(void)
@@ -131,17 +176,126 @@ static void test_complex_command(void)
 	tk5.next = &tk6;
 	tk6.next = &tk7;
 	
-	run_test("Complex command with pipe and redirections", 2, &tk1);
+	run_test("Complex command with pipe and redirections", 
+		"cat < input.txt | grep > output.txt", &tk1);
 }
 
 static void test_empty_input(void)
 {
-	run_test("Empty (NULL) token list", 0, NULL);
+	run_test("Empty input", "", NULL);
+}
+
+static void test_input_redirection(void)
+{
+	t_token tk1 = {.type = WORD, .value = "cat", .next = NULL};
+	t_token tk2 = {.type = LESS, .value = "<", .next = NULL};
+	t_token tk3 = {.type = WORD, .value = "input.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	
+	run_test("Input Redirection", "cat < input.txt", &tk1);
+}
+
+static void test_output_redirection(void)
+{
+	t_token tk1 = {.type = WORD, .value = "echo", .next = NULL};
+	t_token tk2 = {.type = WORD, .value = "hello", .next = NULL};
+	t_token tk3 = {.type = GREAT, .value = ">", .next = NULL};
+	t_token tk4 = {.type = WORD, .value = "output.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	tk3.next = &tk4;
+	
+	run_test("Output Redirection", "echo hello > output.txt", &tk1);
+}
+
+static void test_append_redirection(void)
+{
+	t_token tk1 = {.type = WORD, .value = "echo", .next = NULL};
+	t_token tk2 = {.type = WORD, .value = "hello", .next = NULL};
+	t_token tk3 = {.type = DGREAT, .value = ">>", .next = NULL};
+	t_token tk4 = {.type = WORD, .value = "output.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	tk3.next = &tk4;
+	
+	run_test("Append Redirection", "echo hello >> output.txt", &tk1);
+}
+
+static void test_here_document(void)
+{
+	t_token tk1 = {.type = WORD, .value = "cat", .next = NULL};
+	t_token tk2 = {.type = DLESS, .value = "<<", .next = NULL};
+	t_token tk3 = {.type = WORD, .value = "EOF", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	
+	run_test("Here Document", "cat << EOF", &tk1);
+}
+
+static void test_multiple_redirections(void)
+{
+	t_token tk1 = {.type = WORD, .value = "cat", .next = NULL};
+	t_token tk2 = {.type = LESS, .value = "<", .next = NULL};
+	t_token tk3 = {.type = WORD, .value = "input.txt", .next = NULL};
+	t_token tk4 = {.type = GREAT, .value = ">", .next = NULL};
+	t_token tk5 = {.type = WORD, .value = "output.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	tk3.next = &tk4;
+	tk4.next = &tk5;
+	
+	run_test("Multiple Redirections", "cat < input.txt > output.txt", &tk1);
+}
+
+static void test_pipeline_with_redirections(void)
+{
+	t_token tk1 = {.type = WORD, .value = "cat", .next = NULL};
+	t_token tk2 = {.type = LESS, .value = "<", .next = NULL};
+	t_token tk3 = {.type = WORD, .value = "input.txt", .next = NULL};
+	t_token tk4 = {.type = VLINE, .value = "|", .next = NULL};
+	t_token tk5 = {.type = WORD, .value = "grep", .next = NULL};
+	t_token tk6 = {.type = WORD, .value = "pattern", .next = NULL};
+	t_token tk7 = {.type = GREAT, .value = ">", .next = NULL};
+	t_token tk8 = {.type = WORD, .value = "output.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	tk3.next = &tk4;
+	tk4.next = &tk5;
+	tk5.next = &tk6;
+	tk6.next = &tk7;
+	tk7.next = &tk8;
+	
+	run_test("Pipeline with Redirections",
+		"cat < input.txt | grep pattern > output.txt", &tk1);
+}
+
+static void test_same_type_redirections(void)
+{
+	t_token tk1 = {.type = WORD, .value = "cat", .next = NULL};
+	t_token tk2 = {.type = LESS, .value = "<", .next = NULL};
+	t_token tk3 = {.type = WORD, .value = "input1.txt", .next = NULL};
+	t_token tk4 = {.type = LESS, .value = "<", .next = NULL};
+	t_token tk5 = {.type = WORD, .value = "input2.txt", .next = NULL};
+	
+	tk1.next = &tk2;
+	tk2.next = &tk3;
+	tk3.next = &tk4;
+	tk4.next = &tk5;
+	
+	run_test("Multiple Same-Type Redirections",
+		"cat < input1.txt < input2.txt", &tk1);
 }
 
 int main(void)
 {
-	printf(CYAN "=== Parser Tests: Count Processes ===\n\n" RESET);
+	printf(CYAN "=== Parser Tests ===\n\n" RESET);
 	
 	test_single_command();
 	test_two_commands_pipe();
@@ -149,7 +303,14 @@ int main(void)
 	test_command_with_redirection();
 	test_complex_command();
 	test_empty_input();
+	test_input_redirection();
+	test_output_redirection();
+	test_append_redirection();
+	test_here_document();
+	test_multiple_redirections();
+	test_pipeline_with_redirections();
+	test_same_type_redirections();
 	
-	printf(CYAN "=== Parser Tests Completed ===\n\n" RESET);
+	printf(CYAN "=== Tests Completed ===\n\n" RESET);
 	return (0);
 }
