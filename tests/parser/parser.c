@@ -57,20 +57,32 @@ static void print_redirects(t_redirect *redirects)
 	}
 }
 
+static void print_args(char **args)
+{
+	int	i;
+	
+	printf(GRAY "  argv: " RESET);
+	if (!args)
+	{
+		printf("%p", args);
+		return;
+	}
+	printf("{ ");
+	printf("%s", args[0]);
+	i = 1;
+	while (args[i])
+	{
+		printf(", %s", args[i]);
+		i++;
+	}
+	printf(" }\n");
+}
+
 static void print_process(t_process *process, int index)
 {
 	printf("process [%d]:\n", index);
 	printf(GRAY "  pathname:" RESET " %s\n", process->pathname);
-	
-	if (process->argv)
-	{
-		printf(GRAY "  argv:" RESET "\n");
-		for (int i = 0; process->argv[i]; i++)
-			printf("    [%d] %s\n", i, process->argv[i]);
-	}
-	else
-		printf(GRAY "  argv: " RESET "%p\n", process->argv);
-	
+	print_args(process->argv);
 	print_redirects(process->redirects);
 }
 

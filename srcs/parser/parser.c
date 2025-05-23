@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 20:01:35 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 11:53:16 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/23 23:25:51 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ static int	add_new_redirect(t_parser *parser)
 	return (1);
 }
 
+static int	add_new_arg(t_parser *parser)
+{
+	char **reallocated_argv;
+
+	if (!parser->process->argv)
+		parser->process->pathname = parser->token->value;
+	reallocated_argv = append_arg(parser->token->value, parser->process->argv);
+	if (!reallocated_argv)
+		return (0);
+	parser->process->argv = reallocated_argv;
+	return (1);
+}
+
 static int	handle_tokens(t_parser *parser)
 {
 	if (is_redirection(parser->token))
@@ -42,7 +55,9 @@ static int	handle_tokens(t_parser *parser)
 	}
 	else if (is_word(parser->token))
 	{
-		parser->token = parser->token->next; // TODO
+		if (!add_new_arg(parser))
+			return (0);
+		parser->token = parser->token->next;
 	}
 	else if (is_pipe(parser->token))
 	{
