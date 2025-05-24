@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/24 17:56:00 by datienza         ###   ########.fr       */
+/*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
+/*   Updated: 2025/05/24 18:01:51 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include "pipes.h"
-# include "execute.h"
 
 #endif
