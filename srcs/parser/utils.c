@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/16 17:08:25 by dagredan         ###   ########.fr       */
+/*   Created: 2025/05/22 19:23:00 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/22 19:23:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <fcntl.h>
+int	is_pipe(t_token *token)
+{
+	return (token->type == VLINE);
+}
 
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
+int	is_redirection(t_token *token)
+{
+	return (token->type == LESS || token->type == GREAT
+		|| token->type == DLESS || token->type == DGREAT);
+}
 
-#endif
+int	is_word(t_token *token)
+{
+	return (token->type == WORD);
+}
