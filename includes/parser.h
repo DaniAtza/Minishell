@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:26:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 23:24:08 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:41:41 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 t_process	*create_process(void);
 void		append_process(t_process *new_process, t_process **processes);
 void		free_processes(t_process **processes);
+size_t		count_processes(t_process **processes);
 
 /* redirect.c */
 t_redirect	*create_redirect(t_token *redir_operator, t_token *filename);

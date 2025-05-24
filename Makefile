@@ -12,7 +12,10 @@ RMDIR := rm -rf
 
 NAME := minishell
 SRCS_DIR := srcs
-SRCS := main.c
+SRCS := main.c \
+	$(addprefix lexer/, tokens.c lexer.c utils.c) \
+	$(addprefix parser/, process.c redirect.c args.c parser.c \
+	validation.c utils.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
@@ -30,6 +33,8 @@ $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c $(BUILD_DIR)/%.d Makefile | $(BUILD_DIR)
 
 $(BUILD_DIR):
 	mkdir -p $@
+	mkdir -p $@/lexer
+	mkdir -p $@/parser
 
 
 %.d: ;
