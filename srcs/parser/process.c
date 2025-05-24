@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:55 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 23:28:13 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/24 20:00:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	free_processes(t_process **processes)
 		current = next;
 	}
 	*processes = NULL;
+}
+
+size_t	count_processes(t_process **processes)
+{
+	size_t		count;
+	t_process	*current;
+
+	count = 0;
+	if (!*processes)
+		return (0);
+	current = *processes;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
 }

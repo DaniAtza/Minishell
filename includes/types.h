@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 10:34:10 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:46:22 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ typedef struct s_parser
 
 typedef struct s_data
 {
-	char		*line;		// User input
-	t_token		*tokens;	// Linked list of tokens extracted from line
-	t_process	*processes;	// Linked list of processes to execute
+	char		*line;				// User input
+	t_token		*tokens;			// Linked list of tokens extracted from line
+	t_process	*processes;			// Linked list of processes to execute
+	size_t		processes_count;
 }	t_data;
 
 #endif
