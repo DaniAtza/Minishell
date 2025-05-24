@@ -43,7 +43,8 @@ void	free_processes(t_process **processes)
 	t_process	*next;
 
 	if (!*processes)
-		return ; current = *processes;
+		return ;
+	current = *processes;
 	while (current)
 	{
 		next = current->next;
