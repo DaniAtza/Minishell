@@ -21,4 +21,9 @@
 # include <sys/types.h>
 
 
+
+int	execute_pipeline(t_data *data);
+void	setup_child_pipes(t_process *proc, int **pipes);
+void	apply_redirects(t_redirect *redir);
+
 #endif

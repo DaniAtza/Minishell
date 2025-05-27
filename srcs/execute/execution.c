@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+//TODO free_mem
 void	apply_redirects(t_redirect *redir)
 {
 	int	fd;
 
 	while (redir)
 	{		
+		//TODO heredoc
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
 		{
@@ -34,9 +35,9 @@ void	apply_redirects(t_redirect *redir)
 	}
 }
 
-void	setup_child_pipes(t_process *proc, int **pipes, int process_index, int total_processes)
+void	setup_child_pipes(t_process *proc, int **pipes)
 {
-	if (process_index > 0) // if (proc->pipe_read_fd != -1)
+	if (proc->pipe_read_fd != -1)
 	{
 		if (dup2(proc->pipe_read_fd, STDIN_FILENO) == -1)
 		{
@@ -44,7 +45,7 @@ void	setup_child_pipes(t_process *proc, int **pipes, int process_index, int tota
 			exit(1);
 		}
 	}
-	if (process_index < total_processes - 1) //  // if (proc->pipe_write_fd != -1)
+	if (proc->pipe_write_fd != -1)
 	{
 		if (dup2(proc->pipe_write_fd, STDOUT_FILENO) == -1)
 		{
@@ -71,13 +72,13 @@ int	execute_pipeline(t_data *data)
 		pid = fork();
 		if (pid == 0)
 		{
-			setup_child_pipes(current, data->pipes, process_index, data->processes_count);
+			setup_child_pipes(current, data->pipes);
 			if (current->redirects)
 				apply_redirects(current->redirects);
 			//TODO PATH
 			//TODO command not found:
 			//if (is_builtin(procdcess->pathname))
-				execute_builtin(process->pathname)
+				//execute_builtin(process->pathname)
 			execve(current->pathname, current->argv, NULL);
 			perror(current->pathname);
 			exit(1);
@@ -87,7 +88,7 @@ int	execute_pipeline(t_data *data)
 		process_index++;
 	}
 
-	//TODO //waitpid(); // Exemple aproximat: waitpid(pid, &status, 0)
+	waitpid(pid, &status, 0);
 	
 	return (status);
 }
