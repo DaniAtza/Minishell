@@ -15,6 +15,13 @@
 
 #include "types.h"
 
+typedef struct s_parser
+{
+	t_token		*token;		// Current token being parsed
+	t_process	*process;	// New process being populated
+	t_process	*processes;	// Provisional linked list of processes
+}	t_parser;
+
 /* process.c */
 t_process	*create_process(void);
 void		append_process(t_process *new_process, t_process **processes);
