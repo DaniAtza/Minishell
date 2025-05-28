@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 20:01:35 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 23:25:51 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:41:38 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ static int	add_new_redirect(t_parser *parser)
 
 static int	add_new_arg(t_parser *parser)
 {
-	char **reallocated_argv;
+	char	**reallocated_argv;
 
-	if (!parser->process->argv)
-		parser->process->pathname = parser->token->value;
 	reallocated_argv = append_arg(parser->token->value, parser->process->argv);
 	if (!reallocated_argv)
 		return (0);
