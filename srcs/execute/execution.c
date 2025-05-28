@@ -70,6 +70,11 @@ int	execute_pipeline(t_data *data)
 	while (current)
 	{
 		pid = fork();
+		if (pid == -1)
+		{
+		perror("fork");
+		exit(1);
+		}
 		if (pid == 0)
 		{
 			setup_child_pipes(current, data->pipes);
@@ -90,5 +95,5 @@ int	execute_pipeline(t_data *data)
 
 	waitpid(pid, &status, 0);
 	
-	return (status);
+	return (0);
 }

@@ -28,8 +28,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	data.processes_count = count_processes(data.processes);
-	create_pipes(data.processes_count);
-	ft_printf("Number of processes: %i\n", data.processes_count);
+	data.pipes = create_pipes(data.processes_count);
+	assign_pipes_to_processes(data.pipes, &data);
 	execute_pipeline(&data);
 
 	return (0);
