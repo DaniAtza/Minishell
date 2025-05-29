@@ -61,11 +61,9 @@ int	execute_pipeline(t_data *data)
 {
 	t_process	*current;
 	pid_t		pid;
-	int			process_index;
 	int			status;
 
 	current = data->processes;
-	process_index = 0;
 	
 	while (current)
 	{
@@ -90,7 +88,6 @@ int	execute_pipeline(t_data *data)
 		}
 		current->pid = pid;
 		current = current->next;
-		process_index++;
 	}
 	close_pipes(data->pipes);
 
