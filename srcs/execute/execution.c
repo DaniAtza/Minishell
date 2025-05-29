@@ -17,7 +17,7 @@ void	apply_redirects(t_redirect *redir)
 	int	fd;
 
 	while (redir)
-	{		
+	{
 		//TODO heredoc
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
@@ -53,7 +53,6 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 			exit(1);
 		}
 	}
-	
 	close_pipes(pipes);
 }
 
@@ -64,14 +63,13 @@ int	execute_pipeline(t_data *data)
 	int			status;
 
 	current = data->processes;
-	
 	while (current)
 	{
 		pid = fork();
 		if (pid == -1)
 		{
-		perror("fork");
-		exit(1);
+			perror("fork");
+			exit(1);
 		}
 		if (pid == 0)
 		{
@@ -90,13 +88,11 @@ int	execute_pipeline(t_data *data)
 		current = current->next;
 	}
 	close_pipes(data->pipes);
-
 	current = data->processes;
 	while (current)
 	{
 		waitpid(current->pid, &status, 0);
 		current = current->next;
 	}
-
 	return (0);
 }
