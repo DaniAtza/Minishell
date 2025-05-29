@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-//TODO free_mem
+
 void	apply_redirects(t_redirect *redir)
 {
 	int	fd;

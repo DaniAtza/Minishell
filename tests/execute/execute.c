@@ -31,6 +31,8 @@ int	main(int argc, char *argv[])
 	data.pipes = create_pipes(data.processes_count - 1);
 	assign_pipes_to_processes(data.pipes, &data);
 	execute_pipeline(&data);
-
+	free_pipes(&data.pipes);
+	free_processes(&data.processes);
+	free_tokens(&data.tokens);
 	return (0);
 }
