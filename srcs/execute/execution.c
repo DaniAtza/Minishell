@@ -92,8 +92,14 @@ int	execute_pipeline(t_data *data)
 		current = current->next;
 		process_index++;
 	}
+	close_pipes(data->pipes);
 
-	waitpid(pid, &status, 0);
-	
+	current = data->processes;
+	while (current)
+	{
+		waitpid(current->pid, &status, 0);
+		current = current->next;
+	}
+
 	return (0);
 }
