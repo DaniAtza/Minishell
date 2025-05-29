@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	data.processes_count = count_processes(data.processes);
-	data.pipes = create_pipes(data.processes_count);
+	data.pipes = create_pipes(data.processes_count - 1);
 	assign_pipes_to_processes(data.pipes, &data);
 	execute_pipeline(&data);
 

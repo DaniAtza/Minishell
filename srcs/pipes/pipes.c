@@ -80,15 +80,22 @@ void	destroy_pipes(int ***pipes_addr)
 
 void	assign_pipes_to_processes(int **pipes, t_data *data)
 {
-	size_t	i;
+	t_process	*current;
+	size_t		i;
 
 	i = 0;
-	while (i < data->processes_count)
+	current = data->processes;
+	while (current)
 	{
 		if (i < data->processes_count - 1)
-			data->processes[i].pipe_write_fd = pipes[i][1];
+			current->pipe_write_fd = pipes[i][1];
+		else
+			current->pipe_write_fd = -1;
 		if (i > 0)
-			data->processes[i].pipe_read_fd = pipes[i - 1][0];
+			current->pipe_read_fd = pipes[i - 1][0];
+		else
+			current->pipe_read_fd = -1;
+		current = current->next;
 		i++;
 	}
 }
