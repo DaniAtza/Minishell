@@ -27,9 +27,12 @@ int	main(int argc, char *argv[])
 		printf("Error: parse_tokens: Returned NULL\n");
 		return (1);
 	}
-	create_pipes(data.processes_count);
-	ft_printf("%i", data.processes_count);
+	data.processes_count = count_processes(data.processes);
+	data.pipes = create_pipes(data.processes_count - 1);
+	assign_pipes_to_processes(data.pipes, &data);
 	execute_pipeline(&data);
-
+	free_pipes(&data.pipes);
+	free_processes(&data.processes);
+	free_tokens(&data.tokens);
 	return (0);
 }

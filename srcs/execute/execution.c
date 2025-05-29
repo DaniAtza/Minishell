@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-//TODO free_mem
+
 void	apply_redirects(t_redirect *redir)
 {
 	int	fd;
 
 	while (redir)
-	{		
+	{
 		//TODO heredoc
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
@@ -53,7 +53,6 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 			exit(1);
 		}
 	}
-	
 	close_pipes(pipes);
 }
 
@@ -61,15 +60,17 @@ int	execute_pipeline(t_data *data)
 {
 	t_process	*current;
 	pid_t		pid;
-	int			process_index;
 	int			status;
 
 	current = data->processes;
-	process_index = 0;
-	
 	while (current)
 	{
 		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			exit(1);
+		}
 		if (pid == 0)
 		{
 			setup_child_pipes(current, data->pipes);
@@ -85,10 +86,13 @@ int	execute_pipeline(t_data *data)
 		}
 		current->pid = pid;
 		current = current->next;
-		process_index++;
 	}
-
-	waitpid(pid, &status, 0);
-	
-	return (status);
+	close_pipes(data->pipes);
+	current = data->processes;
+	while (current)
+	{
+		waitpid(current->pid, &status, 0);
+		current = current->next;
+	}
+	return (0);
 }
