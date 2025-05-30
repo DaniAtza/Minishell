@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 21:37:30 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/29 21:42:16 by datienza         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:18:08 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int	ft_echo(char **arg)
 		flag = 1;
 	while (arg[i])
 	{
-		printf("%s ", arg[i]);
+		printf("%s", arg[i]);
+		if (arg[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (flag == 0)

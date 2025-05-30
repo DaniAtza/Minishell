@@ -16,7 +16,7 @@ int	is_builtin(char **cmd)
 {
 	if (!cmd)
 		return (1);
-	if (ft_strncmp(cmd[0], "echo", 4) && ft_strlen(cmd[0]) == 4)
+	if (ft_strcmp(cmd[0], "echo") == 0)
 		ft_echo(cmd);
 	return (0);
 }
