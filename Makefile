@@ -5,7 +5,7 @@ CC := cc
 CFLAGS := -MMD -Wall -Wextra -Werror -I$(LIBFT_DIR)/includes -Iincludes
 
 LDFLAGS := -Llibft
-LDLIBS := -lft
+LDLIBS := -lft -lreadline
 
 RM := rm -f
 RMDIR := rm -rf
