@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/30 17:51:33 by dagredan         ###   ########.fr       */
+/*   Created: 2025/05/29 20:33:18 by datienza          #+#    #+#             */
+/*   Updated: 2025/05/29 20:33:23 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-# include <fcntl.h>
-# include <readline/readline.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-# include "builtin.h"
+int	ft_echo(char **arg);
+int	is_builtin(char **cmd);
 
 #endif
