@@ -3,6 +3,7 @@
 int	main(int argc, char *argv[])
 {
 	t_data	data;
+	int	status;
 
 	if (argc != 2)
 	{
@@ -30,9 +31,9 @@ int	main(int argc, char *argv[])
 	data.processes_count = count_processes(data.processes);
 	data.pipes = create_pipes(data.processes_count - 1);
 	assign_pipes_to_processes(data.pipes, &data);
-	execute_pipeline(&data);
+	status = execute_pipeline(&data);
 	free_pipes(&data.pipes);
 	free_processes(&data.processes);
 	free_tokens(&data.tokens);
-	return (0);
+	return (status);
 }

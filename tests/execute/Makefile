@@ -23,6 +23,7 @@ SRCS = execute.c \
        $(SRCS_DIR)/parser/validation.c \
        $(SRCS_DIR)/parser/process.c \
        $(SRCS_DIR)/execute/execution.c \
+       $(SRCS_DIR)/execute/utils_exe.c \
        $(SRCS_DIR)/execute/cmd_search.c \
        $(SRCS_DIR)/builtin/is_builtin.c \
        $(SRCS_DIR)/builtin/ft_echo.c \
