@@ -6,14 +6,21 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:26:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/24 19:41:41 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:41:36 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "types.h"
+# include "types.h"
+
+typedef struct s_parser
+{
+	t_token		*token;		// Current token being parsed
+	t_process	*process;	// New process being populated
+	t_process	*processes;	// Provisional linked list of processes
+}	t_parser;
 
 /* process.c */
 t_process	*create_process(void);
@@ -34,11 +41,11 @@ void		free_args(char ***args_addr);
 t_process	*parse_tokens(t_token *tokens);
 
 /* validation.c */
-int 		validate_syntax(t_data *data);
+int			validate_syntax(t_data *data);
 
 /* utils.c */
-int 		is_pipe(t_token *token);
-int 		is_redirection(t_token *token);
-int 		is_word(t_token *token);
+int			is_pipe(t_token *token);
+int			is_redirection(t_token *token);
+int			is_word(t_token *token);
 
 #endif

@@ -32,14 +32,6 @@ typedef struct s_token
 	t_token_type	type;	// Type of the token
 }	t_token;
 
-typedef struct s_lexer
-{
-	size_t			i;				// Current index in the line being scanned
-	size_t			token_start;	// Index of the beginning of the new token
-	t_token_type	type;			// Type of the new token
-	t_token			*tokens;		// Provisional linked list of tokens
-}	t_lexer;
-
 typedef struct s_redirect
 {
 	struct s_redirect	*next;		// Next element, or NULL
@@ -61,13 +53,6 @@ typedef struct s_process
 	char				*pathname;		// 'pathname' value for execve()
 	char				**argv;			// 'argv' value for execve()
 }	t_process;
-
-typedef struct s_parser
-{
-	t_token		*token;		// Current token being parsed
-	t_process	*process;	// New process being populated
-	t_process	*processes;	// Provisional linked list of processes
-}	t_parser;
 
 typedef struct s_data
 {

@@ -15,6 +15,14 @@
 
 # include "types.h"
 
+typedef struct s_lexer
+{
+	size_t			i;				// Current index in the line being scanned
+	size_t			token_start;	// Index of the beginning of the new token
+	t_token_type	type;			// Type of the new token
+	t_token			*tokens;		// Provisional linked list of tokens
+}	t_lexer;
+
 /* tokens.c */
 t_token	*create_token(char *line, t_lexer *lexer);
 void	append_token(t_token *new_token, t_token **tokens);
