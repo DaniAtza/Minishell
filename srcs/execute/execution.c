@@ -76,10 +76,11 @@ int	execute_pipeline(t_data *data)
 			setup_child_pipes(current, data->pipes);
 			if (current->redirects)
 				apply_redirects(current->redirects);
-			//TODO PATH
-			//TODO command not found:
-			//if (is_builtin(procdcess->pathname))
-				//execute_builtin(process->pathname)
+			is_builtin(current->argv);
+			current->pathname = get_pathname(current->argv[0]);
+			if (!current->pathname) // Unsuccessful PATH search
+				// Print an error message and return an exit status of 127
+				exit (1);
 			execve(current->pathname, current->argv, NULL);
 			perror(current->pathname);
 			exit(1);
