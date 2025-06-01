@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pipes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/30 17:51:33 by dagredan         ###   ########.fr       */
+/*   Created: 2025/05/22 17:20:39 by dagredan          #+#    #+#             */
+/*   Updated: 2025/05/22 18:30:52 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PIPES_H
+# define PIPES_H
 
-# include <fcntl.h>
-# include <readline/readline.h>
-
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include "pipes.h"
-# include "execute.h"
-# include "builtin.h"
+int		**create_pipes(size_t count);
+void	close_pipes(int **pipes);
+void	free_pipes(int ***pipes_addr);
+void	destroy_pipes(int ***pipes_addr);
+void	assign_pipes_to_processes(int **pipes, t_data *data);
 
 #endif

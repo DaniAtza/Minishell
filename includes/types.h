@@ -60,6 +60,7 @@ typedef struct s_data
 	t_token		*tokens;			// Linked list of tokens extracted from line
 	t_process	*processes;			// Linked list of processes to execute
 	size_t		processes_count;
+	int	**pipes;
 }	t_data;
 
 #endif
