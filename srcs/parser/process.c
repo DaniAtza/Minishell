@@ -58,15 +58,15 @@ void	free_processes(t_process **processes)
 	*processes = NULL;
 }
 
-size_t	count_processes(t_process **processes)
+size_t	count_processes(t_process *processes)
 {
 	size_t		count;
 	t_process	*current;
 
 	count = 0;
-	if (!*processes)
+	if (!processes)
 		return (0);
-	current = *processes;
+	current = processes;
 	while (current)
 	{
 		count++;
