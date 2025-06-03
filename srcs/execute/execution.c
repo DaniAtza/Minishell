@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/24 18:14:30 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:59:06 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,17 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 	close_pipes(pipes);
 }
 
-int	execute_pipeline(t_data *data)
+void	execute_processes(t_data *data)
 {
 	t_process	*current;
 	pid_t		pid;
-	int			status;
 
 	current = data->processes;
 	while (current)
 	{
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("fork");
-			exit(1);
-		}
+			error_exit("fork", 1);
 		if (pid == 0)
 		{
 			setup_child_pipes(current, data->pipes);
@@ -78,16 +74,21 @@ int	execute_pipeline(t_data *data)
 				apply_redirects(current->redirects);
 			is_builtin(current->argv);
 			current->pathname = get_pathname(current->argv[0]);
-			if (!current->pathname) // Unsuccessful PATH search
-				// Print an error message and return an exit status of 127
-				exit (1);
+			if (!current->pathname)
+				cmd_not(current->argv[0]);
 			execve(current->pathname, current->argv, NULL);
-			perror(current->pathname);
-			exit(1);
+			error_exit(current->pathname, 1);
 		}
 		current->pid = pid;
 		current = current->next;
 	}
+}
+
+int	wait_processes(t_data *data)
+{
+	t_process	*current;
+	int			status;
+
 	close_pipes(data->pipes);
 	current = data->processes;
 	while (current)
@@ -95,5 +96,12 @@ int	execute_pipeline(t_data *data)
 		waitpid(current->pid, &status, 0);
 		current = current->next;
 	}
-	return (0);
+	return (status);
+}
+
+//TODO CORRECT RETURN NUM
+int	execute_pipeline(t_data *data)
+{
+	execute_processes(data);
+	return (wait_processes(data));
 }
