@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_builtin.c                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 21:42:45 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/29 21:43:06 by datienza         ###   ########.fr       */
+/*   Created: 2025/06/06 21:59:34 by datienza          #+#    #+#             */
+/*   Updated: 2025/06/06 22:25:14 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char **cmd)
+int	ft_pwd(void)
 {
-	if (!cmd)
-		return (1);
-	if (ft_strcmp(cmd[0], "echo") == 0)
-	{
-		ft_echo(cmd);
-		exit (0);
-	}
-	if (ft_strcmp(cmd[0], "pwd") == 0)
-	{
-		ft_pwd();
-		exit(0);
-	}
+	char	*directory;
+
+	directory = getcwd(NULL, 0);
+	printf("%s\n", directory);
+	free(directory);
 	return (0);
 }
