@@ -71,7 +71,7 @@ void	free_pipes(int ***pipes_addr)
 		i++;
 	}
 	free(pipes);
-	pipes = NULL;
+	*pipes_addr = NULL;
 }
 
 void	destroy_pipes(int ***pipes_addr)
