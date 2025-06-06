@@ -30,5 +30,7 @@ void	apply_redirects(t_redirect *redir);
 char	*get_pathname(char *cmd_name);
 void	error_exit(char *error, int n_exit);
 int		cmd_not(char *cmd);
+void	write_heredoc(int fd, char *delimiter);
+void	apply_heredoc(t_redirect *redir);
 
 #endif
