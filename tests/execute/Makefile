@@ -28,6 +28,7 @@ SRCS = execute.c \
        $(SRCS_DIR)/execute/heredoc.c \
        $(SRCS_DIR)/builtin/is_builtin.c \
        $(SRCS_DIR)/builtin/ft_echo.c \
+       $(SRCS_DIR)/builtin/ft_pwd.c \
        $(SRCS_DIR)/pipes/pipes.c
 
 # Objetos

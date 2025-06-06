@@ -18,6 +18,7 @@
 # include <string.h>
 
 int	ft_echo(char **arg);
+int	ft_pwd(void);
 int	is_builtin(char **cmd);
 
 #endif
