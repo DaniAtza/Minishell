@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/01 22:59:06 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:49:03 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,17 @@ void	apply_redirects(t_redirect *redir)
 
 	while (redir)
 	{
-		//TODO heredoc
-		fd = open(redir->filename, redir->flags, redir->mode);
-		if (fd == -1)
+		if (redir->is_heredoc)
+			apply_heredoc(redir);
+		else
 		{
-			perror(redir->filename);
-			exit(1);
+			fd = open(redir->filename, redir->flags, redir->mode);
+			if (fd == -1)
+				error_exit(redir->filename, 1);
+			if (dup2(fd, redir->target_fd) == -1)
+				error_exit("dup2", 1);
+			close(fd);
 		}
-		if (dup2(fd, redir->target_fd) == -1)
-		{
-			perror("dup2");
-			exit(1);
-		}
-		close(fd);
 		redir = redir->next;
 	}
 }
@@ -40,18 +38,12 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 	if (proc->pipe_read_fd != -1)
 	{
 		if (dup2(proc->pipe_read_fd, STDIN_FILENO) == -1)
-		{
-			perror("dup2");
-			exit(1);
-		}
+			error_exit("dup2", 1);
 	}
 	if (proc->pipe_write_fd != -1)
 	{
 		if (dup2(proc->pipe_write_fd, STDOUT_FILENO) == -1)
-		{
-			perror("dup2");
-			exit(1);
-		}
+			error_exit("dup2", 1);
 	}
 	close_pipes(pipes);
 }
