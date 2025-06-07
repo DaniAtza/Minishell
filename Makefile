@@ -15,7 +15,10 @@ SRCS_DIR := srcs
 SRCS := main.c \
 	$(addprefix lexer/, tokens.c lexer.c utils.c) \
 	$(addprefix parser/, process.c redirect.c args.c parser.c \
-	validation.c utils.c)
+	validation.c utils.c) \
+	$(addprefix pipes/, pipes.c) \
+	$(addprefix builtin/, is_builtin.c ft_echo.c) \
+	$(addprefix execute/, cmd_search.c execution.c heredoc.c utils_exe.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
@@ -35,6 +38,9 @@ $(BUILD_DIR):
 	mkdir -p $@
 	mkdir -p $@/lexer
 	mkdir -p $@/parser
+	mkdir -p $@/pipes
+	mkdir -p $@/builtin
+	mkdir -p $@/execute
 
 
 %.d: ;

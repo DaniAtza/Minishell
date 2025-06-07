@@ -42,6 +42,8 @@ char	**append_arg(char *new_arg, char **args)
 
 void	free_args(char ***args_addr)
 {
+	if (!*args_addr)
+		return ;
 	free(*args_addr);
 	*args_addr = NULL;
 }

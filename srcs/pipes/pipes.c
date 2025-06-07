@@ -61,6 +61,8 @@ void	free_pipes(int ***pipes_addr)
 	int		**pipes;
 	size_t	i;
 
+	if (!*pipes_addr)
+		return ;
 	pipes = *pipes_addr;
 	i = 0;
 	while (pipes[i])
@@ -69,7 +71,7 @@ void	free_pipes(int ***pipes_addr)
 		i++;
 	}
 	free(pipes);
-	pipes = NULL;
+	*pipes_addr = NULL;
 }
 
 void	destroy_pipes(int ***pipes_addr)
