@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/30 17:57:15 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:24:29 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ static void	free_data(t_data *data)
 		free_processes(&data->processes);
 	if (data->pipes)
 		free_pipes(&data->pipes);
-}
-
-static int	print_and_return_error(char *message, int return_value)
-{
-	ft_putendl_fd(message, 2);
-	return (return_value);
 }
 
 static int	init_data(t_data *data)
@@ -81,7 +75,26 @@ int	main(int argc, char *argv[])
 			free_data(&data);
 			continue ;
 		}
-		execute_pipeline(&data);
+		if (data.processes_count == 1 && (!is_builtin(&data.processes->argv[0])))
+		{
+			if (data.processes->redirects)
+				apply_redirects(data.processes->redirects);
+			exe_builtin(&data.processes->argv[0]);
+		}
+		else
+			execute_pipeline(&data);
 		free_data(&data);
 	}
 }
+// void sig_handler(int signum)
+// {
+// 	//nuevo readline
+// }
+
+// signal(SIGINT, sig_handler);
+// signal(SIGQUIT, SIG_IGN);
+
+// oldsig = signal(SIGQUIT, handle_child)
+// //tratas el proceso
+
+// return (signal(SIGQUIT, oldsig))

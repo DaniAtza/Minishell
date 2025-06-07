@@ -17,7 +17,7 @@ SRCS := main.c \
 	$(addprefix parser/, process.c redirect.c args.c parser.c \
 	validation.c utils.c) \
 	$(addprefix pipes/, pipes.c) \
-	$(addprefix builtin/, is_builtin.c ft_echo.c) \
+	$(addprefix builtin/, is_builtin.c exe_builtin.c ft_pwd.c ft_echo.c) \
 	$(addprefix execute/, cmd_search.c execution.c heredoc.c utils_exe.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)

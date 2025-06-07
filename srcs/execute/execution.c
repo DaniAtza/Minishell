@@ -51,27 +51,29 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 void	execute_processes(t_data *data)
 {
 	t_process	*current;
-	pid_t		pid;
 
 	current = data->processes;
 	while (current)
 	{
-		pid = fork();
-		if (pid == -1)
+		current->pid = fork();
+		if (current->pid == -1)
 			error_exit("fork", 1);
-		if (pid == 0)
+		if (current->pid == 0)
 		{
 			setup_child_pipes(current, data->pipes);
 			if (current->redirects)
 				apply_redirects(current->redirects);
-			is_builtin(current->argv);
+			if (!is_builtin(current->argv))
+			{
+				exe_builtin(current->argv);
+				exit(0);
+			}
 			current->pathname = get_pathname(current->argv[0]);
 			if (!current->pathname)
 				cmd_not(current->argv[0]);
 			execve(current->pathname, current->argv, NULL);
 			error_exit(current->pathname, 1);
 		}
-		current->pid = pid;
 		current = current->next;
 	}
 }
