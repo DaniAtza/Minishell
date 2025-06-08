@@ -29,3 +29,9 @@ int	cmd_not(char *cmd)
 	free(msg);
 	exit(127);
 }
+
+int	print_and_return_error(char *message, int return_value)
+{
+	ft_putendl_fd(message, 2);
+	return (return_value);
+}
