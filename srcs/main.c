@@ -75,12 +75,9 @@ int	main(int argc, char *argv[])
 			free_data(&data);
 			continue ;
 		}
-		if (data.processes_count == 1 && (!is_builtin(&data.processes->argv[0])))
-		{
-			if (data.processes->redirects)
-				apply_redirects(data.processes->redirects);
+		if (data.processes_count == 1 && 
+			(is_parent_builtin(&data.processes->argv[0])))
 			exe_builtin(&data.processes->argv[0]);
-		}
 		else
 			execute_pipeline(&data);
 		free_data(&data);

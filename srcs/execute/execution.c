@@ -63,7 +63,7 @@ void	execute_processes(t_data *data)
 			setup_child_pipes(current, data->pipes);
 			if (current->redirects)
 				apply_redirects(current->redirects);
-			if (!is_builtin(current->argv))
+			if (is_builtin(current->argv))
 			{
 				exe_builtin(current->argv);
 				exit(0);

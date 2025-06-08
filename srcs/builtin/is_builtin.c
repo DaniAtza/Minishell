@@ -15,12 +15,21 @@
 int	is_builtin(char **cmd)
 {
 	if (!cmd)
-		return (1);
+		return (0);
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		return (0);
+		return (1);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (0);
+		return (1);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
+		return (1);
+	return (0);
+}
+
+int	is_parent_builtin(char **cmd)
+{
+	if (!cmd)
 		return (0);
-	return (1);
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (1);
+	return (0);
 }
