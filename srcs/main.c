@@ -55,8 +55,9 @@ static int	init_data(t_data *data)
 	return (0);
 }
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
+	t_env	*env;
 	t_data	data;
 
 	if (argc != 1)
@@ -64,6 +65,7 @@ int	main(int argc, char *argv[])
 		printf("Usage: %s\n", argv[0]);
 		return (1);
 	}
+	env = create_env_list(envp);
 	ft_memset(&data, 0, sizeof(t_data));
 	while (1)
 	{
@@ -72,6 +74,7 @@ int	main(int argc, char *argv[])
 			return (0);
 		else if (init_data(&data) == -1)
 		{
+			free_env_list(&env);
 			free_data(&data);
 			continue ;
 		}
