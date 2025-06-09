@@ -80,9 +80,9 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (data.processes_count == 1 && 
 			(is_parent_builtin(&data.processes->argv[0])))
-			exe_builtin(&data.processes->argv[0]);
+			exe_builtin(data.processes->argv, env);
 		else
-			execute_pipeline(&data);
+			execute_pipeline(&data, env);
 		free_data(&data);
 	}
 }

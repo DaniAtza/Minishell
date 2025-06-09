@@ -22,6 +22,8 @@ int	is_builtin(char **cmd)
 		return (1);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		return (1);
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		return (1);
 	return (0);
 }
 
