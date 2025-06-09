@@ -33,5 +33,9 @@ int	is_parent_builtin(char **cmd)
 		return (0);
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (1);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		return (1);
 	return (0);
 }

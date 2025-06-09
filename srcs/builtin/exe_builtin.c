@@ -24,5 +24,9 @@ int	exe_builtin(char **cmd, t_env *env_list)
 		printf("cd\n");
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		print_env_list(env_list);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		ft_export(cmd, &env_list);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		ft_unset(cmd, &env_list);
 	return (0);
 }

@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 20:33:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/07 17:21:09 by datienza         ###   ########.fr       */
+/*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
+/*   Updated: 2025/06/09 16:56:36 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
+int	ft_export(char **cmd, t_env **env_list)
+{
+	int	i;
 
-int	ft_echo(char **arg);
-int	ft_pwd(void);
-int	ft_export(char **cmd, t_env **env_list);
-int	ft_unset(char **cmd, t_env **env_list);
+	i = 1;
+	while (cmd[i])
+	{
+		update_env_node(cmd[i], env_list);
+		i++;
+	}
+	return (0);
+}
 
-int	is_builtin(char **cmd);
-int	is_parent_builtin(char **cmd);
-int	exe_builtin(char **cmd, t_env *env_list);
+int	ft_unset(char **cmd, t_env **env_list)
+{
+	int	i;
 
-#endif
+	i = 1;
+	while (cmd[i])
+	{
+		delete_env_node(cmd[i], env_list);
+		i++;
+	}
+	return (0);
+}

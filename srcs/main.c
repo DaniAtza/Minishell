@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/07 17:24:29 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:54:19 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		if (data.processes_count == 1 && 
-			(is_parent_builtin(&data.processes->argv[0])))
+				(is_parent_builtin(&data.processes->argv[0])))
 			exe_builtin(data.processes->argv, env);
 		else
 			execute_pipeline(&data, env);
