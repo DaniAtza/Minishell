@@ -22,15 +22,18 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-int		execute_pipeline(t_data *data);
-void	execute_processes(t_data *data);
+int		execute_pipeline(t_data *data, t_env *env_list);
+void	execute_processes(t_data *data, t_env *env_list);
 int		wait_processes(t_data *data);
 void	setup_child_pipes(t_process *proc, int **pipes);
 void	apply_redirects(t_redirect *redir);
+
 char	*get_pathname(char *cmd_name);
 void	error_exit(char *error, int n_exit);
+
 int		print_and_return_error(char *message, int return_value);
 int		cmd_not(char *cmd);
+
 void	write_heredoc(int fd, char *delimiter);
 void	apply_heredoc(t_redirect *redir);
 
