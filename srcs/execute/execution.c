@@ -48,7 +48,7 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 	close_pipes(pipes);
 }
 
-void	execute_processes(t_data *data)
+void	execute_processes(t_data *data, t_env *env_list)
 {
 	t_process	*current;
 
@@ -65,7 +65,7 @@ void	execute_processes(t_data *data)
 				apply_redirects(current->redirects);
 			if (is_builtin(current->argv))
 			{
-				exe_builtin(current->argv);
+				exe_builtin(current->argv, env_list);
 				exit(0);
 			}
 			current->pathname = get_pathname(current->argv[0]);
@@ -94,8 +94,8 @@ int	wait_processes(t_data *data)
 }
 
 //TODO CORRECT RETURN NUM
-int	execute_pipeline(t_data *data)
+int	execute_pipeline(t_data *data, t_env *env_list)
 {
-	execute_processes(data);
+	execute_processes(data, env_list);
 	return (wait_processes(data));
 }

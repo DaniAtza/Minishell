@@ -18,12 +18,11 @@ SRCS := main.c \
 	validation.c utils.c) \
 	$(addprefix env/, env_list.c env_node.c) \
 	$(addprefix pipes/, pipes.c) \
-	$(addprefix builtin/, is_builtin.c exe_builtin.c ft_pwd.c ft_echo.c) \
+	$(addprefix builtin/, is_builtin.c ft_echo.c ft_pwd.c ft_export_unset.c exe_builtin.c) \
 	$(addprefix execute/, cmd_search.c execution.c heredoc.c utils_exe.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
-
 
 .PHONY: all clean fclean re
 
