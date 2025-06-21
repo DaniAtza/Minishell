@@ -22,12 +22,20 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
+<<<<<<< HEAD
 void	execute_processes(t_data *data, t_env *env_list);
 void	execute_child_process(t_process *process, int **pipes, t_env *env_list);
 int		execute_pipeline(t_data *data, t_env *env_list);
 int		wait_processes(t_data *data);
 void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
+=======
+int		execute_pipeline(t_data *data, t_env *env_list);
+void	execute_processes(t_data *data, t_env *env_list);
+int		wait_processes(t_data *data);
+void	setup_child_pipes(t_process *proc, int **pipes);
+void	apply_redirects(t_redirect *redir);
+>>>>>>> origin/develop
 
 char	*get_pathname(char *cmd_name);
 void	error_exit(char *error, int n_exit);
@@ -35,9 +43,12 @@ void	error_exit(char *error, int n_exit);
 int		print_and_return_error(char *message, int return_value);
 int		cmd_not(char *cmd);
 
+<<<<<<< HEAD
 int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
 
+=======
+>>>>>>> origin/develop
 void	write_heredoc(int fd, char *delimiter);
 void	apply_heredoc(t_redirect *redir);
 

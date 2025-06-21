@@ -1,50 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_exe_builtin.c                                   :+:      :+:    :+:   */
+/*   exe_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:01:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/15 17:29:56 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:06:15 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_builtin(char **cmd)
-{
-	if (!cmd)
-		return (0);
-	if (ft_strcmp(cmd[0], "echo") == 0)
-		return (1);
-	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd[0], "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (1);
-<<<<<<< HEAD:srcs/builtin/is_exe_builtin.c
-	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd[0], "unset") == 0)
-=======
-	return (0);
-}
-
-int	is_parent_builtin(char **cmd)
-{
-	if (!cmd)
-		return (0);
-	if (ft_strcmp(cmd[0], "cd") == 0)
->>>>>>> origin/develop:srcs/builtin/is_builtin.c
-		return (1);
-	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd[0], "unset") == 0)
-		return (1);
-	return (0);
-}
 
 int	exe_builtin(char **cmd, t_env *env_list)
 {
