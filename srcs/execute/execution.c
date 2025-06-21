@@ -12,27 +12,25 @@
 
 #include "minishell.h"
 
-void	apply_redirects(t_redirect *redir)
+void	execute_child_process(t_process *process, int **pipes, t_env *env_list)
 {
-	int	fd;
-
-	while (redir)
+	setup_child_pipes(process, pipes);
+	if (process->redirects && apply_redirects(process->redirects))
+		exit(1);
+	if (is_builtin(process->argv))
 	{
-		if (redir->is_heredoc)
-			apply_heredoc(redir);
-		else
-		{
-			fd = open(redir->filename, redir->flags, redir->mode);
-			if (fd == -1)
-				error_exit(redir->filename, 1);
-			if (dup2(fd, redir->target_fd) == -1)
-				error_exit("dup2", 1);
-			close(fd);
-		}
-		redir = redir->next;
+		exe_builtin(process->argv, env_list);
+		exit(0);
 	}
+	process->pathname = get_pathname(process->argv[0]);
+	if (!process->pathname)
+		cmd_not(process->argv[0]);
+	execve(process->pathname, process->argv, NULL);
+	error_exit(process->pathname, 1);
 }
 
+<<<<<<< HEAD
+=======
 void	setup_child_pipes(t_process *proc, int **pipes)
 {
 	if (proc->pipe_read_fd != -1)
@@ -48,6 +46,7 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 	close_pipes(pipes);
 }
 
+>>>>>>> origin/develop
 void	execute_processes(t_data *data, t_env *env_list)
 {
 	t_process	*current;
@@ -59,6 +58,9 @@ void	execute_processes(t_data *data, t_env *env_list)
 		if (current->pid == -1)
 			error_exit("fork", 1);
 		if (current->pid == 0)
+<<<<<<< HEAD
+			execute_child_process(current, data->pipes, env_list);
+=======
 		{
 			setup_child_pipes(current, data->pipes);
 			if (current->redirects)
@@ -74,6 +76,7 @@ void	execute_processes(t_data *data, t_env *env_list)
 			execve(current->pathname, current->argv, NULL);
 			error_exit(current->pathname, 1);
 		}
+>>>>>>> origin/develop
 		current = current->next;
 	}
 }
