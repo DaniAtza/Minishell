@@ -6,7 +6,11 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/06/15 17:23:25 by datienza         ###   ########.fr       */
+=======
 /*   Updated: 2025/06/09 16:54:19 by datienza         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +82,26 @@ int	main(int argc, char *argv[], char *envp[])
 			free_data(&data);
 			continue ;
 		}
+<<<<<<< HEAD
+		if (data.processes_count == 1 && (is_builtin(&data.processes->argv[0])))
+		{
+			save_stdio_fds(data.processes);
+			if (apply_redirects(data.processes->redirects))
+				continue ;
+			exe_builtin(data.processes->argv, env);
+			restore_stdio_fds(data.processes);
+		}
+		else
+		{
+			execute_pipeline(&data, env);
+		}
+=======
 		if (data.processes_count == 1 && 
 				(is_parent_builtin(&data.processes->argv[0])))
 			exe_builtin(data.processes->argv, env);
 		else
 			execute_pipeline(&data, env);
+>>>>>>> origin/develop
 		free_data(&data);
 	}
 }
