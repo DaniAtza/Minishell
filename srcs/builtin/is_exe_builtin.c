@@ -24,20 +24,9 @@ int	is_builtin(char **cmd)
 		return (1);
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		return (1);
-<<<<<<< HEAD:srcs/builtin/is_exe_builtin.c
 	else if (ft_strcmp(cmd[0], "export") == 0)
 		return (1);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-=======
-	return (0);
-}
-
-int	is_parent_builtin(char **cmd)
-{
-	if (!cmd)
-		return (0);
-	if (ft_strcmp(cmd[0], "cd") == 0)
->>>>>>> origin/develop:srcs/builtin/is_builtin.c
 		return (1);
 	else if (ft_strcmp(cmd[0], "export") == 0)
 		return (1);

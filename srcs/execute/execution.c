@@ -29,24 +29,6 @@ void	execute_child_process(t_process *process, int **pipes, t_env *env_list)
 	error_exit(process->pathname, 1);
 }
 
-<<<<<<< HEAD
-=======
-void	setup_child_pipes(t_process *proc, int **pipes)
-{
-	if (proc->pipe_read_fd != -1)
-	{
-		if (dup2(proc->pipe_read_fd, STDIN_FILENO) == -1)
-			error_exit("dup2", 1);
-	}
-	if (proc->pipe_write_fd != -1)
-	{
-		if (dup2(proc->pipe_write_fd, STDOUT_FILENO) == -1)
-			error_exit("dup2", 1);
-	}
-	close_pipes(pipes);
-}
-
->>>>>>> origin/develop
 void	execute_processes(t_data *data, t_env *env_list)
 {
 	t_process	*current;
@@ -58,25 +40,7 @@ void	execute_processes(t_data *data, t_env *env_list)
 		if (current->pid == -1)
 			error_exit("fork", 1);
 		if (current->pid == 0)
-<<<<<<< HEAD
 			execute_child_process(current, data->pipes, env_list);
-=======
-		{
-			setup_child_pipes(current, data->pipes);
-			if (current->redirects)
-				apply_redirects(current->redirects);
-			if (is_builtin(current->argv))
-			{
-				exe_builtin(current->argv, env_list);
-				exit(0);
-			}
-			current->pathname = get_pathname(current->argv[0]);
-			if (!current->pathname)
-				cmd_not(current->argv[0]);
-			execve(current->pathname, current->argv, NULL);
-			error_exit(current->pathname, 1);
-		}
->>>>>>> origin/develop
 		current = current->next;
 	}
 }

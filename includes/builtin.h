@@ -23,10 +23,6 @@ int	ft_export(char **cmd, t_env **env_list);
 int	ft_unset(char **cmd, t_env **env_list);
 
 int	is_builtin(char **cmd);
-<<<<<<< HEAD
-=======
-int	is_parent_builtin(char **cmd);
->>>>>>> origin/develop
 int	exe_builtin(char **cmd, t_env *env_list);
 
 #endif
