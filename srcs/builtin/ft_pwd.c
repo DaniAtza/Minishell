@@ -14,7 +14,7 @@
 
 int	ft_pwd(void)
 {
-	char	*directory;
+	char	*directory; //TTODO pwd delete
 
 	directory = getcwd(NULL, 0);
 	printf("%s\n", directory);

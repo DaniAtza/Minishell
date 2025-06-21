@@ -54,7 +54,7 @@ int	update_working_directory(char *directory, t_env **env_list)
 		update_env_node(name_value, env_list);
 		free (name_value);
 	}
-	name_value = ft_strjoin("PWD=", directory);
+	name_value = ft_strjoin("PWD=", getcwd(NULL, 0));
 		if (!name_value)
 			print_and_return_error("cd malloc", 1);
 	update_env_node(name_value, env_list);
