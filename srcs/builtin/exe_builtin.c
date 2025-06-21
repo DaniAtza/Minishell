@@ -21,7 +21,7 @@ int	exe_builtin(char **cmd, t_env *env_list)
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd);
+		ft_cd(cmd, &env_list);
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		print_env_list(env_list);
 	else if (ft_strcmp(cmd[0], "export") == 0)
