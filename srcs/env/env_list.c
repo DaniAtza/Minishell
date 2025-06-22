@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 15:40:31 by dagredan          #+#    #+#             */
-/*   Updated: 2025/06/08 20:08:35 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/06/22 11:46:32 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ void	print_env_list(t_env *env_list)
 	current_node = env_list;
 	while (current_node)
 	{
-		printf("%s=%s\n", current_node->name, current_node->value);
+		if (current_node->value)
+			printf("%s=%s\n", current_node->name, current_node->value);
 		current_node = current_node->next;
 	}
 }

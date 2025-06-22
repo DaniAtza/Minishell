@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/12 22:03:54 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:29:48 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	print_export_list(t_env **env_list)
 	current = *env_list;
 	while (current)
 	{
-		printf("declare -x %s=\"%s\"\n", current->name, current->value);
+		if (current->value)
+			printf("declare -x %s=\"%s\"\n", current->name, current->value);
+		else
+			printf("declare -x %s\n", current->name);
 		current = current->next;
 	}
 }
