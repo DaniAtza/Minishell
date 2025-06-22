@@ -43,6 +43,7 @@ int	check_arg_error(char **arg)
 int	update_working_directory(char *directory, t_env **env_list)
 {
 	char	*name_value;
+	char	*current_dir;
 
 	if (chdir(directory) == -1)
 		return (perror(directory), -1);
@@ -54,9 +55,13 @@ int	update_working_directory(char *directory, t_env **env_list)
 		update_env_node(name_value, env_list);
 		free (name_value);
 	}
-	name_value = ft_strjoin("PWD=", getcwd(NULL, 0));
+	current_dir = getcwd(NULL, 0);
+	if (!current_dir)
+		return (ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", STDERR_FILENO), 1);
+	name_value = ft_strjoin("PWD=", current_dir);
 	if (!name_value)
 		print_and_return_error("cd malloc", 1);
+	free(current_dir);
 	update_env_node(name_value, env_list);
 	free (name_value);
 	return (0);
