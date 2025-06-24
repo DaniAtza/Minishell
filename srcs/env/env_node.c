@@ -23,6 +23,7 @@ void	free_env_node(t_env **node_addr)
 		free(node->name);
 	if (node->value)
 		free(node->value);
+	free(node);
 	node_addr = NULL;
 }
 
