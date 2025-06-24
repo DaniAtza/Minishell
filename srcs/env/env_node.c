@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 16:54:18 by dagredan          #+#    #+#             */
-/*   Updated: 2025/06/08 17:36:52 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:38:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ t_env	*create_env_node(char *env_variable)
 {
 	t_env	*node;
 	size_t	separator_index;
-	int		separator_not_found;
 
 	separator_index = ft_strcspn(env_variable, "=");
-	separator_not_found = separator_index == ft_strlen(env_variable);
-	if (separator_not_found)
-		return (NULL);
 	node = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (NULL);
@@ -45,6 +41,8 @@ t_env	*create_env_node(char *env_variable)
 		free_env_node(&node);
 		return (NULL);
 	}
+	if (separator_index == ft_strlen(env_variable))
+		return (node);
 	node->value = ft_strdup(env_variable + separator_index + 1);
 	if (!node->value)
 	{
