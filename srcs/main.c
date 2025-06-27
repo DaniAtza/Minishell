@@ -6,11 +6,13 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/15 17:23:25 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:10:31 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char *g_current_pwd = NULL;
 
 static void	free_data(t_data *data)
 {
@@ -59,7 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_env	*env;
 	t_data	data;
-
+	g_current_pwd = getcwd(NULL, 0); //TODO
 	if (argc != 1)
 	{
 		printf("Usage: %s\n", argv[0]);
@@ -71,7 +73,11 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		data.line = readline("$ ");
 		if (!data.line)
+		{
+			free_env_list(&env);
+			free(g_current_pwd);
 			return (0);
+		}
 		else if (init_data(&data) == -1)
 		{
 			free_env_list(&env);
@@ -92,6 +98,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		free_data(&data);
 	}
+	free_env_list(&env);
+	free(g_current_pwd);//TODO
 }
 // void sig_handler(int signum)
 // {
