@@ -6,13 +6,13 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/24 14:10:31 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:57:49 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *g_current_pwd = NULL;
+char	*g_current_pwd = NULL;
 
 static void	free_data(t_data *data)
 {
@@ -62,6 +62,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_env	*env;
 	t_data	data;
 	g_current_pwd = getcwd(NULL, 0); //TODO
+
 	if (argc != 1)
 	{
 		printf("Usage: %s\n", argv[0]);
@@ -84,6 +85,7 @@ int	main(int argc, char *argv[], char *envp[])
 			free_data(&data);
 			continue ;
 		}
+		handle_heredocs(data.processes);
 		if (data.processes_count == 1 && (is_builtin(&data.processes->argv[0])))
 		{
 			save_stdio_fds(data.processes);

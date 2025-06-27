@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/15 17:34:13 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:56:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		cmd_not(char *cmd);
 int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
 
-void	write_heredoc(int fd, char *delimiter);
-void	apply_heredoc(t_redirect *redir);
+void	handle_heredocs(t_process *processes);
 
 #endif
