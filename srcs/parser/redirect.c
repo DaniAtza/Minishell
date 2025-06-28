@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:47:37 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/23 23:22:28 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:57:55 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	init_redirect_double(t_redirect *redir, t_token *op, t_token *word)
 	if (op->type == DLESS)
 	{
 		redir->next = NULL;
-		redir->filename = "/tmp/.heredoc"; // TODO: Use a dynamic name
+		redir->filename = NULL;
 		redir->flags = O_RDWR | O_CREAT;
 		redir->mode = 0600;
 		redir->target_fd = STDIN_FILENO;
