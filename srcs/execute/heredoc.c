@@ -6,16 +6,17 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:26:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/04 19:48:15 by datienza         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:57:37 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
-void	write_heredoc(int fd, char *delimiter)
+static void	write_heredoc(t_redirect *redir)
 {
+	int		fd;
 	char	*line;
 
+	fd = open(redir->filename, redir->flags, redir->mode);
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
@@ -24,35 +25,59 @@ void	write_heredoc(int fd, char *delimiter)
 			break ;
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		if (ft_strcmp(line, delimiter) == 0)
+		if (ft_strcmp(line, redir->delimiter) == 0)
 		{
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	close(fd);
 }
 
-//TODO generate_tmpfilename();
-void	apply_heredoc(t_redirect *redir)
+static void	create_tmp_file(t_redirect *redir)
 {
-	int	fd;
+	char	*digits;
+	char	*filename;
+	int		i;
 
-	fd = open(redir->filename, redir->flags, redir->mode);
-	if (fd == -1)
-		error_exit("heredoc_file", 1);
-	write_heredoc(fd, redir->delimiter);
-	close(fd);
-	fd = open(redir->filename, redir->flags, redir->mode);
-	if (fd == -1)
-		error_exit("heredoc_file", 1);
-	if (dup2(fd, redir->target_fd) == -1)
+	i = 0;
+	while (i < 1000000000)
 	{
-		close(fd);
-		error_exit("dup2", 1);
+		digits = ft_itoa(i);
+		if (!digits)
+			error_exit("ft_itoa", 1); // TODO: Free memory properly
+		filename = ft_strjoin("/tmp/.heredoc-", digits);
+		free(digits);
+		if (!filename)
+			error_exit("ft_strjoin", 1); // TODO: Free memory properly
+		if (access(filename, F_OK) == -1)
+			break ;
+		free(filename);
+		i++;
 	}
-	close(fd);
-	unlink(redir->filename);
+	if (i == 1000000000)
+		error_exit("Error: Too many heredocs", 1);
+	redir->filename = filename;
+}
+
+void	handle_heredocs(t_process *processes)
+{
+	t_redirect	*redir;
+
+	while (processes)
+	{
+		redir = processes->redirects;
+		while (redir)
+		{
+			if (redir->is_heredoc)
+			{
+				create_tmp_file(redir);
+				write_heredoc(redir);
+			}
+			redir = redir->next;
+		}
+		processes = processes->next;
+	}
 }
