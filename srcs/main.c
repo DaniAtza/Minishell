@@ -85,6 +85,7 @@ int	main(int argc, char *argv[], char *envp[])
 			free_data(&data);
 			continue ;
 		}
+		add_history(data.line);
 		handle_heredocs(data.processes);
 		if (data.processes_count == 1 && (is_builtin(&data.processes->argv[0])))
 		{
@@ -100,8 +101,10 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		free_data(&data);
 	}
+	rl_clear_history();
 	free_env_list(&env);
 	free(g_current_pwd);//TODO
+	return (0);
 }
 // void sig_handler(int signum)
 // {
