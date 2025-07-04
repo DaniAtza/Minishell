@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/27 22:56:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:18:55 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-void	execute_processes(t_data *data, t_env *env_list);
-void	execute_child_process(t_process *process, int **pipes, t_env *env_list);
-int		execute_pipeline(t_data *data, t_env *env_list);
+void	execute_processes(t_data *data, t_gdata *gdata);
+void	execute_child_process(t_process *process, int **pipes, t_gdata *gdata);
+int		execute_pipeline(t_data *data, t_gdata *gdata);
 int		wait_processes(t_data *data);
+void	handle_execution(t_data *data, t_gdata *gdata);
 void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
 

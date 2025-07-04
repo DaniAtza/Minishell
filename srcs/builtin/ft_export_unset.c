@@ -6,17 +6,17 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/22 12:29:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:19:12 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_export_list(t_env **env_list)
+static void	print_export_list(t_env *env_list)
 {
 	t_env	*current;
 
-	current = *env_list;
+	current = env_list;
 	while (current)
 	{
 		if (current->value)
@@ -59,7 +59,7 @@ static int	validate_variable_name(char *arg)
 	return (0);
 }
 
-int	ft_export(char **cmd, t_env **env_list)
+int	ft_export(char **cmd, t_env *env_list)
 {
 	size_t	i;
 
@@ -69,20 +69,20 @@ int	ft_export(char **cmd, t_env **env_list)
 	while (cmd[i])
 	{
 		if (!validate_variable_name(cmd[i]))
-			update_env_node(cmd[i], env_list);
+			update_env_node(cmd[i], &env_list);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_unset(char **cmd, t_env **env_list)
+int	ft_unset(char **cmd, t_env *env_list)
 {
 	int	i;
 
 	i = 1;
 	while (cmd[i])
 	{
-		delete_env_node(cmd[i], env_list);
+		delete_env_node(cmd[i], &env_list);
 		i++;
 	}
 	return (0);

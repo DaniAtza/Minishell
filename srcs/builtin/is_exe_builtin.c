@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:01:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/15 17:29:56 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:19:23 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ int	is_builtin(char **cmd)
 	return (0);
 }
 
-int	exe_builtin(char **cmd, t_env *env_list)
+int	exe_builtin(char **cmd, t_gdata *gdata)
 {
 	if (!cmd)
-		return (1);
+		return (-1);
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		ft_pwd();
+		ft_pwd(gdata->current_pwd);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd, &env_list);
+		ft_cd(cmd, gdata);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		print_env_list(env_list);
+		print_env_list(gdata->env_list);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		ft_export(cmd, &env_list);
+		ft_export(cmd, gdata->env_list);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		ft_unset(cmd, &env_list);
+		ft_unset(cmd, gdata->env_list);
 	return (0);
 }
