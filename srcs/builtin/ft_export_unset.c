@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:19:12 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:05:44 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,30 @@ static int	validate_variable_name(char *arg)
 	return (0);
 }
 
-int	ft_export(char **cmd, t_env *env_list)
+int	ft_export(char **argv, t_env *env_list)
 {
 	size_t	i;
 
-	if (!cmd[1])
+	if (!argv[1])
 		print_export_list(env_list);
 	i = 1;
-	while (cmd[i])
+	while (argv[i])
 	{
-		if (!validate_variable_name(cmd[i]))
-			update_env_node(cmd[i], &env_list);
+		if (validate_variable_name(argv[i]) == 0)
+			update_env_node(argv[i], &env_list);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_unset(char **cmd, t_env *env_list)
+int	ft_unset(char **argv, t_env *env_list)
 {
 	int	i;
 
 	i = 1;
-	while (cmd[i])
+	while (argv[i])
 	{
-		delete_env_node(cmd[i], &env_list);
+		delete_env_node(argv[i], &env_list);
 		i++;
 	}
 	return (0);

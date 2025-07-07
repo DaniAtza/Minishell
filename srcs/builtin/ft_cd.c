@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 19:32:13 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:05:37 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,18 @@ static int	update_working_directory(char *directory, t_gdata *gdata)
 	return (0);
 }
 
-int	ft_cd(char **arg, t_gdata *gdata)
+int	ft_cd(char **argv, t_gdata *gdata)
 {
-	if (check_arg_error(arg))
+	if (check_arg_error(argv))
 		return (1);
-	if (!arg[1] || !(ft_strcmp(arg[1], "~")))
+	if (!argv[1] || !(ft_strcmp(argv[1], "~")))
 	{
 		if (!search_env("HOME", gdata->env_list))
 			return (ft_putendl_fd("cd: HOME not set", STDERR_FILENO), 1);
 		if (update_working_directory(search_env("HOME", gdata->env_list), gdata))
 			return (1);
 	}
-	else if (!(ft_strcmp(arg[1], "-")))
+	else if (!(ft_strcmp(argv[1], "-")))
 	{
 		if (!search_env("OLDPWD", gdata->env_list))
 			return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
@@ -88,7 +88,7 @@ int	ft_cd(char **arg, t_gdata *gdata)
 	}
 	else
 	{
-		if (update_working_directory(arg[1], gdata))
+		if (update_working_directory(argv[1], gdata))
 			return (1);
 	}
 	return (0);

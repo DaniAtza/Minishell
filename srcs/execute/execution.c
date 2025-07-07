@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 19:58:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:05:55 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	execute_pipeline(t_data *data, t_gdata *gdata)
 
 void	handle_execution(t_data *data, t_gdata *gdata)
 {
-	if (data->processes_count == 1 && (is_builtin(&data->processes->argv[0])))
+	if (data->processes_count == 1 && (is_builtin(data->processes->argv)))
 	{
 		if (save_stdio_fds(data->processes) == -1)
 			return ;
