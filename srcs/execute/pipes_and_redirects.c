@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:56:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/27 22:57:42 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:15:17 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ int	apply_redirects(t_redirect *redir)
 	{
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
-			return (perror(redir->filename), 1);
+			return (print_and_return_error(redir->filename, -1));
 		if (dup2(fd, redir->target_fd) == -1)
-			return (print_and_return_error("dup2", 1));
+			return (print_and_return_error("dup2", -1));
 		close(fd);
-		if (redir->is_heredoc)
-			unlink(redir->filename);
 		redir = redir->next;
 	}
 	return (0);
@@ -50,10 +48,10 @@ int	save_stdio_fds(t_process *processes)
 {
 	processes->pipe_read_fd = dup(STDIN_FILENO);
 	if (!processes->pipe_read_fd)
-		return (print_and_return_error("dup", 1));
+		return (print_and_return_error("dup", -1));
 	processes->pipe_write_fd = dup(STDOUT_FILENO);
 	if (!processes->pipe_write_fd)
-		return (print_and_return_error("dup", 1));
+		return (print_and_return_error("dup", -1));
 	return (0);
 }
 

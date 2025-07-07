@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:26:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/27 22:57:37 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:15:14 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -16,13 +16,13 @@ static void	write_heredoc(t_redirect *redir)
 	int		fd;
 	char	*line;
 
-	fd = open(redir->filename, redir->flags, redir->mode);
+	fd = open(redir->filename, redir->flags, redir->mode); // TODO: Handle error
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break ;
+			break ; // TODO: Handle EOF or error
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, redir->delimiter) == 0)
