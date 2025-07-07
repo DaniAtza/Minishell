@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:10:54 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:16:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	execute_child_process(t_process *process, int **pipes, t_gdata *gdata)
 	setup_child_pipes(process, pipes);
 	if (apply_redirects(process->redirects) == -1)
 		exit(1);
+	if (!process->argv || !process->argv[0])
+		exit(0);
 	if (is_builtin(process->argv))
 	{
 		exe_builtin(process->argv, gdata);
