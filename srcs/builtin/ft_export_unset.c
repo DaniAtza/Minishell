@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:05:44 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:10:50 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static int	validate_variable_name(char *arg)
 
 	i = 1;
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
-		return (print_export_error(arg), 1);
+		return (print_export_error(arg), -1);
 	while (arg[i] && arg[i] != '=')
 	{
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-			return (print_export_error(arg), 1);
+			return (print_export_error(arg), -1);
 		i++;
 	}
 	return (0);

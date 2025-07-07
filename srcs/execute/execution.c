@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:05:55 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:10:54 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_child_process(t_process *process, int **pipes, t_gdata *gdata)
 {
 	setup_child_pipes(process, pipes);
-	if (process->redirects && apply_redirects(process->redirects))
+	if (apply_redirects(process->redirects) == -1)
 		exit(1);
 	if (is_builtin(process->argv))
 	{
@@ -38,7 +38,10 @@ void	execute_processes(t_data *data, t_gdata *gdata)
 	{
 		current->pid = fork();
 		if (current->pid == -1)
-			error_exit("fork", 1);
+		{
+			perror("fork");
+			return ;
+		}
 		if (current->pid == 0)
 			execute_child_process(current, data->pipes, gdata);
 		current = current->next;
