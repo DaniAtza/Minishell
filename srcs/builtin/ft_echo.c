@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 21:37:30 by datienza          #+#    #+#             */
-/*   Updated: 2025/05/30 19:18:08 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:05:41 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,36 @@ static int	is_flag(char *arg)
 	return (1);
 }
 
-static int	check_arg(char **arg)
+static int	check_argv(char **argv)
 {
 	int	i;
 
 	i = 0;
-	while (arg[i] && is_flag(arg[i]))
+	while (argv[i] && is_flag(argv[i]))
 	{
-		if (!is_flag(arg[i]))
+		if (!is_flag(argv[i]))
 			break ;
 		i++;
 	}
 	return (i);
 }
 
-int	ft_echo(char **arg)
+int	ft_echo(char **argv)
 {
 	int	i;
 	int	flag;
 
-	if (!arg)
+	if (!argv)
 		return (1);
 	i = 1;
 	flag = 0;
-	i += check_arg(arg + 1);
+	i += check_argv(argv + 1);
 	if (i > 1)
 		flag = 1;
-	while (arg[i])
+	while (argv[i])
 	{
-		printf("%s", arg[i]);
-		if (arg[i + 1])
+		printf("%s", argv[i]);
+		if (argv[i + 1])
 			printf(" ");
 		i++;
 	}

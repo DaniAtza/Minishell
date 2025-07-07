@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/06/01 22:54:56 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:19:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,11 @@ typedef struct s_data
 	size_t		processes_count;
 	int			**pipes;
 }	t_data;
+
+typedef struct s_gdata
+{
+	t_env		*env_list;
+	char		*current_pwd;
+}	t_gdata;
 
 #endif

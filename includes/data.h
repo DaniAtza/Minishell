@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/06 21:59:34 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:19:16 by dagredan         ###   ########.fr       */
+/*   Created: 2025/07/04 21:37:28 by dagredan          #+#    #+#             */
+/*   Updated: 2025/07/04 22:18:50 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef DATA_H
+# define DATA_H
 
-int	ft_pwd(char *current_pwd)
-{
-	printf("%s\n", current_pwd);
-	return (0);
-}
+# include "types.h"
+
+void 	init_gdata(t_gdata *gdata, char *envp[]);
+int		init_data(t_data *data);
+void	free_gdata(t_gdata *gdata);
+void	free_data(t_data *data);
+
+#endif
+

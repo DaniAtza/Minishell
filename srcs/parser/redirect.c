@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:47:37 by dagredan          #+#    #+#             */
-/*   Updated: 2025/06/27 22:57:55 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:15:22 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ void	free_redirects(t_redirect **redirects)
 	while (current)
 	{
 		next = current->next;
+		if (current->is_heredoc && current->filename)
+		{
+			if (access(current->filename, F_OK) == 0)
+				unlink(current->filename);
+			free(current->filename);
+		}
 		free(current);
 		current = next;
 	}
