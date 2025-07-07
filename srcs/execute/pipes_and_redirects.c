@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:56:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:10:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:15:17 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	apply_redirects(t_redirect *redir)
 		if (dup2(fd, redir->target_fd) == -1)
 			return (print_and_return_error("dup2", -1));
 		close(fd);
-		if (redir->is_heredoc)
-			unlink(redir->filename);
 		redir = redir->next;
 	}
 	return (0);
