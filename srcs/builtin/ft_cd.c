@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:19:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:32:13 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	handle_pwd_update(char *directory, char *old_pwd, t_gdata *gdata)
 		else
 			current_dir = ft_strdup(directory);
 		ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot \
-		access parent directories: No such file or directory", STDERR_FILENO);
+access parent directories: No such file or directory", STDERR_FILENO);
 	}
 	name_value = ft_strjoin("PWD=", current_dir);
 	if (!name_value)
