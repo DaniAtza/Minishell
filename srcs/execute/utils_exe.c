@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:37:43 by datienza          #+#    #+#             */
-/*   Updated: 2025/06/15 17:28:56 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:01:44 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,15 @@ void	error_exit(char *error, int n_exit)
 	exit(n_exit);
 }
 
-int	cmd_not(char *cmd)
+void	cmd_not_found(char *cmd)
 {
-	char	*msg;
-
-	msg = ft_strjoin(cmd, ": command not found\n");
-	if (!msg)
-		error_exit("malloc", 1);
-	ft_putstr_fd(msg, 2);
-	free(msg);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	exit(127);
 }
 
 int	print_and_return_error(char *message, int return_value)
 {
-	ft_putendl_fd(message, 2);
+	ft_putendl_fd(message, STDERR_FILENO);
 	return (return_value);
 }

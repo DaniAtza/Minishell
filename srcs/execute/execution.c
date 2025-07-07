@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:19:35 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:58:33 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_child_process(t_process *process, int **pipes, t_gdata *gdata)
 	}
 	process->pathname = get_pathname(process->argv[0]);
 	if (!process->pathname)
-		cmd_not(process->argv[0]);
+		cmd_not_found(process->argv[0]);
 	execve(process->pathname, process->argv, NULL);
 	error_exit(process->pathname, 1);
 }

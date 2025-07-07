@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:18:55 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:57:56 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_pathname(char *cmd_name);
 void	error_exit(char *error, int n_exit);
 
 int		print_and_return_error(char *message, int return_value);
-int		cmd_not(char *cmd);
+void	cmd_not_found(char *cmd);
 
 int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
