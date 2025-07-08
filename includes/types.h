@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/04 22:19:03 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:14 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ typedef struct s_process
 	char				**argv;			// 'argv' value for execve()
 }	t_process;
 
-typedef struct s_data
+typedef struct s_pipeline
 {
 	char		*line;				// User input
 	t_token		*tokens;			// Linked list of tokens extracted from line
 	t_process	*processes;			// Linked list of processes to execute
-	size_t		processes_count;
+	size_t		process_count;
 	int			**pipes;
-}	t_data;
+}	t_pipeline;
 
-typedef struct s_gdata
+typedef struct s_data
 {
 	t_env		*env_list;
 	char		*current_pwd;
-}	t_gdata;
+}	t_data;
 
 #endif

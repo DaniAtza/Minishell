@@ -6,13 +6,13 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/04 22:20:02 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:15 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void check_args(int argc, char *argv[])
+static void	check_minishell_args(int argc, char *argv[])
 {
 	if (argc != 1)
 	{
@@ -21,35 +21,35 @@ static void check_args(int argc, char *argv[])
 	}
 }
 
-int	main_loop(t_data *data, t_gdata *gdata)
+int	main_loop(t_pipeline *pipeline, t_data *data)
 {
-	data->line = readline("$ ");
-	if (!data->line)
+	pipeline->line = readline("$ ");
+	if (!pipeline->line)
 		return (-1);
-	else if (init_data(data) == -1)
+	else if (init_pipeline(pipeline) == -1)
 		return (0);
-	add_history(data->line);
-	handle_heredocs(data->processes);
-	handle_execution(data, gdata);
+	add_history(pipeline->line);
+	handle_heredocs(pipeline->processes);
+	handle_execution(pipeline, data);
 	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_data	data;
-	t_gdata	gdata;
+	t_data		data;
+	t_pipeline	pipeline;
 
-	check_args(argc, argv);
-	init_gdata(&gdata, envp);
-	ft_memset(&data, 0, sizeof(t_data));
+	check_minishell_args(argc, argv);
+	init_data(&data, envp);
+	ft_memset(&pipeline, 0, sizeof(t_pipeline));
 	while (1)
 	{
-		if (main_loop(&data, &gdata) == -1)
+		if (main_loop(&pipeline, &data) == -1)
 			break ;
-		free_data(&data);
+		free_pipeline(&pipeline);
 	}
 	rl_clear_history();
-	free_gdata(&gdata);
+	free_data(&data);
 	return (0);
 }
 

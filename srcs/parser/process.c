@@ -51,7 +51,7 @@ void	free_processes(t_process **processes)
 		if (current->redirects)
 			free_redirects(&current->redirects);
 		if (current->argv)
-			free_args(&current->argv);
+			free_argv(&current->argv);
 		free(current);
 		current = next;
 	}
