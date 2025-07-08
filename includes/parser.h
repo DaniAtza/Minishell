@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:26:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:36 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:12 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ t_redirect	*create_redirect(t_token *redir_operator, t_token *filename);
 void		append_redirect(t_redirect *new_redirect, t_redirect **redirects);
 void		free_redirects(t_redirect **redirects);
 
-/* args.c */
-char		**append_arg(char *new_arg, char **args);
-void		free_args(char ***args_addr);
+/* argv.c */
+char		**append_arg(char *new_arg, char **argv);
+void		free_argv(char ***argv_addr);
 
 /* parser.c */
 t_process	*parse_tokens(t_token *tokens);
 
 /* validation.c */
-int			validate_syntax(t_data *data);
+int			validate_syntax(t_pipeline *pipeline);
 
 /* utils.c */
 int			is_pipe(t_token *token);

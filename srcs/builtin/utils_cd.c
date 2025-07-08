@@ -26,12 +26,12 @@ char	*search_env(char *env_variable, t_env *env_list)
 	return (NULL);
 }
 
-int	check_arg_error(char **arg)
+int	check_arg_error(char **argv)
 {
 	size_t	i;
 
 	i = 0;
-	while (arg[i])
+	while (argv[i])
 		i++;
 	if ((i - 1) == 0)
 		return (0);

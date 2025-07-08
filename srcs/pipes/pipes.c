@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:41:20 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/22 18:32:26 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:21 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ void	destroy_pipes(int ***pipes_addr)
 	free_pipes(pipes_addr);
 }
 
-void	assign_pipes_to_processes(int **pipes, t_data *data)
+void	assign_pipes_to_processes(int **pipes, t_pipeline *pipeline)
 {
 	t_process	*current;
 	size_t		i;
 
 	i = 0;
-	current = data->processes;
+	current = pipeline->processes;
 	while (current)
 	{
-		if (i < data->processes_count - 1)
+		if (i < pipeline->process_count - 1)
 			current->pipe_write_fd = pipes[i][1];
 		else
 			current->pipe_write_fd = -1;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,26 +24,26 @@ static size_t	ft_array_len(char **array)
 	return (i);
 }
 
-char	**append_arg(char *new_arg, char **args)
+char	**append_arg(char *new_arg, char **argv)
 {
-	char	**reallocated_args;
+	char	**reallocated_argv;
 	size_t	len;
 
-	len = ft_array_len(args);
-	reallocated_args = ft_calloc(len + 2, sizeof(char *));
-	if (!reallocated_args)
+	len = ft_array_len(argv);
+	reallocated_argv = ft_calloc(len + 2, sizeof(char *));
+	if (!reallocated_argv)
 		return (NULL);
-	ft_memmove(reallocated_args, args, len * sizeof(char *));
-	reallocated_args[len] = new_arg;
-	reallocated_args[len + 1] = NULL;
-	free(args);
-	return (reallocated_args);
+	ft_memmove(reallocated_argv, argv, len * sizeof(char *));
+	reallocated_argv[len] = new_arg;
+	reallocated_argv[len + 1] = NULL;
+	free(argv);
+	return (reallocated_argv);
 }
 
-void	free_args(char ***args_addr)
+void	free_argv(char ***argv_addr)
 {
-	if (!*args_addr)
+	if (!*argv_addr)
 		return ;
-	free(*args_addr);
-	*args_addr = NULL;
+	free(*argv_addr);
+	*argv_addr = NULL;
 }

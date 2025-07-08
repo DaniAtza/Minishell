@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:05:37 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:15 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	handle_oldpwd_update(char *old_pwd, t_env *env_list)
 	return (0);
 }
 
-static int	handle_pwd_update(char *directory, char *old_pwd, t_gdata *gdata)
+static int	handle_pwd_update(char *directory, char *old_pwd, t_data *data)
 {
 	char	*name_value;
 	char	*current_dir;
@@ -44,51 +44,51 @@ access parent directories: No such file or directory", STDERR_FILENO);
 	name_value = ft_strjoin("PWD=", current_dir);
 	if (!name_value)
 		return (free(current_dir), print_and_return_error("cd malloc", 1));
-	update_env_node(name_value, &gdata->env_list);
-	if (gdata->current_pwd)
-		free(gdata->current_pwd);
-	gdata->current_pwd = ft_strdup(current_dir);
+	update_env_node(name_value, &data->env_list);
+	if (data->current_pwd)
+		free(data->current_pwd);
+	data->current_pwd = ft_strdup(current_dir);
 	free(current_dir);
 	free(name_value);
 	return (0);
 }
 
-static int	update_working_directory(char *directory, t_gdata *gdata)
+static int	update_working_directory(char *directory, t_data *data)
 {
 	char	*old_pwd;
 
 	if (chdir(directory) == -1)
 		return (perror(directory), 1);
-	old_pwd = ft_strdup(gdata->current_pwd);
-	if (handle_oldpwd_update(old_pwd, gdata->env_list) != 0)
+	old_pwd = ft_strdup(data->current_pwd);
+	if (handle_oldpwd_update(old_pwd, data->env_list) != 0)
 		return (free(old_pwd), 1);
-	if (handle_pwd_update(directory, old_pwd, gdata) != 0)
+	if (handle_pwd_update(directory, old_pwd, data) != 0)
 		return (free(old_pwd), 1);
 	free(old_pwd);
 	return (0);
 }
 
-int	ft_cd(char **argv, t_gdata *gdata)
+int	ft_cd(char **argv, t_data *data)
 {
 	if (check_arg_error(argv))
 		return (1);
 	if (!argv[1] || !(ft_strcmp(argv[1], "~")))
 	{
-		if (!search_env("HOME", gdata->env_list))
+		if (!search_env("HOME", data->env_list))
 			return (ft_putendl_fd("cd: HOME not set", STDERR_FILENO), 1);
-		if (update_working_directory(search_env("HOME", gdata->env_list), gdata))
+		if (update_working_directory(search_env("HOME", data->env_list), data))
 			return (1);
 	}
 	else if (!(ft_strcmp(argv[1], "-")))
 	{
-		if (!search_env("OLDPWD", gdata->env_list))
+		if (!search_env("OLDPWD", data->env_list))
 			return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
-		if (update_working_directory(search_env("OLDPWD", gdata->env_list), gdata))
+		if (update_working_directory(search_env("OLDPWD", data->env_list),data))
 			return (1);
 	}
 	else
 	{
-		if (update_working_directory(argv[1], gdata))
+		if (update_working_directory(argv[1], data))
 			return (1);
 	}
 	return (0);
