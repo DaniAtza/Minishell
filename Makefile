@@ -14,7 +14,7 @@ NAME := minishell
 SRCS_DIR := srcs
 SRCS := main.c \
 	$(addprefix lexer/, tokens.c lexer.c utils.c) \
-	$(addprefix parser/, process.c redirect.c args.c parser.c \
+	$(addprefix parser/, process.c redirect.c argv.c parser.c \
 	validation.c utils.c) \
 	$(addprefix data/, data.c) \
 	$(addprefix env/, env_list.c env_node.c) \

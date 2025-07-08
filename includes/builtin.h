@@ -17,16 +17,16 @@
 # include <stdlib.h>
 # include <string.h>
 
-int		ft_echo(char **arg);
+int		ft_echo(char **argv);
 int		ft_pwd(char *current_pwd);
-int		ft_export(char **cmd, t_env *env_list);
-int		ft_unset(char **cmd, t_env *env_list);
-int		ft_cd(char **arg, t_gdata *gdata);
+int		ft_export(char **argv, t_env *env_list);
+int		ft_unset(char **argv, t_env *env_list);
+int		ft_cd(char **argv, t_data *data);
 
 char	*search_env(char *env_variable, t_env *env_list);
-int		check_arg_error(char **arg);
+int		check_arg_error(char **argv);
 
-int		is_builtin(char **cmd);
-int		exe_builtin(char **cmd, t_gdata *gdata);
+int		is_builtin(char **argv);
+int		exe_builtin(char **argv, t_data *data);
 
 #endif

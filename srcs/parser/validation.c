@@ -6,19 +6,19 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:09 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/20 12:29:02 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	validate_syntax(t_data *data)
+int	validate_syntax(t_pipeline *pipeline)
 {
 	t_token	*tmp;
 
-	if (!data || !data->tokens)
+	if (!pipeline || !pipeline->tokens)
 		return (-1);
-	tmp = data->tokens;
+	tmp = pipeline->tokens;
 	if (is_pipe(tmp))
 		return (-1);
 	while (tmp)
