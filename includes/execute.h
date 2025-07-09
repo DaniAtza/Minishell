@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/08 19:06:03 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:33:50 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_execution(t_pipeline *pipeline, t_data *data);
 void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
 
-char	*get_pathname(char *cmd_name);
+char	*get_pathname(char *cmd_name, t_env *env_list);
 void	error_exit(char *error, int n_exit);
 
 int		print_and_return_error(char *message, int return_value);

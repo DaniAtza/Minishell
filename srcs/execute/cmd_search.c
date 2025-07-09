@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:18:11 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/28 15:50:23 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:33:52 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ static void	free_path_dirs(char **dirs)
 	free(dirs);
 }
 
-static char	**get_path_dirs(void)
+static char	**get_path_dirs(t_env *env_list)
 {
 	char	*path_env;
 	char	**dirs;
 
-	path_env = getenv("PATH");
+	path_env = search_env("PATH", env_list);
 	if (!path_env)
 		path_env = DEF_PATH;
 	dirs = ft_split(path_env, ':');
@@ -58,7 +58,7 @@ static char	**get_path_dirs(void)
 	return (dirs);
 }
 
-char	*get_pathname(char *cmd_name)
+char	*get_pathname(char *cmd_name, t_env *env_list)
 {
 	char	*pathname;
 	char	**path_dirs;
@@ -68,7 +68,7 @@ char	*get_pathname(char *cmd_name)
 		return (NULL);
 	if (ft_strchr(cmd_name, '/'))
 		return (ft_strdup(cmd_name));
-	path_dirs = get_path_dirs();
+	path_dirs = get_path_dirs(env_list);
 	if (!path_dirs)
 		return (NULL);
 	i = 0;
