@@ -6,26 +6,11 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 14:47:18 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:10:50 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:44:32 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	print_export_list(t_env *env_list)
-{
-	t_env	*current;
-
-	current = env_list;
-	while (current)
-	{
-		if (current->value)
-			printf("declare -x %s=\"%s\"\n", current->name, current->value);
-		else
-			printf("declare -x %s\n", current->name);
-		current = current->next;
-	}
-}
 
 static void	print_export_error(char *arg)
 {
@@ -64,7 +49,7 @@ int	ft_export(char **argv, t_env *env_list)
 	size_t	i;
 
 	if (!argv[1])
-		print_export_list(env_list);
+		print_env_list_export(env_list);
 	i = 1;
 	while (argv[i])
 	{
