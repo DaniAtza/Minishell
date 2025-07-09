@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 15:40:31 by dagredan          #+#    #+#             */
-/*   Updated: 2025/06/22 11:46:32 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:33:51 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,20 @@ int	update_env_node(char *env_variable, t_env **env_list_addr)
 	return (0);
 }
 
+char	*search_env(char *name, t_env *env_list)
+{
+	t_env	*current_node;
+
+	current_node = env_list;
+	while (current_node)
+	{
+		if (ft_strcmp(current_node->name, name) == 0)
+			return (current_node->value);
+		current_node = current_node->next;
+	}
+	return (NULL);
+}
+
 void	delete_env_node(char *name, t_env **env_list_addr)
 {
 	t_env	*prev_node;
@@ -105,19 +119,6 @@ void	delete_env_node(char *name, t_env **env_list_addr)
 			return ;
 		}
 		prev_node = current_node;
-		current_node = current_node->next;
-	}
-}
-
-void	print_env_list(t_env *env_list)
-{
-	t_env	*current_node;
-
-	current_node = env_list;
-	while (current_node)
-	{
-		if (current_node->value)
-			printf("%s=%s\n", current_node->name, current_node->value);
 		current_node = current_node->next;
 	}
 }
