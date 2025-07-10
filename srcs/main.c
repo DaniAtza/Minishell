@@ -39,6 +39,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data		data;
 	t_pipeline	pipeline;
 
+	setup_signals();
 	check_minishell_args(argc, argv);
 	init_data(&data, envp);
 	ft_memset(&pipeline, 0, sizeof(t_pipeline));
