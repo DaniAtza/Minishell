@@ -25,5 +25,6 @@
 # include "pipes.h"
 # include "execute.h"
 # include "builtin.h"
+# include "signals.h"
 
 #endif
