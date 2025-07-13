@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:32:30 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/13 15:55:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:40:54 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	free_data(t_data *data)
 
 int	init_pipeline(t_pipeline *pipeline)
 {
-	if (ft_strlen(pipeline->line) == 0)
-		return (-1);
 	pipeline->tokens = tokenize_line(pipeline->line);
 	if (!pipeline->tokens)
 		return (-1);
