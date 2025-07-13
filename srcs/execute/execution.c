@@ -14,6 +14,7 @@
 
 void	execute_child_process(t_process *process, int **pipes, t_data *data)
 {
+	setup_child_signals();
 	setup_child_pipes(process, pipes);
 	if (apply_redirects(process->redirects) == -1)
 		exit(1);
@@ -68,7 +69,11 @@ int	wait_processes(t_pipeline *pipeline)
 //TODO CORRECT RETURN NUM
 int	execute_pipeline(t_pipeline *pipeline, t_data *data)
 {
+	t_signal_backup	signal_backup;
+
+	signal_backup = set_execution_signals();
 	execute_processes(pipeline, data);
+	restore_signals(signal_backup);
 	return (wait_processes(pipeline));
 }
 
