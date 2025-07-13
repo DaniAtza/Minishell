@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/08 19:33:50 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:24:57 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 void	execute_child_process(t_process *process, int **pipes, t_data *data);
 void	execute_processes(t_pipeline *pipeline, t_data *data);
-int		wait_processes(t_pipeline *pipeline);
-int		execute_pipeline(t_pipeline *pipeline, t_data *data);
+void	wait_processes(t_pipeline *pipeline, t_data *data);
+void	execute_pipeline(t_pipeline *pipeline, t_data *data);
 void	handle_execution(t_pipeline *pipeline, t_data *data);
 void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
