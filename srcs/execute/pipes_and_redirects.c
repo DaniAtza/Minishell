@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:56:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:15:17 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:21:26 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	apply_redirects(t_redirect *redir)
 	{
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
-			return (print_and_return_error(redir->filename, -1));
+			return (perror(redir->filename), -1);
 		if (dup2(fd, redir->target_fd) == -1)
 			return (print_and_return_error("dup2", -1));
 		close(fd);
