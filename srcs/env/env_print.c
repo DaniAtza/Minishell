@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:35:06 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/08 19:42:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 14:06:23 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ void	print_env_list_export(t_env *env_list)
 		current = current->next;
 	}
 }
-

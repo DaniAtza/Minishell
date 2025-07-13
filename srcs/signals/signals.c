@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 22:46:00 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/01 22:46:53 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/13 14:00:32 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	signal_handler(int signum)
 {
 	(void)signum;
-
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 void	setup_signals(void)
@@ -34,18 +32,12 @@ void	setup_child_signals(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-void	handle_child(int signum)
-{
-	(void)signum;
-}
-
 t_signal_backup	set_execution_signals(void)
 {
 	t_signal_backup	backup;
-	
-	backup.old_sigint = signal(SIGINT, SIG_DFL);
-	backup.old_sigquit = signal(SIGQUIT, handle_child);
-	
+
+	backup.old_sigint = signal(SIGINT, SIG_IGN);
+	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
 	return (backup);
 }
 

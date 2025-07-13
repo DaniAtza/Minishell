@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/08 19:33:53 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 14:10:00 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,28 @@ int	wait_processes(t_pipeline *pipeline)
 {
 	t_process	*current;
 	int			status;
+	int			last_status;
 
+	last_status = 0;
 	close_pipes(pipeline->pipes);
 	current = pipeline->processes;
 	while (current)
 	{
 		waitpid(current->pid, &status, 0);
+		if (!current->next)
+		{
+			if (WIFSIGNALED(status))
+			{
+				if (WTERMSIG(status) == SIGQUIT)
+					ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+				last_status = 128 + WTERMSIG(status);
+			}
+			else if (WIFEXITED(status))
+				last_status = WEXITSTATUS(status);
+		}
 		current = current->next;
 	}
-	return (status);
+	return (last_status);
 }
 
 //TODO CORRECT RETURN NUM
