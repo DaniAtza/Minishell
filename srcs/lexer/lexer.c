@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:48:28 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/22 13:20:24 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:58:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_token	*tokenize_line(char *line)
 		if (!new_token)
 		{
 			free_tokens(&lexer.tokens);
+			ft_putendl_fd("Error: tokenize_line", 2);
 			return (NULL);
 		}
 		append_token(new_token, &lexer.tokens);

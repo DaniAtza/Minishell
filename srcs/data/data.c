@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:32:30 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/13 15:32:46 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:55:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ void	free_data(t_data *data)
 
 int	init_pipeline(t_pipeline *pipeline)
 {
-	// TODO: Trim string (an all spaces string fail)
 	if (ft_strlen(pipeline->line) == 0)
 		return (-1);
 	pipeline->tokens = tokenize_line(pipeline->line);
 	if (!pipeline->tokens)
-		return (print_and_return_error("Error: tokenize_tokens", -1));
+		return (-1);
 	if (validate_syntax(pipeline) != 0)
 		return (print_and_return_error("Error: Syntax error", -1));
 	pipeline->processes = parse_tokens(pipeline->tokens);
