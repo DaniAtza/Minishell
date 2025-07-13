@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/08 19:06:14 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:25:04 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_data
 {
 	t_env		*env_list;
 	char		*current_pwd;
+	int			last_exit_status;
 }	t_data;
 
 #endif

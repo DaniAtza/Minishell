@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:14:23 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 14:10:00 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:25:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ void	execute_processes(t_pipeline *pipeline, t_data *data)
 	}
 }
 
-int	wait_processes(t_pipeline *pipeline)
+void	wait_processes(t_pipeline *pipeline, t_data *data)
 {
 	t_process	*current;
 	int			status;
-	int			last_status;
 
-	last_status = 0;
 	close_pipes(pipeline->pipes);
 	current = pipeline->processes;
 	while (current)
@@ -69,25 +67,23 @@ int	wait_processes(t_pipeline *pipeline)
 			{
 				if (WTERMSIG(status) == SIGQUIT)
 					ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
-				last_status = 128 + WTERMSIG(status);
+				data->last_exit_status = 128 + WTERMSIG(status);
 			}
 			else if (WIFEXITED(status))
-				last_status = WEXITSTATUS(status);
+				data->last_exit_status = WEXITSTATUS(status);
 		}
 		current = current->next;
 	}
-	return (last_status);
 }
 
-//TODO CORRECT RETURN NUM
-int	execute_pipeline(t_pipeline *pipeline, t_data *data)
+void	execute_pipeline(t_pipeline *pipeline, t_data *data)
 {
 	t_signal_backup	signal_backup;
 
 	signal_backup = set_execution_signals();
 	execute_processes(pipeline, data);
 	restore_signals(signal_backup);
-	return (wait_processes(pipeline));
+	wait_processes(pipeline, data);
 }
 
 void	handle_execution(t_pipeline *pipeline, t_data *data)
@@ -95,14 +91,20 @@ void	handle_execution(t_pipeline *pipeline, t_data *data)
 	if (pipeline->process_count == 1 && (is_builtin(pipeline->processes->argv)))
 	{
 		if (save_stdio_fds(pipeline->processes) == -1)
+		{
+			data->last_exit_status = 1;
 			return ;
+		}
 		if (apply_redirects(pipeline->processes->redirects) == -1)
 		{
+			data->last_exit_status = 1;
 			restore_stdio_fds(pipeline->processes);
 			return ;
 		}
-		exe_builtin(pipeline->processes->argv, data);
+		if (exe_builtin(pipeline->processes->argv, data) == -1)
+			data->last_exit_status = 1;
 		restore_stdio_fds(pipeline->processes);
+		data->last_exit_status = 0;
 	}
 	else
 	{
