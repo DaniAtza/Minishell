@@ -19,12 +19,9 @@ static void	write_heredoc(t_redirect *redir)
 	fd = open(redir->filename, redir->flags, redir->mode); // TODO: Handle error
 	while (1)
 	{
-		ft_putstr_fd("> ", STDERR_FILENO);
-		line = get_next_line(STDIN_FILENO);
-		if (!line) // TODO: Handle EOF or error
+		line = readline("> ");
+		if (!line)
 			break ;
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, redir->delimiter) == 0)
 		{
 			free(line);
