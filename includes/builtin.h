@@ -22,6 +22,7 @@ int		ft_pwd(char *current_pwd);
 int		ft_export(char **argv, t_env *env_list);
 int		ft_unset(char **argv, t_env *env_list);
 int		ft_cd(char **argv, t_data *data);
+void    ft_exit(char **argv, t_data *data);
 
 int		check_arg_error(char **argv);
 
