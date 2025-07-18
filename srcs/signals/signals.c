@@ -18,6 +18,7 @@ void	signal_handler(int signum)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	setup_signals(void)
@@ -37,6 +38,23 @@ t_signal_backup	set_execution_signals(void)
 	t_signal_backup	backup;
 
 	backup.old_sigint = signal(SIGINT, SIG_IGN);
+	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
+	return (backup);
+}
+
+void	heredoc_signal_handler(int sig)
+{
+	g_signal = sig;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+}
+
+t_signal_backup	set_heredoc_signals(void)
+{
+	t_signal_backup	backup;
+
+	backup.old_sigint = signal(SIGINT, heredoc_signal_handler);
 	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
 	return (backup);
 }

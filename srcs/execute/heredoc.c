@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	write_heredoc(t_redirect *redir)
+volatile sig_atomic_t g_signal = 0;
+ 
+static int	write_heredoc(t_redirect *redir)
 {
 	int		fd;
 	char	*line;
@@ -20,17 +22,22 @@ static void	write_heredoc(t_redirect *redir)
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal == SIGINT)
+			break ;
 		if (!line)
 			break ;
 		if (ft_strcmp(line, redir->delimiter) == 0)
-		{
-			free(line);
 			break ;
-		}
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	if (line)
+		free(line);
 	close(fd);
+	if (g_signal == SIGINT)
+		return (130);
+	else
+		return(0);
 }
 
 static void	create_tmp_file(t_redirect *redir)
@@ -62,7 +69,9 @@ static void	create_tmp_file(t_redirect *redir)
 void	handle_heredocs(t_process *processes)
 {
 	t_redirect	*redir;
+	t_signal_backup	signal_backup;
 
+	signal_backup = set_heredoc_signals();
 	while (processes)
 	{
 		redir = processes->redirects;
@@ -71,10 +80,13 @@ void	handle_heredocs(t_process *processes)
 			if (redir->is_heredoc)
 			{
 				create_tmp_file(redir);
-				write_heredoc(redir);
+				if (write_heredoc(redir) == 130)
+					break ;
 			}
 			redir = redir->next;
 		}
 		processes = processes->next;
 	}
+	g_signal = 0;
+	restore_signals(signal_backup);
 }
