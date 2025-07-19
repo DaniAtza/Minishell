@@ -9,6 +9,7 @@
 /*   Updated: 2025/07/07 20:15:14 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 volatile sig_atomic_t g_signal = 0;
@@ -68,25 +69,50 @@ static void	create_tmp_file(t_redirect *redir)
 
 void	handle_heredocs(t_process *processes)
 {
+	t_process	*ptr;
 	t_redirect	*redir;
 	t_signal_backup	signal_backup;
+	pid_t	pid;
 
-	signal_backup = set_heredoc_signals();
-	while (processes)
+	signal_backup = set_execution_signals();
+	ptr = processes;
+	while (ptr)
 	{
-		redir = processes->redirects;
+		redir = ptr->redirects;
 		while (redir)
 		{
 			if (redir->is_heredoc)
-			{
 				create_tmp_file(redir);
-				if (write_heredoc(redir) == 130)
-					break ;
-			}
 			redir = redir->next;
 		}
-		processes = processes->next;
+		ptr = ptr->next;
 	}
-	g_signal = 0;
+	pid = fork();
+	if (pid < 0)
+		error_exit("fork", 1);
+	if (pid == 0)
+	{
+		setup_heredoc_signals();		
+		ptr = processes;
+		while (ptr)
+		{
+			redir = ptr->redirects;
+			while (redir)
+			{
+				if (redir->is_heredoc)
+					if (write_heredoc(redir) == 130)
+						break ;
+				redir = redir->next;
+			}
+			ptr = ptr->next;
+		}
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
+	}
 	restore_signals(signal_backup);
 }

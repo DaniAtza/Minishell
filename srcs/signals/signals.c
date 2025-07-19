@@ -45,18 +45,17 @@ t_signal_backup	set_execution_signals(void)
 void	heredoc_signal_handler(int sig)
 {
 	g_signal = sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
+	// (void)sig;
+	// write(STDIN_FILENO, "\n", 1);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	exit(130);
+	
 }
 
-t_signal_backup	set_heredoc_signals(void)
+void	setup_heredoc_signals(void)
 {
-	t_signal_backup	backup;
-
-	backup.old_sigint = signal(SIGINT, heredoc_signal_handler);
-	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
-	return (backup);
+	signal(SIGINT, heredoc_signal_handler);
 }
 
 void	restore_signals(t_signal_backup backup)

@@ -29,7 +29,7 @@ void				setup_child_signals(void);
 void				restore_signals(t_signal_backup backup);
 t_signal_backup		set_execution_signals(void);
 
-t_signal_backup		set_heredoc_signals(void);
+void				setup_heredoc_signals(void);
 void				heredoc_signal_handler(int sig);
 
 #endif
