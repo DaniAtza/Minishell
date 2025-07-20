@@ -17,7 +17,9 @@ static int	write_heredoc(t_redirect *redir)
 	int		fd;
 	char	*line;
 
-	fd = open(redir->filename, redir->flags, redir->mode); // TODO: Handle error
+	fd = open(redir->filename, redir->flags, redir->mode);
+	if (fd == -1)
+		exit(-1);
 	while (1)
 	{
 		line = readline("> ");
@@ -60,7 +62,7 @@ static int	execute_heredoc_child(t_process *processes)
 
 	pid = fork();
 	if (pid < 0)
-		error_exit("fork", 1);
+		return (print_and_return_error("fork", -1));
 	if (pid == 0)
 	{
 		setup_heredoc_signals();
@@ -69,7 +71,7 @@ static int	execute_heredoc_child(t_process *processes)
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0); //TODO
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 			return (130);
 	}
@@ -82,7 +84,11 @@ int	handle_heredocs(t_process *processes)
 	int				exit_code;
 
 	signal_backup = set_execution_signals();
-	create_all_tmp_files(processes);
+	if (create_all_tmp_files(processes) == -1)
+	{
+		restore_signals(signal_backup);
+		return (-1);
+	}	
 	exit_code = execute_heredoc_child(processes);
 	restore_signals(signal_backup);
 	return (exit_code);

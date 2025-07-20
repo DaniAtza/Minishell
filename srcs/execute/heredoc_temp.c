@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	create_tmp_file(t_redirect *redir)
+static int	search_name_tmp_file(t_redirect *redir)
 {
 	char	*digits;
 	char	*filename;
@@ -23,25 +23,27 @@ static void	create_tmp_file(t_redirect *redir)
 	{
 		digits = ft_itoa(i);
 		if (!digits)
-			error_exit("ft_itoa", 1); // TODO: Free memory properly
+			return (print_and_return_error("ft_itoa", -1));
 		filename = ft_strjoin("/tmp/.heredoc-", digits);
 		free(digits);
 		if (!filename)
-			error_exit("ft_strjoin", 1); // TODO: Free memory properly
+		return (print_and_return_error("ft_strjoin", -1));
 		if (access(filename, F_OK) == -1)
 			break ;
 		free(filename);
 		i++;
 	}
 	if (i == 1000000000)
-		error_exit("Error: Too many heredocs", 1);
+		return (print_and_return_error("Error: Too many heredocs", -1));
 	redir->filename = filename;
+	return (0);
 }
 
-void	create_all_tmp_files(t_process *processes)
+int	create_all_tmp_files(t_process *processes)
 {
 	t_process	*ptr;
 	t_redirect	*redir;
+	int			fd;
 
 	ptr = processes;
 	while (ptr)
@@ -50,9 +52,17 @@ void	create_all_tmp_files(t_process *processes)
 		while (redir)
 		{
 			if (redir->is_heredoc)
-				create_tmp_file(redir);
+			{
+				if (search_name_tmp_file(redir) == -1)
+					return (-1);
+				fd = open(redir->filename, redir->flags, redir->mode);
+				if (fd == -1)
+					return (print_and_return_error("Open filename heredoc", -1));
+				close(fd);
+			}
 			redir = redir->next;
 		}
 		ptr = ptr->next;
 	}
+	return (0);
 }

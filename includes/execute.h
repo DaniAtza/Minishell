@@ -40,6 +40,6 @@ int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
 
 int	    handle_heredocs(t_process *processes);
-void	create_all_tmp_files(t_process *processes);
+int	create_all_tmp_files(t_process *processes);
 
 #endif
