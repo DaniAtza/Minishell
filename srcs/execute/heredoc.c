@@ -23,8 +23,8 @@ static int	write_heredoc(t_redirect *redir)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_signal == SIGINT)
-			break ;
+		//if (g_signal == SIGINT)
+		//	break ;
 		if (!line)
 			break ;
 		if (ft_strcmp(line, redir->delimiter) == 0)
@@ -35,10 +35,9 @@ static int	write_heredoc(t_redirect *redir)
 	if (line)
 		free(line);
 	close(fd);
-	if (g_signal == SIGINT)
-		return (130);
-	else
-		return(0);
+	//if (g_signal == SIGINT)
+	//	return (130);
+	return(0);
 }
 
 static void	create_tmp_file(t_redirect *redir)
@@ -67,12 +66,13 @@ static void	create_tmp_file(t_redirect *redir)
 	redir->filename = filename;
 }
 
-void	handle_heredocs(t_process *processes)
+int	handle_heredocs(t_process *processes)
 {
 	t_process	*ptr;
 	t_redirect	*redir;
 	t_signal_backup	signal_backup;
 	pid_t	pid;
+	int		status;
 
 	signal_backup = set_execution_signals();
 	ptr = processes;
@@ -100,19 +100,21 @@ void	handle_heredocs(t_process *processes)
 			while (redir)
 			{
 				if (redir->is_heredoc)
-					if (write_heredoc(redir) == 130)
-						break ;
+					write_heredoc(redir);
+				//if (write_heredoc(redir) == 130)
+					//	exit(130);
 				redir = redir->next;
 			}
 			ptr = ptr->next;
 		}
+		exit(0);
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
+		waitpid(pid, &status, 0);
 	}
 	restore_signals(signal_backup);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		return (130); 
+	return (0);
 }

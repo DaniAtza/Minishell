@@ -42,15 +42,14 @@ t_signal_backup	set_execution_signals(void)
 	return (backup);
 }
 
-void	heredoc_signal_handler(int sig)
+void	heredoc_signal_handler(int signum)
 {
-	g_signal = sig;
+	g_signal = signum;
 	// (void)sig;
-	// write(STDIN_FILENO, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
+	write(STDIN_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	exit(130);
-	
 }
 
 void	setup_heredoc_signals(void)
