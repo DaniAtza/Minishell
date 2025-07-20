@@ -54,6 +54,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (main_loop(&pipeline, &data) == -1)
 			break ;
 		free_pipeline(&pipeline);
+		setup_signals();
 	}
 	rl_clear_history();
 	free_data(&data);

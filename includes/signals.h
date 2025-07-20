@@ -25,12 +25,13 @@ void				restore_signals(t_signal_backup backup);
 t_signal_backup		set_execution_signals(void);
 
 void				setup_signals(void);
+void				setup_postexecution_signals(void);
 void				main_signal_handler(int signum);
+void				postexecution_signal_handler(int signum);
 
 void				setup_child_signals(void);
 
 void				setup_heredoc_signals(void);
 void				heredoc_signal_handler(int signum);
-void				create_all_tmp_files(t_process *processes);
 
 #endif

@@ -21,6 +21,14 @@ void	main_signal_handler(int signum)
 	rl_redisplay();
 }
 
+void	postexecution_signal_handler(int signum)
+{
+	(void)signum;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+}
+
 void	heredoc_signal_handler(int signum)
 {
 	(void)signum;

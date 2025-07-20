@@ -18,6 +18,12 @@ void	setup_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+void	setup_postexecution_signals(void)
+{
+	signal(SIGINT, postexecution_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	setup_heredoc_signals(void)
 {
 	signal(SIGINT, heredoc_signal_handler);

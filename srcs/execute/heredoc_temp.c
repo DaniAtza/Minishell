@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 12:50:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 12:50:42 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:56:20 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ void	create_all_tmp_files(t_process *processes)
 		ptr = ptr->next;
 	}
 }
-
