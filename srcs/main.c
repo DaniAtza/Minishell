@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 16:40:49 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/20 12:38:02 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 	if (handle_heredocs(pipeline->processes) == 130)
 	{
 		data->last_exit_status = 130;
-		return (0); 
+		return (0);
 	}
 	handle_execution(pipeline, data);
 	return (0);
@@ -59,16 +59,3 @@ int	main(int argc, char *argv[], char *envp[])
 	free_data(&data);
 	return (0);
 }
-
-// void sig_handler(int signum)
-// {
-// 	//nuevo readline
-// }
-
-// signal(SIGINT, sig_handler);
-// signal(SIGQUIT, SIG_IGN);
-
-// oldsig = signal(SIGQUIT, handle_child)
-// //tratas el proceso
-
-// return (signal(SIGQUIT, oldsig))

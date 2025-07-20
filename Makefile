@@ -20,8 +20,9 @@ SRCS := main.c \
 	$(addprefix env/, env_list.c env_node.c env_print.c) \
 	$(addprefix pipes/, pipes.c) \
 	$(addprefix builtin/, is_exe_builtin.c ft_echo.c ft_pwd.c ft_cd.c utils_cd.c ft_export_unset.c) \
-	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c heredoc.c utils_exe.c) \
-	$(addprefix signals/, signals.c)
+	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c utils_exe.c \
+	heredoc_temp.c heredoc_exec.c) \
+	$(addprefix signals/, signals.c signals_handler.c setup_signals.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
