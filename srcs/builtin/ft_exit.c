@@ -15,6 +15,5 @@
 void	ft_exit(char **argv, t_data *data)
 {
     if (!argv[1])
-        return(data->last_exit_status);
-
+        exit(data->last_exit_status);
 }
