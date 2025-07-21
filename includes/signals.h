@@ -6,14 +6,14 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 22:34:39 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 20:25:01 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:24:06 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-#include <signal.h>
+# include <signal.h>
 
 typedef struct s_signal_backup
 {

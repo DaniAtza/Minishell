@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 20:24:57 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:22:35 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	cmd_not_found(char *cmd);
 int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
 
-int		handle_heredocs(t_data *data , t_process *processes);
+int		handle_heredocs(t_data *data, t_process *processes);
 int		create_all_tmp_files(t_process *processes);
 
 #endif
