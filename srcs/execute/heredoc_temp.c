@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 12:50:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 16:56:20 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:54:29 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	search_name_tmp_file(t_redirect *redir)
 		filename = ft_strjoin("/tmp/.heredoc-", digits);
 		free(digits);
 		if (!filename)
-		return (print_and_return_error("ft_strjoin", -1));
+			return (print_and_return_error("ft_strjoin", -1));
 		if (access(filename, F_OK) == -1)
 			break ;
 		free(filename);
@@ -57,7 +57,8 @@ int	create_all_tmp_files(t_process *processes)
 					return (-1);
 				fd = open(redir->filename, redir->flags, redir->mode);
 				if (fd == -1)
-					return (print_and_return_error("Open filename heredoc", -1));
+					return (print_and_return_error("Open filename \
+heredoc", -1));
 				close(fd);
 			}
 			redir = redir->next;

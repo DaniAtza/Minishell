@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:26:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 11:32:52 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:56:08 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,26 @@ static int	execute_heredoc_child(t_process *processes)
 	}
 	else
 	{
-		waitpid(pid, &status, 0); //TODO
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-			return (130);
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+			return (128 + WTERMSIG(status));
+		else if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
 	return (0);
 }
 
-int	handle_heredocs(t_process *processes)
+int	handle_heredocs(t_data *data, t_process *processes)
 {
 	t_signal_backup	signal_backup;
-	int				exit_code;
 
 	signal_backup = set_execution_signals();
 	if (create_all_tmp_files(processes) == -1)
 	{
 		restore_signals(signal_backup);
 		return (-1);
-	}	
-	exit_code = execute_heredoc_child(processes);
+	}
+	data->last_exit_status = execute_heredoc_child(processes);
 	restore_signals(signal_backup);
-	return (exit_code);
+	return (data->last_exit_status);
 }
