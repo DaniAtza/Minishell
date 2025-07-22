@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   setup_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 22:46:00 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 12:34:59 by datienza         ###   ########.fr       */
+/*   Created: 2025/07/20 12:10:12 by datienza          #+#    #+#             */
+/*   Updated: 2025/07/20 12:36:01 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_signal_backup	set_execution_signals(void)
+void	setup_signals(void)
 {
-	t_signal_backup	backup;
-
-	backup.old_sigint = signal(SIGINT, SIG_IGN);
-	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
-	return (backup);
+	signal(SIGINT, main_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	restore_signals(t_signal_backup backup)
+void	setup_postexecution_signals(void)
 {
-	signal(SIGINT, backup.old_sigint);
-	signal(SIGQUIT, backup.old_sigquit);
+	signal(SIGINT, postexecution_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setup_child_signals(void)
+void	setup_heredoc_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, heredoc_signal_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 16:40:49 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/20 12:38:02 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 	add_history(pipeline->line);
 	if (init_pipeline(pipeline) == -1)
 		return (0);
-	handle_heredocs(pipeline->processes);
+	if (handle_heredocs(data, pipeline->processes) != 0)
+		return (0);
 	handle_execution(pipeline, data);
 	return (0);
 }
@@ -50,21 +51,9 @@ int	main(int argc, char *argv[], char *envp[])
 		if (main_loop(&pipeline, &data) == -1)
 			break ;
 		free_pipeline(&pipeline);
+		setup_signals();
 	}
 	rl_clear_history();
 	free_data(&data);
 	return (0);
 }
-
-// void sig_handler(int signum)
-// {
-// 	//nuevo readline
-// }
-
-// signal(SIGINT, sig_handler);
-// signal(SIGQUIT, SIG_IGN);
-
-// oldsig = signal(SIGQUIT, handle_child)
-// //tratas el proceso
-
-// return (signal(SIGQUIT, oldsig))
