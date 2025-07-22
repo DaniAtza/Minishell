@@ -78,11 +78,8 @@ void	wait_processes(t_pipeline *pipeline, t_data *data)
 
 void	execute_pipeline(t_pipeline *pipeline, t_data *data)
 {
-	t_signal_backup	signal_backup;
-
-	signal_backup = set_execution_signals();
 	execute_processes(pipeline, data);
-	restore_signals(signal_backup);
+	setup_postexecution_signals();
 	wait_processes(pipeline, data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/13 14:13:06 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:00:39 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	ft_cd(char **argv, t_data *data)
 	{
 		if (!search_env("OLDPWD", data->env_list))
 			return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
-		if (update_working_directory(search_env("OLDPWD", data->env_list),data))
+		if (update_working_directory(search_env("OLDPWD", \
+data->env_list), data))
 			return (1);
 	}
 	else

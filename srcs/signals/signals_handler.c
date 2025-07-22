@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 22:46:00 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 12:34:59 by datienza         ###   ########.fr       */
+/*   Created: 2025/07/20 11:49:09 by datienza          #+#    #+#             */
+/*   Updated: 2025/07/20 12:35:36 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_signal_backup	set_execution_signals(void)
+void	main_signal_handler(int signum)
 {
-	t_signal_backup	backup;
-
-	backup.old_sigint = signal(SIGINT, SIG_IGN);
-	backup.old_sigquit = signal(SIGQUIT, SIG_IGN);
-	return (backup);
+	(void)signum;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	restore_signals(t_signal_backup backup)
+void	postexecution_signal_handler(int signum)
 {
-	signal(SIGINT, backup.old_sigint);
-	signal(SIGQUIT, backup.old_sigquit);
+	(void)signum;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
-void	setup_child_signals(void)
+void	heredoc_signal_handler(int signum)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	(void)signum;
+	write(STDIN_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	exit(130);
 }
