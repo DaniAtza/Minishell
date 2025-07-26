@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
+#ifndef CORE_H
+# define CORE_H
 
 # include "types.h"
 
