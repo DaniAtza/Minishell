@@ -20,12 +20,8 @@ SRCS := main.c \
 	$(addprefix parse/, validate.c processes.c redirects.c argv.c parse.c \
 	parse_utils.c) \
 	$(addprefix pipes/, pipes.c) \
-<<<<<<< HEAD
-	$(addprefix builtin/, ft_echo.c ft_cd.c ft_pwd.c ft_export_unset ft_exit.c \
-=======
 	$(addprefix builtin/, ft_echo.c ft_cd.c ft_pwd.c ft_export_unset.c \
->>>>>>> 262ac74 (refactor: Update ft_cd.c and remove utils_cd.c)
-	is_exe_builtin.c) \
+	ft_exit.c is_exe_builtin.c) \
 	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c \
 	utils_exe.c heredoc_temp.c heredoc_exec.c)
 BUILD_DIR := build

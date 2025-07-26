@@ -6,11 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/07/26 18:14:36 by datienza         ###   ########.fr       */
-=======
 /*   Updated: 2025/07/26 18:42:07 by dagredan         ###   ########.fr       */
->>>>>>> b7252b4 (refactor: Update error handling functions)
 /*                                                                            */
 /* ************************************************************************** */
 

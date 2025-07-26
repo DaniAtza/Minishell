@@ -6,11 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 20:33:18 by datienza          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/07/26 18:12:53 by datienza         ###   ########.fr       */
-=======
 /*   Updated: 2025/07/26 19:08:48 by dagredan         ###   ########.fr       */
->>>>>>> 262ac74 (refactor: Update ft_cd.c and remove utils_cd.c)
 /*                                                                            */
 /* ************************************************************************** */
 
