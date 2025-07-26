@@ -22,8 +22,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-void	execute_child_process(t_process *process, t_pipeline *pipeline, \
-int **pipes, t_data *data);
+void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data);
 void	execute_processes(t_pipeline *pipeline, t_data *data);
 void	wait_processes(t_pipeline *pipeline, t_data *data);
 void	execute_pipeline(t_pipeline *pipeline, t_data *data);
