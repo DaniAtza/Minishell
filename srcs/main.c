@@ -43,8 +43,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipeline	pipeline;
 	int			exit_code;
 
-	setup_signals();
 	check_minishell_args(argc, argv);
+	setup_signals();
 	init_data(&data, envp);
 	ft_memset(&pipeline, 0, sizeof(t_pipeline));
 	while (1)

@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_cd.c                                         :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 12:30:00 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/08 19:33:51 by dagredan         ###   ########.fr       */
+/*   Created: 2025/06/01 21:37:43 by datienza          #+#    #+#             */
+/*   Updated: 2025/07/26 18:42:21 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_arg_error(char **argv)
+void	perror_exit(char *error_message, int n_exit)
 {
-	size_t	i;
+	perror(error_message);
+	exit(n_exit);
+}
 
-	i = 0;
-	while (argv[i])
-		i++;
-	if ((i - 1) == 0)
-		return (0);
-	else if ((i - 1) >= 2)
-		return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO), 1);
-	return (0);
+int	perror_return(char *error_message, int n_return)
+{
+	perror(error_message);
+	return (n_return);
+}
+
+int	print_error_return(char *error_message, int n_return)
+{
+	ft_putendl_fd(error_message, STDERR_FILENO);
+	return (n_return);
 }

@@ -13,16 +13,17 @@ RMDIR := rm -rf
 NAME := minishell
 SRCS_DIR := srcs
 SRCS := main.c \
-	$(addprefix lexer/, tokens.c lexer.c utils.c) \
-	$(addprefix parser/, process.c redirect.c argv.c parser.c \
-	validation.c utils.c) \
-	$(addprefix data/, data.c) \
-	$(addprefix env/, env_list.c env_node.c env_print.c) \
+	$(addprefix signals/, signals.c signals_handler.c setup_signals.c) \
+	$(addprefix env/, env_list.c env_node.c env_utils.c) \
+	$(addprefix core/, data.c pipeline.c exit.c) \
+	$(addprefix tokenize/, tokens.c tokenize.c tokenize_utils.c) \
+	$(addprefix parse/, validate.c processes.c redirects.c argv.c parse.c \
+	parse_utils.c) \
 	$(addprefix pipes/, pipes.c) \
-	$(addprefix builtin/, is_exe_builtin.c ft_echo.c ft_pwd.c ft_cd.c ft_exit.c utils_cd.c ft_export_unset.c) \
-	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c utils_exe.c \
-	heredoc_temp.c heredoc_exec.c) \
-	$(addprefix signals/, signals.c signals_handler.c setup_signals.c)
+	$(addprefix builtin/, ft_echo.c ft_cd.c ft_pwd.c ft_export_unset.c \
+	ft_exit.c is_exe_builtin.c) \
+	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c \
+	utils_exe.c heredoc_temp.c heredoc_exec.c)
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
@@ -39,14 +40,14 @@ $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c $(BUILD_DIR)/%.d Makefile | $(BUILD_DIR)
 
 $(BUILD_DIR):
 	mkdir -p $@
-	mkdir -p $@/lexer
-	mkdir -p $@/parser
-	mkdir -p $@/data
+	mkdir -p $@/signals
 	mkdir -p $@/env
+	mkdir -p $@/core
+	mkdir -p $@/tokenize
+	mkdir -p $@/parse
 	mkdir -p $@/pipes
 	mkdir -p $@/builtin
 	mkdir -p $@/execute
-	mkdir -p $@/signals
 
 %.d: ;
 
