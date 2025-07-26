@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:37:28 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:06 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:07:58 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_data(t_data *data);
 
 // Pipeline
 
-int		init_pipeline(t_pipeline *pipeline);
+int		init_pipeline(t_pipeline *pipeline, t_env *env_list);
 void	free_pipeline(t_pipeline *pipeline);
 
 // Exit

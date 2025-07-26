@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:13:48 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/20 12:38:02 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:08:01 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 	if (ft_strlen(pipeline->line) == 0)
 		return (0);
 	add_history(pipeline->line);
-	if (init_pipeline(pipeline) == -1)
+	if (init_pipeline(pipeline, data->env_list) == -1)
 		return (0);
 	if (handle_heredocs(data, pipeline->processes) != 0)
 		return (0);
