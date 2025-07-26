@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:07 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:08:49 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ access parent directories: No such file or directory", STDERR_FILENO);
 	return (0);
 }
 
-static int	update_working_directory(char *directory, t_data *data)
+static int	update_working_dir(char *directory, t_data *data)
 {
 	char	*old_pwd;
 
@@ -68,6 +68,20 @@ static int	update_working_directory(char *directory, t_data *data)
 	return (0);
 }
 
+int	check_arg_error(char **argv)
+{
+	size_t	i;
+
+	i = 0;
+	while (argv[i])
+		i++;
+	if ((i - 1) == 0)
+		return (0);
+	else if ((i - 1) >= 2)
+		return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO), 1);
+	return (0);
+}
+
 int	ft_cd(char **argv, t_data *data)
 {
 	if (check_arg_error(argv))
@@ -76,20 +90,19 @@ int	ft_cd(char **argv, t_data *data)
 	{
 		if (!search_env("HOME", data->env_list))
 			return (ft_putendl_fd("cd: HOME not set", STDERR_FILENO), 1);
-		if (update_working_directory(search_env("HOME", data->env_list), data))
+		if (update_working_dir(search_env("HOME", data->env_list), data))
 			return (1);
 	}
 	else if (!(ft_strcmp(argv[1], "-")))
 	{
 		if (!search_env("OLDPWD", data->env_list))
 			return (ft_putendl_fd("cd: OLDPWD not set", STDERR_FILENO), 1);
-		if (update_working_directory(search_env("OLDPWD", \
-data->env_list), data))
+		if (update_working_dir(search_env("OLDPWD", data->env_list), data))
 			return (1);
 	}
 	else
 	{
-		if (update_working_directory(argv[1], data))
+		if (update_working_dir(argv[1], data))
 			return (1);
 	}
 	return (0);
