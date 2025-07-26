@@ -68,7 +68,7 @@ static int	update_working_dir(char *directory, t_data *data)
 	return (0);
 }
 
-int	check_arg_error(char **argv)
+static int	check_arg_error(char **argv)
 {
 	size_t	i;
 
