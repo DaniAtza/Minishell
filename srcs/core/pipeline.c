@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 21:32:30 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/13 20:25:07 by dagredan         ###   ########.fr       */
+/*   Created: 2025/07/26 12:39:42 by dagredan          #+#    #+#             */
+/*   Updated: 2025/07/26 18:21:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	init_data(t_data *data, char *envp[])
-{
-	ft_memset(data, 0, sizeof(t_data));
-	data->env_list = create_env_list(envp); // TODO: Handle error
-	data->current_pwd = getcwd(NULL, 0); // TODO: Handle error
-	data->last_exit_status = 0;
-}
-
-void	free_data(t_data *data)
-{
-	if (!data)
-		return ;
-	if (data->env_list)
-		free_env_list(&data->env_list);
-	if (data->current_pwd)
-		free(data->current_pwd);
-}
 
 int	init_pipeline(t_pipeline *pipeline)
 {
