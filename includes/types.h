@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/13 20:25:04 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:52:46 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TYPES_H
 
 # include <stddef.h>
+# include <fcntl.h>
 
 typedef enum e_token_type
 {
