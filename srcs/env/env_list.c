@@ -86,20 +86,6 @@ int	update_env_node(char *env_variable, t_env **env_list_addr)
 	return (0);
 }
 
-char	*search_env(char *name, t_env *env_list)
-{
-	t_env	*current_node;
-
-	current_node = env_list;
-	while (current_node)
-	{
-		if (ft_strcmp(current_node->name, name) == 0)
-			return (current_node->value);
-		current_node = current_node->next;
-	}
-	return (NULL);
-}
-
 void	delete_env_node(char *name, t_env **env_list_addr)
 {
 	t_env	*prev_node;
@@ -121,4 +107,18 @@ void	delete_env_node(char *name, t_env **env_list_addr)
 		prev_node = current_node;
 		current_node = current_node->next;
 	}
+}
+
+char	*search_env(char *name, t_env *env_list)
+{
+	t_env	*current_node;
+
+	current_node = env_list;
+	while (current_node)
+	{
+		if (ft_strcmp(current_node->name, name) == 0)
+			return (current_node->value);
+		current_node = current_node->next;
+	}
+	return (NULL);
 }

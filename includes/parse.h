@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:26:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/08 19:06:12 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:59:42 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSE_H
+# define PARSE_H
 
 # include "types.h"
+
+// Parser
 
 typedef struct s_parser
 {
@@ -22,28 +24,34 @@ typedef struct s_parser
 	t_process	*processes;	// Provisional linked list of processes
 }	t_parser;
 
-/* process.c */
+// Validate
+
+int			validate_syntax(t_pipeline *pipeline);
+
+// Processes
+
 t_process	*create_process(void);
 void		append_process(t_process *new_process, t_process **processes);
 void		free_processes(t_process **processes);
 size_t		count_processes(t_process *processes);
 
-/* redirect.c */
+// Redirects
+
 t_redirect	*create_redirect(t_token *redir_operator, t_token *filename);
 void		append_redirect(t_redirect *new_redirect, t_redirect **redirects);
 void		free_redirects(t_redirect **redirects);
 
-/* argv.c */
+// Argv
+
 char		**append_arg(char *new_arg, char **argv);
 void		free_argv(char ***argv_addr);
 
-/* parser.c */
+// Parse
+
 t_process	*parse_tokens(t_token *tokens);
 
-/* validation.c */
-int			validate_syntax(t_pipeline *pipeline);
+// Parse utils
 
-/* utils.c */
 int			is_pipe(t_token *token);
 int			is_redirection(t_token *token);
 int			is_word(t_token *token);

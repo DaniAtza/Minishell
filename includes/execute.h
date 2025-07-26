@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/26 18:14:36 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:42:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
 
 char	*get_pathname(char *cmd_name, t_env *env_list);
-void	error_exit(char *error, int n_exit);
-
-int		print_and_return_error(char *message, int return_value);
 void	cmd_not_found(char *cmd);
 
 int		save_stdio_fds(t_process *processes);
