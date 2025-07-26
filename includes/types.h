@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 17:52:46 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:07:22 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ typedef struct s_pipeline
 	size_t		process_count;
 	int			**pipes;
 }	t_pipeline;
+
+typedef struct s_env
+{
+	struct s_env	*next;
+	char			*name;	
+	char			*value;
+}	t_env;
 
 typedef struct s_data
 {
