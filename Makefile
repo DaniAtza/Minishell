@@ -14,7 +14,7 @@ NAME := minishell
 SRCS_DIR := srcs
 SRCS := main.c \
 	$(addprefix signals/, signals.c signals_handler.c setup_signals.c) \
-	$(addprefix env/, env_list.c env_node.c env_print.c) \
+	$(addprefix env/, env_list.c env_node.c env_utils.c) \
 	$(addprefix core/, data.c pipeline.c exit.c) \
 	$(addprefix tokenize/, tokens.c tokenize.c tokenize_utils.c) \
 	$(addprefix parse/, validate.c processes.c redirects.c argv.c parse.c \
