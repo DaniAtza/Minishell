@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 17:52:43 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:59:01 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "signals.h"
 # include "env.h"
 # include "data.h"
-# include "lexer.h"
+# include "tokenize.h"
 # include "parser.h"
 # include "pipes.h"
 # include "execute.h"
