@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:59:29 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/21 22:22:35 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:14:36 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-void	execute_child_process(t_process *process, int **pipes, t_data *data);
+void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data);
 void	execute_processes(t_pipeline *pipeline, t_data *data);
 void	wait_processes(t_pipeline *pipeline, t_data *data);
 void	execute_pipeline(t_pipeline *pipeline, t_data *data);

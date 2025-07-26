@@ -12,24 +12,24 @@
 
 #include "minishell.h"
 
-void	execute_child_process(t_process *process, int **pipes, t_data *data)
+void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data)
 {
 	setup_child_signals();
-	setup_child_pipes(process, pipes);
-	if (apply_redirects(process->redirects) == -1)
+	setup_child_pipes(proc, pline->pipes);
+	if (apply_redirects(proc->redirects) == -1)
 		exit(1);
-	if (!process->argv || !process->argv[0])
+	if (!proc->argv || !proc->argv[0])
 		exit(0);
-	if (is_builtin(process->argv))
+	if (is_builtin(proc->argv))
 	{
-		exe_builtin(process->argv, data);
+		exe_builtin(proc->argv, pline, data);
 		exit(0);
 	}
-	process->pathname = get_pathname(process->argv[0], data->env_list);
-	if (!process->pathname)
-		cmd_not_found(process->argv[0]);
-	execve(process->pathname, process->argv, NULL);
-	error_exit(process->pathname, 1);
+	proc->pathname = get_pathname(proc->argv[0], data->env_list);
+	if (!proc->pathname)
+		cmd_not_found(proc->argv[0]);
+	execve(proc->pathname, proc->argv, NULL);
+	error_exit(proc->pathname, 1);
 }
 
 void	execute_processes(t_pipeline *pipeline, t_data *data)
@@ -46,7 +46,7 @@ void	execute_processes(t_pipeline *pipeline, t_data *data)
 			return ;
 		}
 		if (current->pid == 0)
-			execute_child_process(current, pipeline->pipes, data);
+			execute_child_process(current, pipeline, data);
 		current = current->next;
 	}
 }
@@ -98,7 +98,7 @@ void	handle_execution(t_pipeline *pipeline, t_data *data)
 			restore_stdio_fds(pipeline->processes);
 			return ;
 		}
-		if (exe_builtin(pipeline->processes->argv, data) == -1)
+		if (exe_builtin(pipeline->processes->argv, pipeline, data) == -1)
 			data->last_exit_status = 1;
 		restore_stdio_fds(pipeline->processes);
 		data->last_exit_status = 0;
