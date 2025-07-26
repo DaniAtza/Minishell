@@ -41,6 +41,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_data		data;
 	t_pipeline	pipeline;
+	int			exit_code;
 
 	setup_signals();
 	check_minishell_args(argc, argv);
@@ -54,6 +55,8 @@ int	main(int argc, char *argv[], char *envp[])
 		setup_signals();
 	}
 	rl_clear_history();
+	exit_code = data.last_exit_status;
 	free_data(&data);
-	return (0);
+	printf("exit\n");
+	return (exit_code);
 }
