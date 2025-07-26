@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:26:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/21 22:25:46 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:42:09 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	execute_heredoc_child(t_process *processes)
 
 	pid = fork();
 	if (pid < 0)
-		return (print_and_return_error("fork", -1));
+		return (perror_return("fork", -1));
 	if (pid == 0)
 	{
 		setup_heredoc_signals();

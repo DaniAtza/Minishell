@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:48:28 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 17:59:03 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:42:20 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ static int	seek_next_quote(t_lexer *lexer, char *line, char quote)
 	while (line[lexer->i] != quote)
 	{
 		if (line[lexer->i] == '\0')
-		{
-			ft_putstr_fd("Syntax error: Unmatched quotes\n", 2);
-			return (0);
-		}
+			return (print_error_return("Syntax error: Unmatched quote", -1));
 		lexer->i++;
 	}
-	return (1);
+	return (0);
 }
 
 static t_token	*tokenize_word(t_lexer *lexer, char *line)
@@ -35,7 +32,7 @@ static t_token	*tokenize_word(t_lexer *lexer, char *line)
 		if (is_special(line[lexer->i]))
 			break ;
 		if (is_quote(line[lexer->i]))
-			if (!seek_next_quote(lexer, line, line[lexer->i]))
+			if (seek_next_quote(lexer, line, line[lexer->i]) == -1)
 				return (NULL);
 		lexer->i++;
 	}

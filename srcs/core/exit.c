@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_exe.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 21:37:43 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:42:21 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_not_found(char *cmd)
+void	perror_exit(char *error_message, int n_exit)
 {
-	char	*msg;
+	perror(error_message);
+	exit(n_exit);
+}
 
-	msg = ft_strjoin(cmd, ": command not found\n");
-	if (!msg)
-		perror_exit("malloc", 1);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	free(msg);
-	exit(127);
+int	perror_return(char *error_message, int n_return)
+{
+	perror(error_message);
+	return (n_return);
+}
+
+int	print_error_return(char *error_message, int n_return)
+{
+	ft_putendl_fd(error_message, STDERR_FILENO);
+	return (n_return);
 }
