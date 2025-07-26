@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	execute_child_process(t_process *process, int **pipes, t_data *data)
+void	execute_child_process(t_process *process, t_pipeline *pipeline, int **pipes, t_data *data)
 {
 	setup_child_signals();
 	setup_child_pipes(process, pipes);
@@ -22,7 +22,7 @@ void	execute_child_process(t_process *process, int **pipes, t_data *data)
 		exit(0);
 	if (is_builtin(process->argv))
 	{
-		exe_builtin(process->argv, data);
+		exe_builtin(process->argv, pipeline, data);
 		exit(0);
 	}
 	process->pathname = get_pathname(process->argv[0], data->env_list);
@@ -46,7 +46,7 @@ void	execute_processes(t_pipeline *pipeline, t_data *data)
 			return ;
 		}
 		if (current->pid == 0)
-			execute_child_process(current, pipeline->pipes, data);
+			execute_child_process(current, pipeline, pipeline->pipes, data);
 		current = current->next;
 	}
 }
@@ -98,7 +98,7 @@ void	handle_execution(t_pipeline *pipeline, t_data *data)
 			restore_stdio_fds(pipeline->processes);
 			return ;
 		}
-		if (exe_builtin(pipeline->processes->argv, data) == -1)
+		if (exe_builtin(pipeline->processes->argv, pipeline, data) == -1)
 			data->last_exit_status = 1;
 		restore_stdio_fds(pipeline->processes);
 		data->last_exit_status = 0;

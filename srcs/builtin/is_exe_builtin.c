@@ -37,7 +37,7 @@ int	is_builtin(char **argv)
 	return (0);
 }
 
-int	exe_builtin(char **argv, t_data *data)
+int	exe_builtin(char **argv, t_pipeline *pipeline, t_data *data)
 {
 	if (!argv || !argv[0])
 		return (-1);
@@ -54,6 +54,6 @@ int	exe_builtin(char **argv, t_data *data)
 	else if (ft_strcmp(argv[0], "unset") == 0)
 		ft_unset(argv, data->env_list);
 	else if (ft_strcmp(argv[0], "exit") == 0)
-		ft_exit(argv, data);
+		ft_exit(argv, pipeline, data);
 	return (0);
 }
