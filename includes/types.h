@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 23:13:03 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:07:22 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:09:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stddef.h>
 # include <fcntl.h>
+
+// Token type
 
 typedef enum e_token_type
 {
@@ -26,12 +28,16 @@ typedef enum e_token_type
 	WORD,	// Everything else
 }	t_token_type;
 
+// Token
+
 typedef struct s_token
 {
 	struct s_token	*next;	// Next element, or NULL
 	char			*value;	// Zero terminated string if WORD type, or NULL
 	t_token_type	type;	// Type of the token
 }	t_token;
+
+// Redirect
 
 typedef struct s_redirect
 {
@@ -44,6 +50,8 @@ typedef struct s_redirect
 	char				*delimiter;	// The word after '<<', or NULL
 }	t_redirect;
 
+// Process
+
 typedef struct s_process
 {
 	struct s_process	*next;			// Next element, or NULL
@@ -55,27 +63,33 @@ typedef struct s_process
 	char				**argv;			// 'argv' value for execve()
 }	t_process;
 
+// Pipeline
+
 typedef struct s_pipeline
 {
-	char		*line;				// User input
-	t_token		*tokens;			// Linked list of tokens extracted from line
-	t_process	*processes;			// Linked list of processes to execute
-	size_t		process_count;
+	char		*line;			// User input
+	t_token		*tokens;		// Linked list of tokens extracted from line
+	t_process	*processes;		// Linked list of processes to execute
+	size_t		process_count;	// Number of processes in the pipeline
 	int			**pipes;
 }	t_pipeline;
 
+// Env
+
 typedef struct s_env
 {
-	struct s_env	*next;
-	char			*name;	
-	char			*value;
+	struct s_env	*next;	// Next element, or NULL
+	char			*name;	// Name of the environment variable
+	char			*value;	// Value of the environment variable
 }	t_env;
+
+// Data
 
 typedef struct s_data
 {
-	t_env		*env_list;
-	char		*current_pwd;
-	int			last_exit_status;
+	t_env		*env_list;			// Linked list of environment variables
+	char		*current_pwd;		// Current working directory
+	int			last_exit_status;	// Exit status of the last executed pipeline
 }	t_data;
 
 #endif
