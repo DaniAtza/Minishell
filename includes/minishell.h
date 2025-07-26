@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:21:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:59:41 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "env.h"
 # include "core.h"
 # include "tokenize.h"
-# include "parser.h"
+# include "parse.h"
 # include "pipes.h"
 # include "execute.h"
 # include "builtin.h"

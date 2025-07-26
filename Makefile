@@ -17,8 +17,8 @@ SRCS := main.c \
 	$(addprefix env/, env_list.c env_node.c env_print.c) \
 	$(addprefix core/, data.c pipeline.c exit.c) \
 	$(addprefix tokenize/, tokens.c tokenize.c tokenize_utils.c) \
-	$(addprefix parser/, process.c redirect.c argv.c parser.c \
-	validation.c utils.c) \
+	$(addprefix parse/, validate.c processes.c redirects.c argv.c parse.c \
+	parse_utils.c) \
 	$(addprefix pipes/, pipes.c) \
 	$(addprefix builtin/, is_exe_builtin.c ft_echo.c ft_pwd.c ft_cd.c \
 	utils_cd.c ft_export_unset.c) \
@@ -44,7 +44,7 @@ $(BUILD_DIR):
 	mkdir -p $@/env
 	mkdir -p $@/core
 	mkdir -p $@/tokenize
-	mkdir -p $@/parser
+	mkdir -p $@/parse
 	mkdir -p $@/pipes
 	mkdir -p $@/builtin
 	mkdir -p $@/execute
