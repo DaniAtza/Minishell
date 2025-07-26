@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:32:31 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/21 22:00:39 by datienza         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:42:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	handle_oldpwd_update(char *old_pwd, t_env *env_list)
 		return (0);
 	name_value = ft_strjoin("OLDPWD=", old_pwd);
 	if (!name_value)
-		return (print_and_return_error("cd malloc", 1));
+		return (perror_return("cd malloc", 1));
 	update_env_node(name_value, &env_list);
 	free(name_value);
 	return (0);
@@ -43,7 +43,7 @@ access parent directories: No such file or directory", STDERR_FILENO);
 	}
 	name_value = ft_strjoin("PWD=", current_dir);
 	if (!name_value)
-		return (free(current_dir), print_and_return_error("cd malloc", 1));
+		return (free(current_dir), perror_return("cd malloc", 1));
 	update_env_node(name_value, &data->env_list);
 	if (data->current_pwd)
 		free(data->current_pwd);
