@@ -29,7 +29,7 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 	if (ft_strlen(pipeline->line) == 0)
 		return (0);
 	add_history(pipeline->line);
-	if (init_pipeline(pipeline) == -1)
+	if (init_pipeline(pipeline, data->env_list) == -1)
 		return (0);
 	if (handle_heredocs(data, pipeline->processes) != 0)
 		return (0);

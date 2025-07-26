@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:08:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:59:41 by dagredan         ###   ########.fr       */
+/*   Created: 2025/07/27 01:42:47 by dagredan          #+#    #+#             */
+/*   Updated: 2025/07/27 01:42:49 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "types.h"
 
-# include "libft.h"
+typedef struct s_expan
+{
+	char	*name;
+	char	*value;
+	size_t	name_start;
+	size_t	name_len;
+	char	*srcs[3];
+	size_t	sizes[3];
+}	t_expan;
 
-# include "signals.h"
-# include "env.h"
-# include "core.h"
-# include "tokenize.h"
-# include "parse.h"
-# include "expand.h"
-# include "pipes.h"
-# include "execute.h"
-# include "builtin.h"
+// Expand
+
+int		expand_words(t_token *token_list, t_env *env_list);
 
 #endif
