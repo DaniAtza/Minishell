@@ -42,13 +42,13 @@ static int	check_argv(char **argv)
 	return (i);
 }
 
-int	ft_echo(char **argv)
+void	ft_echo(char **argv, t_data *data)
 {
 	int	i;
 	int	flag;
 
 	if (!argv)
-		return (1);
+		return ;
 	i = 1;
 	flag = 0;
 	i += check_argv(argv + 1);
@@ -63,5 +63,5 @@ int	ft_echo(char **argv)
 	}
 	if (flag == 0)
 		printf("\n");
-	return (0);
+	data->last_exit_status = 0;
 }

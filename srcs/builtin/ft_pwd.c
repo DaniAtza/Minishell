@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-int	ft_pwd(char *current_pwd)
+void	ft_pwd(char *current_pwd, t_data *data)
 {
 	printf("%s\n", current_pwd);
-	return (0);
+	data->last_exit_status = 0;
 }

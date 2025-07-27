@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	print_env_list(t_env *env_list)
+void	print_env_list(t_env *env_list, t_data *data)
 {
 	t_env	*current;
 
@@ -23,6 +23,7 @@ void	print_env_list(t_env *env_list)
 			printf("%s=%s\n", current->name, current->value);
 		current = current->next;
 	}
+	data->last_exit_status = 0;
 }
 
 void	print_env_list_export(t_env *env_list)

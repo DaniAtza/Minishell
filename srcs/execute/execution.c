@@ -101,7 +101,6 @@ void	handle_execution(t_pipeline *pipeline, t_data *data)
 		if (exe_builtin(pipeline->processes->argv, pipeline, data) == -1)
 			data->last_exit_status = 1;
 		restore_stdio_fds(pipeline->processes);
-		data->last_exit_status = 0;
 	}
 	else
 	{

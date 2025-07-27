@@ -30,7 +30,7 @@ char	*search_env(char *name, t_env *env_list);
 
 // Env utils
 
-void	print_env_list(t_env *env_list);
+void	print_env_list(t_env *env_list, t_data *data);
 void	print_env_list_export(t_env *env_list);
 
 #endif
