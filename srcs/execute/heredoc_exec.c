@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:26:36 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/07/30 22:26:17 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,32 @@ static int	execute_heredoc_child(t_process *processes)
 	return (0);
 }
 
+static int	is_heredocs(t_process *processes)
+{
+	t_process	*ptr;
+	t_redirect	*redir;
+
+	ptr = processes;
+	while (ptr)
+	{
+		redir = ptr->redirects;
+		while (redir)
+		{
+			if (redir->is_heredoc)
+				return (1);
+			redir = redir->next;
+		}
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
 int	handle_heredocs(t_data *data, t_process *processes)
 {
 	t_signal_backup	signal_backup;
 
+	if (!is_heredocs(processes))
+		return (0);
 	signal_backup = set_execution_signals();
 	if (create_all_tmp_files(processes) == -1)
 	{
