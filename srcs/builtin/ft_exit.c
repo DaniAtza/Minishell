@@ -42,7 +42,7 @@ static int	convert_exit_num(char *arg)
 	long long	num;
 	int			exit_status;
 
-	num = atoll(arg); //TODO
+	num = ft_atoll(arg);
 	exit_status = (int)(num % 256);
 	if (exit_status < 0)
 		exit_status += 256;

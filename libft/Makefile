@@ -21,7 +21,7 @@ SRCS = ft_isupper.c ft_islower.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 	ft_strmapi.c ft_striteri.c ft_putchar.c ft_putchar_fd.c ft_putstr_fd.c \
 	ft_putstr.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c \
 	ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-	ft_lstiter.c ft_lstmap.c get_next_line.c $(addprefix $(PRINTF_DIR), \
+	ft_lstiter.c ft_lstmap.c get_next_line.c ft_atoll.c $(addprefix $(PRINTF_DIR), \
 	ft_printf.c spec_parser.c ft_print_c.c ft_print_s.c ft_print_p.c \
 	ft_print_d.c ft_print_u.c ft_print_x.c utils.c)
 BUILD_DIR = build

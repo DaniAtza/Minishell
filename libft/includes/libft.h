@@ -70,6 +70,7 @@ int		ft_putstr(const char *s);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+long long	ft_atoll(const char *nptr);
 
 typedef struct s_list
 {
