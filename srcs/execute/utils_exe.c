@@ -18,7 +18,7 @@ void	cmd_not_found(char *cmd)
 
 	msg = ft_strjoin(cmd, ": command not found\n");
 	if (!msg)
-		perror_exit("malloc", 1);
+		perror_exit("malloc", -1);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	free(msg);
 	exit(127);
