@@ -42,7 +42,7 @@ static int	convert_exit_num(char *arg)
 	long long	num;
 	int			exit_status;
 
-	num = atoll(arg); //TODO
+	num = ft_atoll(arg);
 	exit_status = (int)(num % 256);
 	if (exit_status < 0)
 		exit_status += 256;
@@ -72,7 +72,10 @@ void	ft_exit(char **argv, t_pipeline *pipeline, t_data *data)
 	int	exit_status;
 
 	if (!argv[1])
-		printf("exit\n");
+	{
+		if (pipeline->process_count == 1)
+			printf("exit\n");
+	}
 	else if (!is_valid_number(argv[1]))
 		no_numeric_arg(argv[1], pipeline->process_count, data);
 	else if (argv[2])
