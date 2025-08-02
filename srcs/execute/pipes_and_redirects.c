@@ -20,7 +20,7 @@ int	apply_redirects(t_redirect *redir)
 	{
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
-			return (perror(redir->filename), -1);
+			return (perror(redir->filename), 1);
 		if (dup2(fd, redir->target_fd) == -1)
 			return (perror_return("dup2", -1));
 		close(fd);
@@ -34,12 +34,12 @@ void	setup_child_pipes(t_process *proc, int **pipes)
 	if (proc->pipe_read_fd != -1)
 	{
 		if (dup2(proc->pipe_read_fd, STDIN_FILENO) == -1)
-			perror_exit("dup2", 1);
+			perror_exit("dup2", 100);
 	}
 	if (proc->pipe_write_fd != -1)
 	{
 		if (dup2(proc->pipe_write_fd, STDOUT_FILENO) == -1)
-			perror_exit("dup2", 1);
+			perror_exit("dup2", 100);
 	}
 	close_pipes(pipes);
 }
@@ -58,10 +58,10 @@ int	save_stdio_fds(t_process *processes)
 int	restore_stdio_fds(t_process *processes)
 {
 	if (dup2(processes->pipe_read_fd, STDIN_FILENO) == -1)
-		return (print_error_return("dup2", 1));
+		return (print_error_return("dup2", -1));
 	close(processes->pipe_read_fd);
 	if (dup2(processes->pipe_write_fd, STDOUT_FILENO) == -1)
-		return (print_error_return("dup2", 1));
+		return (print_error_return("dup2", -1));
 	close(processes->pipe_write_fd);
 	return (0);
 }
