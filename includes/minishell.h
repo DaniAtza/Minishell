@@ -23,6 +23,7 @@
 # include "core.h"
 # include "tokenize.h"
 # include "parse.h"
+# include "expand.h"
 # include "pipes.h"
 # include "execute.h"
 # include "builtin.h"
