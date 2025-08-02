@@ -23,9 +23,9 @@
 # include <sys/types.h>
 
 void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data);
-void	execute_processes(t_pipeline *pipeline, t_data *data);
+int		execute_processes(t_pipeline *pipeline, t_data *data);
 void	wait_processes(t_pipeline *pipeline, t_data *data);
-void	execute_pipeline(t_pipeline *pipeline, t_data *data);
+int		execute_pipeline(t_pipeline *pipeline, t_data *data);
 void	handle_execution(t_pipeline *pipeline, t_data *data);
 void	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
