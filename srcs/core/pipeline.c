@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	init_pipeline(t_pipeline *pipeline, t_env *env_list)
+int	init_pipeline(t_pipeline *pipeline, t_data *data)
 {
 	pipeline->tokens = tokenize_line(pipeline->line);
 	if (!pipeline->tokens)
@@ -22,7 +22,7 @@ int	init_pipeline(t_pipeline *pipeline, t_env *env_list)
 	pipeline->processes = parse_tokens(pipeline->tokens);
 	if (!pipeline->processes)
 		return (print_error_return("Error: parse_tokens", -1));
-	if (expand_words(pipeline->tokens, env_list) != 0)
+	if (expand_words(pipeline->processes, data) != 0)
 		return (print_error_return("Error: expand_words", -1));
 	pipeline->process_count = count_processes(pipeline->processes);
 	pipeline->pipes = create_pipes(pipeline->process_count - 1);
