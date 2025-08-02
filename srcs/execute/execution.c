@@ -12,35 +12,37 @@
 
 #include "minishell.h"
 
-void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data)
+int	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data)
 {
-	int	error_num;
+	int	return_value;
 
 	setup_child_signals();
-	setup_child_pipes(proc, pline->pipes);
-	error_num = apply_redirects(proc->redirects);
-	if (error_num == -1)
-		exit(100);
-	else if (error_num == 1)
-		exit(1);
+	if (setup_child_pipes(proc, pline->pipes) != 0)
+		return (1);
+	if (apply_redirects(proc->redirects) != 0)
+		return (1);
 	if (!proc->argv || !proc->argv[0])
-		exit(0);
+		return (1);
 	if (is_builtin(proc->argv))
 	{
-		if (exe_builtin(proc->argv, pline, data) == -1)
-			exit (100);
-		exit(0);
+		if (exe_builtin(proc->argv, pline, data) != 0)
+			return (1);
+		return (0);
 	}
-	proc->pathname = get_pathname(proc->argv[0], data->env_list);
-	if (!proc->pathname)
-		cmd_not_found(proc->argv[0]);
-	execve(proc->pathname, proc->argv, NULL); //TODO add env
-	perror_exit(proc->pathname, 1); //TODO too many code error 2...
+	return_value = get_pathname(proc->argv[0], data->env_list, proc);
+	if (return_value == 127)
+		return (cmd_not_found(proc->argv[0]));
+	else if (return_value != 0)
+		return (1);
+	if (execve(proc->pathname, proc->argv, NULL) != 0)
+		return (perror_return_exec(proc->argv[0]));
+	return (1);
 }
 
 int	execute_processes(t_pipeline *pipeline, t_data *data)
 {
 	t_process	*current;
+	int			return_value;
 
 	current = pipeline->processes;
 	while (current)
@@ -52,7 +54,12 @@ int	execute_processes(t_pipeline *pipeline, t_data *data)
 			return (-1);
 		}
 		if (current->pid == 0)
-			execute_child_process(current, pipeline, data);
+		{
+			return_value = execute_child_process(current, pipeline, data);
+			free_pipeline(pipeline);
+			free_data(data);
+			exit(return_value);
+		}
 		current = current->next;
 	}
 	return (0);

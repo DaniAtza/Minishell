@@ -12,14 +12,35 @@
 
 #include "minishell.h"
 
-void	cmd_not_found(char *cmd)
+int	cmd_not_found(char *cmd_pathname)
 {
 	char	*msg;
 
-	msg = ft_strjoin(cmd, ": command not found\n");
+	msg = ft_strjoin(cmd_pathname, ": command not found\n");
 	if (!msg)
-		perror_exit("malloc", -1);
+		return (perror_return("malloc", 1));
 	ft_putstr_fd(msg, STDERR_FILENO);
 	free(msg);
-	exit(127);
+	return (127);
+}
+
+int	perror_return_exec(char *cmd_pathname)
+{
+	struct stat		file_info;
+
+	if (stat(cmd_pathname, &file_info) != 0)
+	{
+		perror(cmd_pathname);
+		return (127);
+	}
+	else if (access(cmd_pathname, X_OK))
+	{
+		perror(cmd_pathname);
+		return (126);
+	}
+	else if (S_ISDIR(file_info.st_mode))
+		return (print_error_return(ft_strjoin(cmd_pathname, ": Is a directory"), 126));
+	else if (errno == EINVAL)
+		return (2);
+	return (1);
 }
