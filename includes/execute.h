@@ -18,20 +18,22 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 
-void	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data);
+int 	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data);
 int		execute_processes(t_pipeline *pipeline, t_data *data);
 void	wait_processes(t_pipeline *pipeline, t_data *data);
 int		execute_pipeline(t_pipeline *pipeline, t_data *data);
 void	handle_execution(t_pipeline *pipeline, t_data *data);
-void	setup_child_pipes(t_process *proc, int **pipes);
+int 	setup_child_pipes(t_process *proc, int **pipes);
 int		apply_redirects(t_redirect *redir);
 
-char	*get_pathname(char *cmd_name, t_env *env_list);
-void	cmd_not_found(char *cmd);
+int		get_pathname(char *cmd_name, t_env *env_list, t_process *proc);
+int 	cmd_not_found(char *cmd_pathname);
+int 	perror_return_exec(char *cmd_pathname);
 
 int		save_stdio_fds(t_process *processes);
 int		restore_stdio_fds(t_process *processes);
