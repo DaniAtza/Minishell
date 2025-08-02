@@ -22,7 +22,7 @@ void	free_data(t_data *data);
 
 // Pipeline
 
-int		init_pipeline(t_pipeline *pipeline, t_env *env_list);
+int		init_pipeline(t_pipeline *pipeline, t_data *data);
 void	free_pipeline(t_pipeline *pipeline);
 
 // Exit

@@ -33,11 +33,11 @@ static int	validate_variable_name(char *arg)
 	size_t	i;
 
 	i = 1;
-	if (!ft_isalpha(arg[0]) && arg[0] != '_')
+	if (!is_valid_name_first_char(arg[0]))
 		return (print_export_error(arg), -1);
 	while (arg[i] && arg[i] != '=')
 	{
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+		if (!is_valid_name_char(arg[i]))
 			return (print_export_error(arg), -1);
 		i++;
 	}

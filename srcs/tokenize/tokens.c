@@ -32,29 +32,29 @@ t_token	*create_token(char *line, t_lexer *lexer)
 	return (token);
 }
 
-void	append_token(t_token *new_token, t_token **tokens)
+void	append_token(t_token *new_token, t_token **tokens_addr)
 {
 	t_token	*current;
 
-	if (!*tokens)
-		*tokens = new_token;
+	if (!*tokens_addr)
+		*tokens_addr = new_token;
 	else
 	{
-		current = *tokens;
+		current = *tokens_addr;
 		while (current->next)
 			current = current->next;
 		current->next = new_token;
 	}
 }
 
-void	free_tokens(t_token **tokens)
+void	free_tokens(t_token **tokens_addr)
 {
 	t_token	*current;
 	t_token	*next;
 
-	if (!*tokens)
+	if (!*tokens_addr)
 		return ;
-	current = *tokens;
+	current = *tokens_addr;
 	while (current)
 	{
 		next = current->next;
@@ -62,5 +62,5 @@ void	free_tokens(t_token **tokens)
 		free(current);
 		current = next;
 	}
-	*tokens = NULL;
+	*tokens_addr = NULL;
 }
