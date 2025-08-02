@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 12:39:42 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:08 by dagredan         ###   ########.fr       */
+/*   Created: 2025/07/04 21:32:30 by dagredan          #+#    #+#             */
+/*   Updated: 2025/07/22 20:08:01 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_pipeline(t_pipeline *pipeline)
+int	init_pipeline(t_pipeline *pipeline, t_data *data)
 {
 	pipeline->tokens = tokenize_line(pipeline->line);
 	if (!pipeline->tokens)
@@ -22,6 +22,8 @@ int	init_pipeline(t_pipeline *pipeline)
 	pipeline->processes = parse_tokens(pipeline->tokens);
 	if (!pipeline->processes)
 		return (print_error_return("Error: parse_tokens", -1));
+	if (expand_words(pipeline->processes, data) != 0)
+		return (print_error_return("Error: expand_words", -1));
 	pipeline->process_count = count_processes(pipeline->processes);
 	pipeline->pipes = create_pipes(pipeline->process_count - 1);
 	if (!pipeline->pipes)
