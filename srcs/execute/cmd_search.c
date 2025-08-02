@@ -58,31 +58,35 @@ static char	**get_path_dirs(t_env *env_list)
 	return (dirs);
 }
 
-char	*get_pathname(char *cmd_name, t_env *env_list)
+int	get_pathname(char *cmd_name, t_env *env_list, t_process *proc)
 {
-	char	*pathname;
 	char	**path_dirs;
 	int		i;
 
 	if (!cmd_name || !*cmd_name)
-		return (NULL);
+		return (perror_return("malloc", -1));
 	if (ft_strchr(cmd_name, '/'))
-		return (ft_strdup(cmd_name));
+	{
+		proc->pathname = ft_strdup(cmd_name);
+		return (0);
+	}
 	path_dirs = get_path_dirs(env_list);
 	if (!path_dirs)
-		return (NULL);
+		return (perror_return("malloc", -1));
 	i = 0;
 	while (path_dirs[i])
 	{
-		pathname = ft_pathjoin(path_dirs[i], cmd_name);
-		if (!pathname)
+		proc->pathname = ft_pathjoin(path_dirs[i], cmd_name);
+		if (!proc->pathname)
 			break ;
-		if (access(pathname, F_OK) == 0)
-			break ;
-		free(pathname);
-		pathname = NULL;
+		if (access(proc->pathname, F_OK) == 0)
+		{
+			free_path_dirs(path_dirs);
+			return (0);
+		}
+		free(proc->pathname);
 		i++;
 	}
 	free_path_dirs(path_dirs);
-	return (pathname);
+	return (127);
 }
