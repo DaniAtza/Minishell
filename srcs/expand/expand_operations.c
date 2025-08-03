@@ -46,6 +46,7 @@ void	remove_quotes(t_word *word) // TODO: memory leak de segments
 {
 	t_segm	*previous;
 	t_segm	*current;
+	t_segm	*to_free;
 
 	previous = NULL;
 	current = word->segments;
@@ -54,16 +55,21 @@ void	remove_quotes(t_word *word) // TODO: memory leak de segments
 		if (current->type == QUOTE
 			&& !current->single_quoted && !current->double_quoted)
 		{
+			to_free = current;
 			if (previous)
 			{
 				previous->next = current->next;
 				current = current->next;
+				free(to_free->string);
+				free(to_free);
 				continue ;
 			}
 			else
 			{
 				word->segments = current->next;
 				current = current->next;
+				free(to_free->string);
+				free(to_free);
 				continue ;
 			}
 		}
