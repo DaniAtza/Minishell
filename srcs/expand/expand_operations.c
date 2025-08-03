@@ -15,7 +15,6 @@
 void	expand_parameters(t_word *word, t_data *data)
 {
 	t_segm	*current;
-	char	*name;
 	char	*value;
 
 	current = word->segments;
@@ -23,24 +22,24 @@ void	expand_parameters(t_word *word, t_data *data)
 	{
 		if (current->type == PARAMETER && !current->single_quoted)
 		{
-			name = ft_substr(current->start, 1, current->len - 1); // TODO: err
-			if (name[0] == '?')
-				value = ft_itoa(data->last_exit_status); // TODO: error and free
+			if (current->string[1] == '?')
+				current->string = ft_itoa(data->last_exit_status);
 			else
-				value = search_env(name, data->env_list);
-			free(name);
-			if (value)
 			{
-				current->start = value;
-				current->len = ft_strlen(value);
-				current->type = TEXT;
+				value = search_env(current->string + 1, data->env_list);
+				if (!value) // This means that the variable is not found
+					current->string = ft_strdup("");
+				else
+					current->string = ft_strdup(value);
 			}
+			if (!current->string)
+				return ; // Handle malloc error
 		}
 		current = current->next;
 	}
 }
 
-void	remove_quotes(t_word *word)
+void	remove_quotes(t_word *word) // TODO: memory leak de segments
 {
 	t_segm	*previous;
 	t_segm	*current;

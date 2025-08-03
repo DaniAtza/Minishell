@@ -28,7 +28,7 @@ static int	write_heredoc(t_redirect *redir, t_data *data)
 		if (ft_strcmp(line, redir->delimiter) == 0)
 			break ;
 		if (redir->expand_heredoc)
-			line = expand_heredoc_line(line, data);
+			line = expand_heredoc_line(line, data); // TODO: malloc failure
 		ft_putendl_fd(line, fd);
 		free(line);
 	}

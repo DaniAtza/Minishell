@@ -75,13 +75,10 @@ void	create_word_segments(t_word *word)
 			new_segment = create_quote_segment(ptr);
 		else
 			new_segment = create_text_segment(ptr);
-		if (!new_segment) // Handle error
-		{
-			printf("Error creating segment\n");
+		if (!new_segment) // Handle error malloc of create segment
 			return ;
-		}
 		append_segment(new_segment, word);
-		ptr += new_segment->len;
+		ptr += ft_strlen(new_segment->string);
 	}
 }
 
@@ -97,7 +94,7 @@ void	identify_quoted_segments(t_word *word)
 	{
 		if (current->type == QUOTE)
 		{
-			found_quote = current->start[0];
+			found_quote = current->string[0];
 			if (current_quote == '\0')
 			{
 				current_quote = found_quote;

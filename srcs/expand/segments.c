@@ -18,7 +18,7 @@ t_word	*create_word(char *word)
 
 	new_word = ft_calloc(1, sizeof(t_word));
 	if (!new_word)
-		return (NULL);
+		return (NULL); // Handle memory allocation failure
 	new_word->string = ft_strdup(word);
 	if (!new_word->string)
 	{
@@ -41,9 +41,13 @@ t_segm	*create_segment(char *start, size_t len, t_segm_type type)
 
 	new_segment = ft_calloc(1, sizeof(t_segm));
 	if (!new_segment)
-		return (NULL);
-	new_segment->start = start;
-	new_segment->len = len;
+		return (NULL); // Handle memory allocation failure
+	new_segment->string = ft_substr(start, 0, len);
+	if (!new_segment->string)
+	{
+		free(new_segment);
+		return (NULL); // Handle memory allocation failure
+	}
 	new_segment->type = type;
 	return (new_segment);
 }

@@ -29,8 +29,7 @@ typedef enum e_segm_type
 typedef struct s_segm
 {
 	struct s_segm	*next;			// Next segment, or NULL
-	char			*start;			// Pointer to start of the segment
-	size_t			len;			// Length of the segment excluding null char
+	char			*string;		// NULL terminated content of the segment
 	int				double_quoted;	// Bool flag if the segment is double quoted
 	int				single_quoted;	// Bool flag if the segment is single quoted
 	t_segm_type		type;			// Type of the segment

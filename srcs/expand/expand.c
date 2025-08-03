@@ -26,8 +26,8 @@ char	*expand_heredoc_line(char *line, t_data *data)
 		current->double_quoted = 1;
 		current = current->next;
 	}
-	expand_parameters(word, data);
-	concat_word_segments(word);
+	expand_parameters(word, data); // can fail
+	concat_word_segments(word); // can fail
 	return (word->string);
 }
 
@@ -46,7 +46,7 @@ static void	expand_heredoc_delimiters(t_redirect *redirects)
 				return ; // Handle malloc error
 			identify_quoted_segments(word);
 			remove_quotes(word);
-			concat_word_segments(word);
+			concat_word_segments(word); // can fail
 			current->delimiter = word->string; // TODO: memleak;
 			current->expand_heredoc = 0;
 		}
@@ -73,11 +73,11 @@ static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 			identify_quoted_segments(word);
 			if (contains_parameters(word->string))
 			{
-				expand_parameters(word, data);
+				expand_parameters(word, data); // Can fail
 				//split_word()
 			}
 			remove_quotes(word);
-			concat_word_segments(word);
+			concat_word_segments(word); // can fail
 			current->filename = word->string; // TODO: memleak;
 		}
 		current = current->next;
@@ -100,11 +100,11 @@ static void	expand_argv_words(char **argv, t_data *data)
 			identify_quoted_segments(word);
 			if (contains_parameters(word->string))
 			{
-				expand_parameters(word, data);
+				expand_parameters(word, data); // can fail
 				//split_word()
 			}
 			remove_quotes(word);
-			concat_word_segments(word);
+			concat_word_segments(word); // can fail
 			argv[i] = word->string; // TODO: memleak;
 		}
 		i++;
@@ -118,9 +118,9 @@ int	expand_words(t_process *processes, t_data *data)
 	current = processes;
 	while (current)
 	{
-		expand_argv_words(current->argv, data);
-		expand_redirect_words(current->redirects, data);
-		expand_heredoc_delimiters(current->redirects);
+		expand_argv_words(current->argv, data); // can fail
+		expand_redirect_words(current->redirects, data); // can fail
+		expand_heredoc_delimiters(current->redirects); // can fail
 		current = current->next;
 	}
 	return (0);
