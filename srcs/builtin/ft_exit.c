@@ -90,11 +90,6 @@ void	ft_exit(char **argv, t_pipeline *pipeline, t_data *data)
 		data->last_exit_status = convert_exit_num(argv[1]);
 	}
 	exit_status = data->last_exit_status;
-	//if(pipeline->process_count == 1)
-	//{
-	//	close(pipeline->processes->pipe_read_fd);
-	//	close(pipeline->processes->pipe_write_fd);
-	//}
 	free_pipeline(pipeline);
 	free_data(data);
 	exit(exit_status);
