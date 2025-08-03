@@ -56,12 +56,13 @@ void	ft_echo(char **argv, t_data *data)
 		flag = 1;
 	while (argv[i])
 	{
-		printf("%s", argv[i]); //TODO -nnn -m "string" "string" > a
+		ft_putstr_fd(argv[i], 1);
+		//printf("%s", argv[i]); //TODO -nnn -m "string" "string" > a
 		if (argv[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (flag == 0)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	data->last_exit_status = 0;
 }
