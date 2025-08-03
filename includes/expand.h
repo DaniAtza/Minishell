@@ -29,8 +29,7 @@ typedef enum e_segm_type
 typedef struct s_segm
 {
 	struct s_segm	*next;			// Next segment, or NULL
-	char			*start;			// Pointer to start of the segment
-	size_t			len;			// Length of the segment excluding null char
+	char			*string;		// NULL terminated content of the segment
 	int				double_quoted;	// Bool flag if the segment is double quoted
 	int				single_quoted;	// Bool flag if the segment is single quoted
 	t_segm_type		type;			// Type of the segment
@@ -40,40 +39,29 @@ typedef struct s_segm
 
 typedef struct s_word
 {
-	struct s_word	*next;		// Next word element, or NULL
 	char			*string;	// String of the word being expanded
 	t_segm			*segments;	// Linked list of segments of the word
 }	t_word;
 
 // Segments
 
-t_word	*create_word(char *word);
+int		init_word(t_word *word, char *string);
+void	create_word_segments(t_word *word);
 t_segm	*create_segment(char *start, size_t len, t_segm_type type);
 void	append_segment(t_segm *new_segment, t_word *word);
+void	free_segments(t_word *word);
+void	free_word(t_word *word);
 
-// Segments identify
-
-void	identify_segments(t_word *word);
 void	identify_quoted_segments(t_word *word);
-
-// Segments concat
-
-void	concat_segments(t_word *word);
-
-// Segments utils
-void	print_segment(t_segm *segment); // DEBUGGING
-void	print_word_segments(t_word *word); // DEBUGGING
 
 // Expand
 
 int		expand_words(t_process *processes, t_data *data);
-
-// Expand operations
-
-void	expand_parameters(t_word *word, t_data *data);
+int		expand_parameters(t_word *word, t_data *data);
 void	remove_quotes(t_word *word);
+int		concat_word_segments(t_word *word);
 
-// Expand utils
+char	*expand_heredoc_line(char *line, t_data *data);
 
 int		is_valid_name_first_char(char c);
 int		is_valid_name_char(char c);

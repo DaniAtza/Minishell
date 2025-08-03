@@ -42,8 +42,16 @@ char	**append_arg(char *new_arg, char **argv)
 
 void	free_argv(char ***argv_addr)
 {
+	size_t	i;
+
 	if (!*argv_addr)
 		return ;
+	i = 0;
+	while ((*argv_addr)[i])
+	{
+		free((*argv_addr)[i]);
+		i++;
+	}
 	free(*argv_addr);
 	*argv_addr = NULL;
 }

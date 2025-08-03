@@ -21,31 +21,29 @@ size_t	get_total_segments_len(t_word *word)
 	current = word->segments;
 	while (current)
 	{
-		total_len += current->len;
+		total_len += ft_strlen(current->string);
 		current = current->next;
 	}
 	return (total_len);
 }
 
-void	concat_segments(t_word *word)
+int	concat_word_segments(t_word *word)
 {
 	t_segm	*current;
 	size_t	total_len;
 	char	*new_string;
-	char	*new_string_ptr;
 
 	total_len = get_total_segments_len(word);
 	new_string = ft_calloc(total_len + 1, sizeof(char));
-	if (!new_string) // TODO: handle error
-		return ;
-	new_string_ptr = new_string;
+	if (!new_string)
+		return (perror_return("concat_word_segments: malloc", -1));
 	current = word->segments;
 	while (current)
 	{
-		ft_strlcpy(new_string_ptr, current->start, current->len + 1);
-		new_string_ptr += current->len;
+		ft_strlcat(new_string, current->string, total_len + 1);
 		current = current->next;
 	}
 	free(word->string);
 	word->string = new_string;
+	return (0);
 }
