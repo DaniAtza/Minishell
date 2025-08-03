@@ -61,7 +61,7 @@ static t_segm	*create_parameter_segment(char *ptr)
 	return (new_segment);
 }
 
-void	identify_segments(t_word *word)
+void	create_word_segments(t_word *word)
 {
 	t_segm	*new_segment;
 	char	*ptr;
@@ -75,13 +75,13 @@ void	identify_segments(t_word *word)
 			new_segment = create_quote_segment(ptr);
 		else
 			new_segment = create_text_segment(ptr);
-		if (!new_segment) // Handle error
+		if (!new_segment)
 		{
-			printf("Error creating segment\n");
+			free_segments(word);
 			return ;
 		}
 		append_segment(new_segment, word);
-		ptr += new_segment->len;
+		ptr += ft_strlen(new_segment->string);
 	}
 }
 
@@ -97,7 +97,7 @@ void	identify_quoted_segments(t_word *word)
 	{
 		if (current->type == QUOTE)
 		{
-			found_quote = current->start[0];
+			found_quote = current->string[0];
 			if (current_quote == '\0')
 			{
 				current_quote = found_quote;

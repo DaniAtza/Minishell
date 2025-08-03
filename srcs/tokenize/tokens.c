@@ -58,7 +58,8 @@ void	free_tokens(t_token **tokens_addr)
 	while (current)
 	{
 		next = current->next;
-		free(current->value);
+		if (current->type != WORD)
+			free(current->value);
 		free(current);
 		current = next;
 	}

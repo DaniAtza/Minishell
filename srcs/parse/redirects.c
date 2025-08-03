@@ -23,6 +23,7 @@ static void	init_redirect_simple(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDIN_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 	else if (op->type == GREAT)
 	{
@@ -33,6 +34,7 @@ static void	init_redirect_simple(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDOUT_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 }
 
@@ -47,6 +49,7 @@ static void	init_redirect_double(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDIN_FILENO;
 		redir->is_heredoc = 1;
 		redir->delimiter = word->value;
+		redir->expand_heredoc = 0;
 	}
 	else if (op->type == DGREAT)
 	{
@@ -57,6 +60,7 @@ static void	init_redirect_double(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDOUT_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 }
 
@@ -104,12 +108,15 @@ void	free_redirects(t_redirect **redirects)
 	while (current)
 	{
 		next = current->next;
-		if (current->is_heredoc && current->filename)
+		if (current->is_heredoc)
 		{
-			if (access(current->filename, F_OK) == 0)
+			if (current->filename && access(current->filename, F_OK) == 0)
 				unlink(current->filename);
-			free(current->filename);
 		}
+		if (current->delimiter)
+			free(current->delimiter);
+		if (current->filename)
+			free(current->filename);
 		free(current);
 		current = next;
 	}
