@@ -23,7 +23,14 @@ t_word	*create_word(char *word)
 	if (!new_word->string)
 	{
 		free(new_word);
-		return (NULL);
+		return (NULL); // Handle memory allocation failure
+	}
+	create_word_segments(new_word);
+	if (!new_word->segments)
+	{
+		free(new_word->string);
+		free(new_word);
+		return (NULL); // Handle memory allocation failure
 	}
 	return (new_word);
 }

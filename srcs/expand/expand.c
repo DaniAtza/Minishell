@@ -18,7 +18,8 @@ char	*expand_heredoc_line(char *line, t_data *data)
 	t_segm	*current;
 
 	word = create_word(line);
-	identify_segments(word);
+	if (!word)
+		return (NULL); // Handle malloc error
 	current = word->segments;
 	while (current)
 	{
@@ -41,7 +42,8 @@ static void	expand_heredoc_delimiters(t_redirect *redirects)
 		if (current->is_heredoc && contains_quotes(current->delimiter))
 		{
 			word = create_word(current->delimiter);
-			identify_segments(word);
+			if (!word)
+				return ; // Handle malloc error
 			identify_quoted_segments(word);
 			remove_quotes(word);
 			concat_word_segments(word);
@@ -66,7 +68,8 @@ static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 			|| contains_quotes(current->filename)))
 		{
 			word = create_word(current->filename);
-			identify_segments(word);
+			if (!word)
+				return ; // Handle malloc error
 			identify_quoted_segments(word);
 			if (contains_parameters(word->string))
 			{
@@ -92,7 +95,8 @@ static void	expand_argv_words(char **argv, t_data *data)
 		if (contains_parameters(argv[i]) || contains_quotes(argv[i]))
 		{
 			word = create_word(argv[i]);
-			identify_segments(word);
+			if (!word)
+				return ; // Handle malloc error
 			identify_quoted_segments(word);
 			if (contains_parameters(word->string))
 			{

@@ -61,7 +61,7 @@ static t_segm	*create_parameter_segment(char *ptr)
 	return (new_segment);
 }
 
-void	identify_segments(t_word *word)
+void	create_word_segments(t_word *word)
 {
 	t_segm	*new_segment;
 	char	*ptr;

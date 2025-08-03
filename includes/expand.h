@@ -52,7 +52,7 @@ t_segm	*create_segment(char *start, size_t len, t_segm_type type);
 void	append_segment(t_segm *new_segment, t_word *word);
 void	concat_word_segments(t_word *word);
 
-void	identify_segments(t_word *word);
+void	create_word_segments(t_word *word);
 void	identify_quoted_segments(t_word *word);
 
 // Expand
