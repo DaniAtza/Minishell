@@ -39,14 +39,13 @@ typedef struct s_segm
 
 typedef struct s_word
 {
-	struct s_word	*next;		// Next word element, or NULL
 	char			*string;	// String of the word being expanded
 	t_segm			*segments;	// Linked list of segments of the word
 }	t_word;
 
 // Segments
 
-t_word	*create_word(char *word);
+int		init_word(t_word *word, char *string);
 t_segm	*create_segment(char *start, size_t len, t_segm_type type);
 void	append_segment(t_segm *new_segment, t_word *word);
 void	concat_word_segments(t_word *word);

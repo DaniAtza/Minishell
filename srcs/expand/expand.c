@@ -14,26 +14,25 @@
 
 char	*expand_heredoc_line(char *line, t_data *data)
 {
-	t_word	*word;
+	t_word	word;
 	t_segm	*current;
 
-	word = create_word(line);
-	if (!word)
+	if (init_word(&word, line) != 00)
 		return (NULL); // Handle malloc error
-	current = word->segments;
+	current = word.segments;
 	while (current)
 	{
 		current->double_quoted = 1;
 		current = current->next;
 	}
-	expand_parameters(word, data); // can fail
-	concat_word_segments(word); // can fail
-	return (word->string);
+	expand_parameters(&word, data); // can fail
+	concat_word_segments(&word); // can fail
+	return (word.string);
 }
 
 static void	expand_heredoc_delimiters(t_redirect *redirects)
 {
-	t_word		*word;
+	t_word		word;
 	t_redirect	*current;
 
 	current = redirects;
@@ -41,14 +40,14 @@ static void	expand_heredoc_delimiters(t_redirect *redirects)
 	{
 		if (current->is_heredoc && contains_quotes(current->delimiter))
 		{
-			word = create_word(current->delimiter);
-			if (!word)
+			if (init_word(&word, current->delimiter) != 0)
 				return ; // Handle malloc error
-			identify_quoted_segments(word);
-			remove_quotes(word);
-			concat_word_segments(word); // can fail
-			current->delimiter = word->string; // TODO: memleak;
+			identify_quoted_segments(&word);
+			remove_quotes(&word);
+			concat_word_segments(&word); // can fail
+			current->delimiter = word.string; // TODO: memleak;
 			current->expand_heredoc = 0;
+			//free_word(&word); // TODO: free word segments and string
 		}
 		else if (current->is_heredoc && !contains_quotes(current->delimiter))
 			current->expand_heredoc = 1;
@@ -58,7 +57,7 @@ static void	expand_heredoc_delimiters(t_redirect *redirects)
 
 static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 {
-	t_word		*word;
+	t_word		word;
 	t_redirect	*current;
 
 	current = redirects;
@@ -67,18 +66,17 @@ static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 		if (!current->is_heredoc && (contains_parameters(current->filename)
 			|| contains_quotes(current->filename)))
 		{
-			word = create_word(current->filename);
-			if (!word)
+			if (init_word(&word, current->filename) != 0)
 				return ; // Handle malloc error
-			identify_quoted_segments(word);
-			if (contains_parameters(word->string))
+			identify_quoted_segments(&word);
+			if (contains_parameters(word.string))
 			{
-				expand_parameters(word, data); // Can fail
-				//split_word()
+				expand_parameters(&word, data); // Can fail
 			}
-			remove_quotes(word);
-			concat_word_segments(word); // can fail
-			current->filename = word->string; // TODO: memleak;
+			remove_quotes(&word);
+			concat_word_segments(&word); // can fail
+			current->filename = word.string; // TODO: memleak;
+			//free_word(&word); // TODO: free word segments and string
 		}
 		current = current->next;
 	}
@@ -86,7 +84,7 @@ static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 
 static void	expand_argv_words(char **argv, t_data *data)
 {
-	t_word	*word;
+	t_word	word;
 	size_t	i;
 
 	i = 0;
@@ -94,18 +92,17 @@ static void	expand_argv_words(char **argv, t_data *data)
 	{
 		if (contains_parameters(argv[i]) || contains_quotes(argv[i]))
 		{
-			word = create_word(argv[i]);
-			if (!word)
+			if (init_word(&word, argv[i]) != 0)
 				return ; // Handle malloc error
-			identify_quoted_segments(word);
-			if (contains_parameters(word->string))
+			identify_quoted_segments(&word);
+			if (contains_parameters(word.string))
 			{
-				expand_parameters(word, data); // can fail
-				//split_word()
+				expand_parameters(&word, data); // can fail
 			}
-			remove_quotes(word);
-			concat_word_segments(word); // can fail
-			argv[i] = word->string; // TODO: memleak;
+			remove_quotes(&word);
+			concat_word_segments(&word); // can fail
+			argv[i] = word.string; // TODO: memleak;
+			//free_word(&word); // TODO: free word segments and string
 		}
 		i++;
 	}

@@ -12,27 +12,19 @@
 
 #include "minishell.h"
 
-t_word	*create_word(char *word)
+int	init_word(t_word *word, char *string)
 {
-	t_word	*new_word;
-
-	new_word = ft_calloc(1, sizeof(t_word));
-	if (!new_word)
-		return (NULL); // Handle memory allocation failure
-	new_word->string = ft_strdup(word);
-	if (!new_word->string)
+	ft_memset(word, 0, sizeof(t_word));
+	word->string = ft_strdup(string);
+	if (!word->string)
+		return (-1); // Handle memory allocation failure
+	create_word_segments(word);
+	if (!word->segments)
 	{
-		free(new_word);
-		return (NULL); // Handle memory allocation failure
+		free(word->string);
+		return (-1); // Handle memory allocation failure
 	}
-	create_word_segments(new_word);
-	if (!new_word->segments)
-	{
-		free(new_word->string);
-		free(new_word);
-		return (NULL); // Handle memory allocation failure
-	}
-	return (new_word);
+	return (0);
 }
 
 t_segm	*create_segment(char *start, size_t len, t_segm_type type)
