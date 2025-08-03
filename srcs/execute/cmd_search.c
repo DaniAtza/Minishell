@@ -20,7 +20,7 @@ static char	*ft_pathjoin(char *dir, char *cmd_name)
 	if (!dir || !cmd_name)
 		return (NULL);
 	size = ft_strlen(dir) + ft_strlen("/") + ft_strlen(cmd_name) + 1;
-	full_path = (char *) ft_calloc(size, sizeof(char));
+	full_path = (char *)ft_calloc(size, sizeof(char));
 	if (!full_path)
 		return (NULL);
 	ft_strlcpy(full_path, dir, size);

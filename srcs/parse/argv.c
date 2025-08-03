@@ -30,7 +30,7 @@ char	**append_arg(char *new_arg, char **argv)
 	size_t	len;
 
 	len = ft_array_len(argv);
-	reallocated_argv = ft_calloc(len + 2, sizeof(char *));
+	reallocated_argv = (char **)ft_calloc(len + 2, sizeof(char *));
 	if (!reallocated_argv)
 	{
 		perror("append_arg: malloc");
