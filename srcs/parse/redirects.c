@@ -70,7 +70,10 @@ t_redirect	*create_redirect(t_token *redirection_operator, t_token *word)
 
 	new_redirect = (t_redirect *)ft_calloc(1, sizeof(t_redirect));
 	if (!new_redirect)
+	{
+		perror("create_redirect: malloc");
 		return (NULL);
+	}
 	if (redirection_operator->type == LESS)
 		init_redirect_simple(new_redirect, redirection_operator, word);
 	else if (redirection_operator->type == GREAT)
