@@ -17,8 +17,8 @@ int	init_pipeline(t_pipeline *pipeline, t_data *data)
 	pipeline->tokens = tokenize_line(pipeline->line);
 	if (!pipeline->tokens)
 		return (-1);
-	if (validate_syntax(pipeline) != 0) // here there are more prints, remove
-		return (print_error_return("Error: Syntax error", -1));
+	if (validate_syntax(pipeline) != 0)
+		return (-1);
 	pipeline->processes = parse_tokens(pipeline->tokens);
 	if (!pipeline->processes)
 		return (print_error_return("Error: parse_tokens", -1));
