@@ -53,6 +53,10 @@ void	free_processes(t_process **processes)
 		if (current->argv)
 			free_argv(&current->argv);
 		free(current);
+		if(current->pipe_read_fd > 0)
+			close(current->pipe_read_fd);
+		if(current->pipe_read_fd > 0)
+			close(current->pipe_write_fd);
 		current = next;
 	}
 	*processes = NULL;
