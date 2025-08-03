@@ -41,13 +41,14 @@ typedef struct s_token
 
 typedef struct s_redirect
 {
-	struct s_redirect	*next;		// Next element, or NULL
-	char				*filename;	// 'pathname' value for open()
-	int					flags;		// 'flags' value for open()
-	mode_t				mode;		// 'mode' value for open()
-	int					target_fd;	// 'newfd' value for dup2()
-	int					is_heredoc;	// Boolean flag if '<<' found
-	char				*delimiter;	// The word after '<<', or NULL
+	struct s_redirect	*next;			// Next element, or NULL
+	char				*filename;		// 'pathname' value for open()
+	int					flags;			// 'flags' value for open()
+	mode_t				mode;			// 'mode' value for open()
+	int					target_fd;		// 'newfd' value for dup2()
+	int					is_heredoc;		// Boolean flag if '<<' found
+	char				*delimiter;		// The word after '<<', or NULL
+	int					expand_heredoc;	// Flag if heredoc should be expanded
 }	t_redirect;
 
 // Process

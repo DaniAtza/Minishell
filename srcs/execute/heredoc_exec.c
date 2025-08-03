@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	write_heredoc(t_redirect *redir)
+static int	write_heredoc(t_redirect *redir, t_data *data)
 {
 	int		fd;
 	char	*line;
@@ -27,6 +27,8 @@ static int	write_heredoc(t_redirect *redir)
 			break ;
 		if (ft_strcmp(line, redir->delimiter) == 0)
 			break ;
+		if (redir->expand_heredoc)
+			line = expand_heredoc_line(line, data);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -36,7 +38,7 @@ static int	write_heredoc(t_redirect *redir)
 	return (0);
 }
 
-static void	write_all_heredocs(t_process *processes)
+static void	write_all_heredocs(t_process *processes, t_data *data)
 {
 	t_process	*ptr;
 	t_redirect	*redir;
@@ -48,14 +50,14 @@ static void	write_all_heredocs(t_process *processes)
 		while (redir)
 		{
 			if (redir->is_heredoc)
-				write_heredoc(redir);
+				write_heredoc(redir, data);
 			redir = redir->next;
 		}
 		ptr = ptr->next;
 	}
 }
 
-static int	execute_heredoc_child(t_process *processes)
+static int	execute_heredoc_child(t_process *processes, t_data *data)
 {
 	pid_t	pid;
 	int		status;
@@ -66,7 +68,7 @@ static int	execute_heredoc_child(t_process *processes)
 	if (pid == 0)
 	{
 		setup_heredoc_signals();
-		write_all_heredocs(processes);
+		write_all_heredocs(processes, data);
 		exit(0);
 	}
 	else
@@ -80,7 +82,7 @@ static int	execute_heredoc_child(t_process *processes)
 	return (0);
 }
 
-static int	is_heredocs(t_process *processes)
+static int	some_heredoc(t_process *processes)
 {
 	t_process	*ptr;
 	t_redirect	*redir;
@@ -104,7 +106,7 @@ int	handle_heredocs(t_data *data, t_process *processes)
 {
 	t_signal_backup	signal_backup;
 
-	if (!is_heredocs(processes))
+	if (!some_heredoc(processes))
 		return (0);
 	signal_backup = set_execution_signals();
 	if (create_all_tmp_files(processes) == -1)
@@ -112,7 +114,7 @@ int	handle_heredocs(t_data *data, t_process *processes)
 		restore_signals(signal_backup);
 		return (-1);
 	}
-	data->last_exit_status = execute_heredoc_child(processes);
+	data->last_exit_status = execute_heredoc_child(processes, data);
 	restore_signals(signal_backup);
 	return (data->last_exit_status);
 }

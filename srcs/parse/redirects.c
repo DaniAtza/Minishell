@@ -23,6 +23,7 @@ static void	init_redirect_simple(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDIN_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 	else if (op->type == GREAT)
 	{
@@ -33,6 +34,7 @@ static void	init_redirect_simple(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDOUT_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 }
 
@@ -47,6 +49,7 @@ static void	init_redirect_double(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDIN_FILENO;
 		redir->is_heredoc = 1;
 		redir->delimiter = word->value;
+		redir->expand_heredoc = 0;
 	}
 	else if (op->type == DGREAT)
 	{
@@ -57,6 +60,7 @@ static void	init_redirect_double(t_redirect *redir, t_token *op, t_token *word)
 		redir->target_fd = STDOUT_FILENO;
 		redir->is_heredoc = 0;
 		redir->delimiter = NULL;
+		redir->expand_heredoc = 0;
 	}
 }
 

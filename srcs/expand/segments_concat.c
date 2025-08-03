@@ -27,7 +27,7 @@ size_t	get_total_segments_len(t_word *word)
 	return (total_len);
 }
 
-void	concat_segments(t_word *word)
+void	concat_word_segments(t_word *word)
 {
 	t_segm	*current;
 	size_t	total_len;

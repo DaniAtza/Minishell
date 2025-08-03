@@ -50,30 +50,17 @@ typedef struct s_word
 t_word	*create_word(char *word);
 t_segm	*create_segment(char *start, size_t len, t_segm_type type);
 void	append_segment(t_segm *new_segment, t_word *word);
-
-// Segments identify
+void	concat_word_segments(t_word *word);
 
 void	identify_segments(t_word *word);
 void	identify_quoted_segments(t_word *word);
 
-// Segments concat
-
-void	concat_segments(t_word *word);
-
-// Segments utils
-void	print_segment(t_segm *segment); // DEBUGGING
-void	print_word_segments(t_word *word); // DEBUGGING
-
 // Expand
 
 int		expand_words(t_process *processes, t_data *data);
-
-// Expand operations
-
+char	*expand_heredoc_line(char *line, t_data *data);
 void	expand_parameters(t_word *word, t_data *data);
 void	remove_quotes(t_word *word);
-
-// Expand utils
 
 int		is_valid_name_first_char(char c);
 int		is_valid_name_char(char c);
