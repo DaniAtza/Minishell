@@ -27,7 +27,7 @@ int	init_pipeline(t_pipeline *pipeline, t_data *data)
 	pipeline->process_count = count_processes(pipeline->processes);
 	pipeline->pipes = create_pipes(pipeline->process_count - 1);
 	if (!pipeline->pipes)
-		return (print_error_return("Error: create_pipes", -1));
+		return (-1);
 	assign_pipes_to_processes(pipeline->pipes, pipeline);
 	return (0);
 }

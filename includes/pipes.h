@@ -18,7 +18,6 @@
 int		**create_pipes(size_t count);
 void	close_pipes(int **pipes);
 void	free_pipes(int ***pipes_addr);
-void	destroy_pipes(int ***pipes_addr);
 void	assign_pipes_to_processes(int **pipes, t_pipeline *pipeline);
 
 #endif
