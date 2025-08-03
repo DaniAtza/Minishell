@@ -108,12 +108,15 @@ void	free_redirects(t_redirect **redirects)
 	while (current)
 	{
 		next = current->next;
-		if (current->is_heredoc && current->filename)
+		if (current->is_heredoc)
 		{
-			if (access(current->filename, F_OK) == 0)
+			if (current->filename && access(current->filename, F_OK) == 0)
 				unlink(current->filename);
-			free(current->filename);
 		}
+		if (current->delimiter)
+			free(current->delimiter);
+		if (current->filename)
+			free(current->filename);
 		free(current);
 		current = next;
 	}

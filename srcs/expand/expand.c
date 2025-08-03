@@ -59,7 +59,7 @@ static int	expand_heredoc_delimiters(t_redirect *redirects)
 				free_word(&word);
 				return (-1);
 			}
-			// Free the old delimiter and assign the new one
+			free(current->delimiter);
 			current->delimiter = ft_strdup(word.string);
 			if (!current->delimiter)
 			{
@@ -104,7 +104,7 @@ static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 				free_word(&word);
 				return (-1);
 			}
-			// Free the old filename and assign the new one
+			free(current->filename);
 			current->filename = ft_strdup(word.string);
 			if (current->filename == NULL)
 			{
@@ -145,7 +145,7 @@ static int	expand_argv_words(char **argv, t_data *data)
 				free_word(&word);
 				return (-1);
 			}
-			// Free the old argv[i] and assign the new one
+			free(argv[i]);
 			argv[i] = ft_strdup(word.string);
 			if (argv[i] == NULL)
 			{
