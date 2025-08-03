@@ -12,31 +12,34 @@
 
 #include "minishell.h"
 
-void	expand_parameters(t_word *word, t_data *data)
+int	expand_parameters(t_word *word, t_data *data)
 {
 	t_segm	*current;
-	char	*value;
+	char	*name;
 
 	current = word->segments;
 	while (current)
 	{
 		if (current->type == PARAMETER && !current->single_quoted)
 		{
-			if (current->string[1] == '?')
+			name = current->string;
+			if (name[1] == '?')
 				current->string = ft_itoa(data->last_exit_status);
 			else
 			{
-				value = search_env(current->string + 1, data->env_list);
-				if (!value) // This means that the variable is not found
+				current->string = search_env(name + 1, data->env_list);
+				if (!current->string)
 					current->string = ft_strdup("");
 				else
-					current->string = ft_strdup(value);
+					current->string = ft_strdup(current->string);
 			}
+			free(name);
 			if (!current->string)
-				return ; // Handle malloc error
+				return (perror_return("expand_parameters: malloc", -1));
 		}
 		current = current->next;
 	}
+	return (0);
 }
 
 void	remove_quotes(t_word *word) // TODO: memory leak de segments

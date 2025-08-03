@@ -75,8 +75,11 @@ void	create_word_segments(t_word *word)
 			new_segment = create_quote_segment(ptr);
 		else
 			new_segment = create_text_segment(ptr);
-		if (!new_segment) // Handle error malloc of create segment
+		if (!new_segment)
+		{
+			free_segments(word);
 			return ;
+		}
 		append_segment(new_segment, word);
 		ptr += ft_strlen(new_segment->string);
 	}

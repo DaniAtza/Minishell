@@ -35,7 +35,13 @@ static int	add_new_redirect(t_parser *parser)
 static int	add_new_arg(t_parser *parser)
 {
 	char	**reallocated_argv;
+	//char	*new_arg;
 
+	/*
+	new_arg = ft_strdup(parser->token->value);
+	if (!new_arg)
+		return (0);
+	*/
 	reallocated_argv = append_arg(parser->token->value, parser->process->argv);
 	if (!reallocated_argv)
 		return (0);

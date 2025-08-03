@@ -17,20 +17,30 @@ char	*expand_heredoc_line(char *line, t_data *data)
 	t_word	word;
 	t_segm	*current;
 
-	if (init_word(&word, line) != 00)
-		return (NULL); // Handle malloc error
+	if (init_word(&word, line) != 0)
+		return (NULL);
+	free(line);
 	current = word.segments;
 	while (current)
 	{
 		current->double_quoted = 1;
 		current = current->next;
 	}
-	expand_parameters(&word, data); // can fail
-	concat_word_segments(&word); // can fail
+	if (expand_parameters(&word, data) != 0)
+	{
+		free_word(&word);
+		return (NULL);
+	}
+	if (concat_word_segments(&word) != 0)
+	{
+		free_word(&word);
+		return (NULL);
+	}
+	free_segments(&word);
 	return (word.string);
 }
 
-static void	expand_heredoc_delimiters(t_redirect *redirects)
+static int	expand_heredoc_delimiters(t_redirect *redirects)
 {
 	t_word		word;
 	t_redirect	*current;
@@ -41,21 +51,32 @@ static void	expand_heredoc_delimiters(t_redirect *redirects)
 		if (current->is_heredoc && contains_quotes(current->delimiter))
 		{
 			if (init_word(&word, current->delimiter) != 0)
-				return ; // Handle malloc error
+				return (-1); 
 			identify_quoted_segments(&word);
 			remove_quotes(&word);
-			concat_word_segments(&word); // can fail
-			current->delimiter = word.string; // TODO: memleak;
+			if (concat_word_segments(&word) != 0)
+			{
+				free_word(&word);
+				return (-1);
+			}
+			// Free the old delimiter and assign the new one
+			current->delimiter = ft_strdup(word.string);
+			if (!current->delimiter)
+			{
+				free_word(&word);
+				return (perror_return("expand_heredoc_delimiters: strdup", -1));
+			}
 			current->expand_heredoc = 0;
-			//free_word(&word); // TODO: free word segments and string
+			free_word(&word);
 		}
 		else if (current->is_heredoc && !contains_quotes(current->delimiter))
 			current->expand_heredoc = 1;
 		current = current->next;
 	}
+	return (0);
 }
 
-static void	expand_redirect_words(t_redirect *redirects, t_data *data)
+static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 {
 	t_word		word;
 	t_redirect	*current;
@@ -67,22 +88,37 @@ static void	expand_redirect_words(t_redirect *redirects, t_data *data)
 			|| contains_quotes(current->filename)))
 		{
 			if (init_word(&word, current->filename) != 0)
-				return ; // Handle malloc error
+				return (-1);
 			identify_quoted_segments(&word);
 			if (contains_parameters(word.string))
 			{
-				expand_parameters(&word, data); // Can fail
+				if (expand_parameters(&word, data) != 0)
+				{
+					free_word(&word);
+					return (-1);
+				}
 			}
 			remove_quotes(&word);
-			concat_word_segments(&word); // can fail
-			current->filename = word.string; // TODO: memleak;
-			//free_word(&word); // TODO: free word segments and string
+			if (concat_word_segments(&word) != 0)
+			{
+				free_word(&word);
+				return (-1);
+			}
+			// Free the old filename and assign the new one
+			current->filename = ft_strdup(word.string);
+			if (current->filename == NULL)
+			{
+				free_word(&word);
+				return (perror_return("expand_redirect_words: strdup", -1));
+			}
+			free_word(&word);
 		}
 		current = current->next;
 	}
+	return (0);
 }
 
-static void	expand_argv_words(char **argv, t_data *data)
+static int	expand_argv_words(char **argv, t_data *data)
 {
 	t_word	word;
 	size_t	i;
@@ -93,19 +129,34 @@ static void	expand_argv_words(char **argv, t_data *data)
 		if (contains_parameters(argv[i]) || contains_quotes(argv[i]))
 		{
 			if (init_word(&word, argv[i]) != 0)
-				return ; // Handle malloc error
+				return (-1);
 			identify_quoted_segments(&word);
 			if (contains_parameters(word.string))
 			{
-				expand_parameters(&word, data); // can fail
+				if (expand_parameters(&word, data) != 0)
+				{
+					free_word(&word);
+					return (-1);
+				}
 			}
 			remove_quotes(&word);
-			concat_word_segments(&word); // can fail
-			argv[i] = word.string; // TODO: memleak;
-			//free_word(&word); // TODO: free word segments and string
+			if (concat_word_segments(&word) != 0)
+			{
+				free_word(&word);
+				return (-1);
+			}
+			// Free the old argv[i] and assign the new one
+			argv[i] = ft_strdup(word.string);
+			if (argv[i] == NULL)
+			{
+				free_word(&word);
+				return (perror_return("expand_argv_words: strdup", -1));
+			}
+			free_word(&word);
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	expand_words(t_process *processes, t_data *data)
@@ -115,9 +166,12 @@ int	expand_words(t_process *processes, t_data *data)
 	current = processes;
 	while (current)
 	{
-		expand_argv_words(current->argv, data); // can fail
-		expand_redirect_words(current->redirects, data); // can fail
-		expand_heredoc_delimiters(current->redirects); // can fail
+		if (expand_argv_words(current->argv, data) != 0)
+			return (-1);
+		if (expand_redirect_words(current->redirects, data) != 0)
+			return (-1);
+		if (expand_heredoc_delimiters(current->redirects) != 0)
+			return (-1);
 		current = current->next;
 	}
 	return (0);
