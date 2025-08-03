@@ -48,6 +48,10 @@ void	free_processes(t_process **processes)
 	while (current)
 	{
 		next = current->next;
+		if(current->pipe_read_fd > 0)
+			close(current->pipe_read_fd);
+		if(current->pipe_read_fd > 0)
+			close(current->pipe_write_fd);
 		if (current->redirects)
 			free_redirects(&current->redirects);
 		if (current->argv)
