@@ -56,7 +56,7 @@ void	ft_echo(char **argv, t_data *data)
 		flag = 1;
 	while (argv[i])
 	{
-		printf("%s", argv[i]);
+		printf("%s", argv[i]); //TODO -nnn -m "string" "string" > a
 		if (argv[i + 1])
 			printf(" ");
 		i++;

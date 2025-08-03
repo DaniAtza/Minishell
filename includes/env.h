@@ -19,6 +19,7 @@
 
 t_env	*create_env_node(char *env_variable);
 void	free_env_node(t_env **node_addr);
+void	free_env_array(char **env_array);
 
 // Env list
 
@@ -32,5 +33,9 @@ char	*search_env(char *name, t_env *env_list);
 
 void	print_env_list(t_env *env_list, t_data *data);
 void	print_env_list_export(t_env *env_list);
+
+// Env array
+
+char	**env_list_to_array(t_env *env_list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:18:11 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/08 19:33:52 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/03 10:43:41 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,11 @@ static char	**get_path_dirs(t_env *env_list)
 	return (dirs);
 }
 
-int	get_pathname(char *cmd_name, t_env *env_list, t_process *proc)
+static int	search_in_path(char *cmd_name, t_env *env_list, t_process *proc)
 {
 	char	**path_dirs;
 	int		i;
 
-	if (!cmd_name || !*cmd_name)
-		return (perror_return("malloc", -1));
-	if (ft_strchr(cmd_name, '/'))
-	{
-		proc->pathname = ft_strdup(cmd_name);
-		return (0);
-	}
 	path_dirs = get_path_dirs(env_list);
 	if (!path_dirs)
 		return (perror_return("malloc", -1));
@@ -89,4 +82,16 @@ int	get_pathname(char *cmd_name, t_env *env_list, t_process *proc)
 	}
 	free_path_dirs(path_dirs);
 	return (127);
+}
+
+int	get_pathname(char *cmd_name, t_env *env_list, t_process *proc)
+{
+	if (!cmd_name || !*cmd_name)
+		return (perror_return("malloc", -1));
+	if (ft_strchr(cmd_name, '/'))
+	{
+		proc->pathname = ft_strdup(cmd_name);
+		return (0);
+	}
+	return (search_in_path(cmd_name, env_list, proc));
 }

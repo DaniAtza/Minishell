@@ -88,6 +88,7 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_env		*env_list;			// Linked list of environment variables
+	char		**exe_env;			// Array to execve
 	char		*current_pwd;		// Current working directory
 	int			last_exit_status;	// Exit status of the last executed pipeline
 }	t_data;

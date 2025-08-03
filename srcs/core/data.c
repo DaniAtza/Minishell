@@ -16,6 +16,7 @@ void	init_data(t_data *data, char *envp[])
 {
 	ft_memset(data, 0, sizeof(t_data));
 	data->env_list = create_env_list(envp); // TODO: Handle error
+	data->exe_env = NULL;
 	data->current_pwd = getcwd(NULL, 0); // TODO: Handle error
 	data->last_exit_status = 0;
 }
@@ -26,6 +27,8 @@ void	free_data(t_data *data)
 		return ;
 	if (data->env_list)
 		free_env_list(&data->env_list);
+	if (data->env_list)
+		free_env_array(data->exe_env);
 	if (data->current_pwd)
 		free(data->current_pwd);
 }
