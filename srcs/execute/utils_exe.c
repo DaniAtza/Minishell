@@ -39,7 +39,8 @@ int	perror_return_exec(char *cmd_pathname)
 		return (126);
 	}
 	else if (S_ISDIR(file_info.st_mode))
-		return (print_error_return(ft_strjoin(cmd_pathname, ": Is a directory"), 126));
+		return (print_error_return(ft_strjoin(cmd_pathname, \
+": Is a directory"), 126));
 	else if (errno == EINVAL)
 		return (2);
 	return (1);

@@ -34,9 +34,11 @@ int	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data)
 		return (cmd_not_found(proc->argv[0]));
 	else if (return_value != 0)
 		return (1);
-	if (execve(proc->pathname, proc->argv, NULL) != 0)
-		return (perror_return_exec(proc->argv[0]));
-	return (1);
+	data->exe_env = env_list_to_array(data->env_list);
+	if (!data->exe_env)
+		return (perror_return("malloc", 1));
+	execve(proc->pathname, proc->argv, data->exe_env);
+	return (perror_return_exec(proc->argv[0]));
 }
 
 int	execute_processes(t_pipeline *pipeline, t_data *data)
@@ -99,8 +101,6 @@ int	execute_pipeline(t_pipeline *pipeline, t_data *data)
 	}
 	setup_postexecution_signals();
 	wait_processes(pipeline, data);
-	if (data->last_exit_status == 100)
-		return (-1);
 	return (0);
 }
 
