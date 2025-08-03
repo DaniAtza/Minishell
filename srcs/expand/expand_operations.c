@@ -42,7 +42,7 @@ int	expand_parameters(t_word *word, t_data *data)
 	return (0);
 }
 
-void	remove_quotes(t_word *word) // TODO: memory leak de segments
+void	remove_quotes(t_word *word)
 {
 	t_segm	*previous;
 	t_segm	*current;

@@ -22,7 +22,7 @@ int	init_pipeline(t_pipeline *pipeline, t_data *data)
 	pipeline->processes = parse_tokens(pipeline->tokens);
 	if (!pipeline->processes)
 		return (print_error_return("Error: parse_tokens", -1));
-	if (expand_words(pipeline->processes, data) != 0) // can fail
+	if (expand_words(pipeline->processes, data) != 0)
 		return (print_error_return("Error: expand_words", -1));
 	pipeline->process_count = count_processes(pipeline->processes);
 	pipeline->pipes = create_pipes(pipeline->process_count - 1);
