@@ -14,26 +14,24 @@
 
 int	validate_syntax(t_pipeline *pipeline)
 {
-	t_token	*tmp;
+	t_token	*current;
 
-	if (!pipeline || !pipeline->tokens)
-		return (-1);
-	tmp = pipeline->tokens;
-	if (is_pipe(tmp))
-		return (-1);
-	while (tmp)
+	current = pipeline->tokens;
+	if (is_pipe(current))
+		return (print_error_return(SYNTAX_ERROR, -1));
+	while (current)
 	{
-		if (is_pipe(tmp))
+		if (is_pipe(current))
 		{
-			if (!tmp->next || is_pipe(tmp->next))
-				return (-1);
+			if (!current->next || is_pipe(current->next))
+				return (print_error_return(SYNTAX_ERROR, -1));
 		}
-		if (is_redirection(tmp))
+		if (is_redirection(current))
 		{
-			if (!tmp->next || !is_word(tmp->next))
-				return (-1);
+			if (!current->next || !is_word(current->next))
+				return (print_error_return(SYNTAX_ERROR, -1));
 		}
-		tmp = tmp->next;
+		current = current->next;
 	}
 	return (0);
 }

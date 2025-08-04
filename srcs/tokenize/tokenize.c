@@ -18,7 +18,7 @@ static int	seek_next_quote(t_lexer *lexer, char *line, char quote)
 	while (line[lexer->i] != quote)
 	{
 		if (line[lexer->i] == '\0')
-			return (print_error_return("Syntax error: Unmatched quote", -1));
+			return (print_error_return(UNMATCHED_QUOTE_ERROR, -1));
 		lexer->i++;
 	}
 	return (0);
@@ -86,7 +86,6 @@ t_token	*tokenize_line(char *line)
 		if (!new_token)
 		{
 			free_tokens(&lexer.tokens);
-			ft_putendl_fd("Error: tokenize_line", 2);
 			return (NULL);
 		}
 		append_token(new_token, &lexer.tokens);

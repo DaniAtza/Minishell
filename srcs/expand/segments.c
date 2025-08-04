@@ -32,7 +32,7 @@ t_segm	*create_segment(char *start, size_t len, t_segm_type type)
 {
 	t_segm	*new_segment;
 
-	new_segment = ft_calloc(1, sizeof(t_segm));
+	new_segment = (t_segm *)ft_calloc(1, sizeof(t_segm));
 	if (!new_segment)
 	{
 		perror("create_segment: malloc");
