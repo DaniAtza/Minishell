@@ -19,11 +19,15 @@ t_token	*create_token(char *line, t_lexer *lexer)
 
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
+	{
+		perror("create_token: malloc");
 		return (NULL);
+	}
 	len = lexer->i - lexer->token_start;
 	token->value = ft_substr(line, lexer->token_start, len);
 	if (!token->value)
 	{
+		perror("create_token: malloc");
 		free(token);
 		return (NULL);
 	}

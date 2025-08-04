@@ -13,6 +13,8 @@
 #ifndef PARSE_H
 # define PARSE_H
 
+# define SYNTAX_ERROR "syntax error near an unexpected token"
+
 # include "types.h"
 
 // Parser
