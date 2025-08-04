@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 21:37:30 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/07 20:05:41 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:48:53 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ void	ft_echo(char **argv, t_data *data)
 		i++;
 	}
 	if (flag == 0)
-	ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	data->last_exit_status = 0;
 }

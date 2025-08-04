@@ -22,8 +22,8 @@ SRCS := main.c \
 	$(addprefix expand/, segments.c segments_identify.c segments_concat.c \
 	expand.c expand_operations.c expand_utils.c) \
 	$(addprefix pipes/, pipes.c) \
-	$(addprefix builtin/, ft_echo.c ft_cd.c ft_pwd.c ft_export_unset.c \
-	ft_exit.c is_exe_builtin.c) \
+	$(addprefix builtin/, ft_echo.c ft_pwd.c ft_export_unset.c \
+	ft_exit.c is_exe_builtin.c ft_cd.c ft_cd_update.c) \
 	$(addprefix execute/, cmd_search.c execution.c pipes_and_redirects.c \
 	utils_exe.c heredoc_temp.c heredoc_exec.c)
 BUILD_DIR := build

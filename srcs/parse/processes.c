@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:55 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:59:53 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:02:35 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	free_processes(t_process **processes)
 	while (current)
 	{
 		next = current->next;
-		if(current->pipe_read_fd > 0)
+		if (current->pipe_read_fd > 0)
 			close(current->pipe_read_fd);
-		if(current->pipe_write_fd > 0)
+		if (current->pipe_write_fd > 0)
 			close(current->pipe_write_fd);
 		if (current->redirects)
 			free_redirects(&current->redirects);
