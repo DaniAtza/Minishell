@@ -47,7 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 	int			exit_code;
 
 	check_minishell_args(argc, argv);
-	setup_signals();
+	if (setup_signals() == -1)
+		perror_exit("setup signals", 1);
 	init_data(&data, envp);
 	ft_memset(&pipeline, 0, sizeof(t_pipeline));
 	while (1)

@@ -99,7 +99,8 @@ int	execute_pipeline(t_pipeline *pipeline, t_data *data)
 		setup_postexecution_signals();
 		return (-1);
 	}
-	setup_postexecution_signals();
+	if (setup_postexecution_signals() == -1)
+		perror_return("postexecution signal", -1);
 	wait_processes(pipeline, data);
 	return (0);
 }
