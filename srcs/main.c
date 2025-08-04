@@ -31,7 +31,7 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 	add_history(pipeline->line);
 	if (init_pipeline(pipeline, data) == -1)
 	{
-		data->last_exit_status = 1;
+		data->last_exit_status = 2;
 		return (0);
 	}
 	if (handle_heredocs(data, pipeline->processes) != 0)
