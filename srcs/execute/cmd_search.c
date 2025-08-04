@@ -86,8 +86,8 @@ static int	search_in_path(char *cmd_name, t_env *env_list, t_process *proc)
 
 int	get_pathname(char *cmd_name, t_env *env_list, t_process *proc)
 {
-	if (!cmd_name || !*cmd_name)
-		return (perror_return("malloc", -1));
+	if (ft_strlen(cmd_name) == 0)
+		return (127);
 	if (ft_strchr(cmd_name, '/'))
 	{
 		proc->pathname = ft_strdup(cmd_name);
