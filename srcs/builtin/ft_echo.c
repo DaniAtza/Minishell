@@ -56,12 +56,12 @@ void	ft_echo(char **argv, t_data *data)
 		flag = 1;
 	while (argv[i])
 	{
-		ft_putstr_fd(argv[i], 1);
+		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		if (argv[i + 1])
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
 	if (flag == 0)
-	ft_putchar_fd('\n', 1);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	data->last_exit_status = 0;
 }
