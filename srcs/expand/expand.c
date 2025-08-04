@@ -51,7 +51,7 @@ static int	expand_heredoc_delimiters(t_redirect *redirects)
 		if (current->is_heredoc && contains_quotes(current->delimiter))
 		{
 			if (init_word(&word, current->delimiter) != 0)
-				return (-1); 
+				return (-1);
 			identify_quoted_segments(&word);
 			remove_quotes(&word);
 			if (concat_word_segments(&word) != 0)
@@ -85,7 +85,7 @@ static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 	while (current)
 	{
 		if (!current->is_heredoc && (contains_parameters(current->filename)
-			|| contains_quotes(current->filename)))
+				|| contains_quotes(current->filename)))
 		{
 			if (init_word(&word, current->filename) != 0)
 				return (-1);

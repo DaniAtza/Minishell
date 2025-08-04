@@ -21,7 +21,7 @@ typedef enum e_segm_type
 {
 	TEXT,		// Regular text segment
 	PARAMETER,	// Parameter segment, like $VAR or $?
-	QUOTE		// Quote character, like ' or "
+	QUOTE,		// Quote character, like ' or "
 }	t_segm_type;
 
 // Segment
