@@ -22,7 +22,7 @@ int	execute_child_process(t_process *proc, t_pipeline *pline, t_data *data)
 	if (apply_redirects(proc->redirects) != 0)
 		return (1);
 	if (!proc->argv || !proc->argv[0])
-		return (1);
+		return (0);
 	if (is_builtin(proc->argv))
 	{
 		if (exe_builtin(proc->argv, pline, data) != 0)

@@ -123,6 +123,8 @@ static int	expand_argv_words(char **argv, t_data *data)
 	t_word	word;
 	size_t	i;
 
+	if (argv == NULL)
+		return (0);
 	i = 0;
 	while (argv[i])
 	{
