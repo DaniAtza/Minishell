@@ -13,6 +13,8 @@
 #ifndef TOKENIZE_H
 # define TOKENIZE_H
 
+# define UNMATCHED_QUOTE_ERROR "syntax error due to unmatched quote"
+
 # include "types.h"
 
 // Lexer

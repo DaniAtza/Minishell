@@ -18,7 +18,10 @@ t_process	*create_process(void)
 
 	new_process = (t_process *)ft_calloc(1, sizeof(t_process));
 	if (!new_process)
+	{
+		perror("create_process: malloc");
 		return (NULL);
+	}
 	return (new_process);
 }
 

@@ -30,7 +30,10 @@ int	main_loop(t_pipeline *pipeline, t_data *data)
 		return (0);
 	add_history(pipeline->line);
 	if (init_pipeline(pipeline, data) == -1)
+	{
+		data->last_exit_status = 1;
 		return (0);
+	}
 	if (handle_heredocs(data, pipeline->processes) != 0)
 		return (0);
 	handle_execution(pipeline, data);
@@ -50,7 +53,7 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_memset(&pipeline, 0, sizeof(t_pipeline));
 	while (1)
 	{
-		if (main_loop(&pipeline, &data) == -1)
+		if (main_loop(&pipeline, &data) != 0)
 			break ;
 		free_pipeline(&pipeline);
 		setup_signals();
