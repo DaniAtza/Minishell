@@ -57,6 +57,7 @@ void	identify_quoted_segments(t_word *word);
 // Expand
 
 int		expand_words(t_process *processes, t_data *data);
+int		expand_words_argv(char **argv, t_data *data);
 int		expand_parameters(t_word *word, t_data *data);
 int		concat_word_segments(t_word *word);
 

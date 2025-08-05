@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:35:08 by dagredan          #+#    #+#             */
-/*   Updated: 2025/08/05 02:00:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 02:59:53 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,76 +122,6 @@ static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 	return (0);
 }
 
-// Insert the expanded word back into the argv array
-static int	insert_expanded_argv_word(char **argv, size_t *i, t_word *word)
-{
-	size_t	j;
-
-	if (word->string == NULL)
-	{
-		free(argv[*i]);
-		// move every argv to the left
-		j = *i;
-		while (argv[j + 1])
-		{
-			argv[j] = argv[j + 1];
-			j++;
-		}
-		argv[j] = NULL;
-		// and move i back
-		(*i)--;
-	}
-	else
-	{
-		free(argv[*i]);
-		argv[*i] = ft_strdup(word->string);
-		if (argv[*i] == NULL)
-			return (perror_return("insert_expanded_argv_word: malloc", -1));
-	}
-	return (0);
-}
-
-
-static int	expand_argv_words(char **argv, t_data *data)
-{
-	t_word	word;
-	size_t	i;
-
-	if (argv == NULL)
-		return (0);
-	i = 0;
-	while (argv[i])
-	{
-		if (contains_parameters(argv[i]) || contains_quotes(argv[i]))
-		{
-			if (init_word(&word, argv[i]) != 0)
-				return (-1);
-			identify_quoted_segments(&word);
-			if (contains_parameters(word.string))
-			{
-				if (expand_parameters(&word, data) != 0)
-				{
-					free_word(&word);
-					return (-1);
-				}
-			}
-			if (concat_word_segments(&word) != 0)
-			{
-				free_word(&word);
-				return (-1);
-			}
-			if (insert_expanded_argv_word(argv, &i, &word) != 0)
-			{
-				free_word(&word);
-				return (-1);
-			}
-			free_word(&word);
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	expand_words(t_process *processes, t_data *data)
 {
 	t_process	*current;
@@ -199,7 +129,7 @@ int	expand_words(t_process *processes, t_data *data)
 	current = processes;
 	while (current)
 	{
-		if (expand_argv_words(current->argv, data) != 0)
+		if (expand_words_argv(current->argv, data) != 0)
 			return (-1);
 		if (expand_redirect_words(current->redirects, data) != 0)
 			return (-1);
