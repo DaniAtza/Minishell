@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:32:30 by dagredan          #+#    #+#             */
-/*   Updated: 2025/08/05 02:07:20 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:40:14 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 void	init_data(t_data *data, char *envp[])
 {
+	char	**env_min;
+
 	ft_memset(data, 0, sizeof(t_data));
-	data->env_list = create_env_list(envp);
+	if (!envp || !envp[0])
+	{
+		env_min = create_minimal_env();
+		if (!env_min)
+			perror_exit("init_data: create_minimal_env", 1);
+		data->env_list = create_env_list(env_min);
+	}
+	else
+		data->env_list = create_env_list(envp);
 	if (!data->env_list)
 		perror_exit("init_data: create_env_list", 1);
 	data->exe_env = NULL;

@@ -13,6 +13,10 @@
 #ifndef ENV_H
 # define ENV_H
 
+# define DEF_PATH "PATH=/usr/local/bin:/usr/bin:/bin"
+# define DEF_SHLVL "SHLVL=1"
+# define DEF_UNDERSCORE "_=/usr/bin/env"
+
 # include "types.h"
 
 // Env node
@@ -37,5 +41,6 @@ void	print_env_list_export(t_env *env_list);
 // Env array
 
 char	**env_list_to_array(t_env *env_list);
+char	**create_minimal_env(void);
 
 #endif

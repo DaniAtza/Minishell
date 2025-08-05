@@ -13,8 +13,6 @@
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# define DEF_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
