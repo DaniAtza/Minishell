@@ -58,7 +58,7 @@ $(BUILD_DIR):
 -include $(DEPS)
 
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 
 
