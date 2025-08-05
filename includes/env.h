@@ -13,7 +13,8 @@
 #ifndef ENV_H
 # define ENV_H
 
-# define DEF_PATH "PATH=/usr/local/bin:/usr/bin:/bin"
+# define DEF_PATH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin\
+:/bin"
 # define DEF_SHLVL "SHLVL=1"
 # define DEF_UNDERSCORE "_=/usr/bin/env"
 
