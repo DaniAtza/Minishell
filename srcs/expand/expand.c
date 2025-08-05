@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:35:08 by dagredan          #+#    #+#             */
-/*   Updated: 2025/08/05 02:59:53 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 03:34:01 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,53 +75,6 @@ static int	expand_heredoc_delimiters(t_redirect *redirects)
 	return (0);
 }
 
-static int	expand_redirect_words(t_redirect *redirects, t_data *data)
-{
-	t_word		word;
-	t_redirect	*current;
-
-	current = redirects;
-	while (current)
-	{
-		if (!current->is_heredoc && (contains_parameters(current->filename)
-				|| contains_quotes(current->filename)))
-		{
-			if (init_word(&word, current->filename) != 0)
-				return (-1);
-			identify_quoted_segments(&word);
-			if (contains_parameters(word.string))
-			{
-				if (expand_parameters(&word, data) != 0)
-				{
-					free_word(&word);
-					return (-1);
-				}
-			}
-			if (concat_word_segments(&word) != 0)
-			{
-				free_word(&word);
-				return (-1);
-			}
-			// replace the filename with the expanded word
-			free(current->filename);
-			if (!word.string)
-				current->filename = NULL;
-			else
-			{
-				current->filename = ft_strdup(word.string);
-				if (current->filename == NULL)
-				{
-					free_word(&word);
-					return (perror_return("expand_redirect_words: strdup", -1));
-				}
-			}
-			free_word(&word);
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
 int	expand_words(t_process *processes, t_data *data)
 {
 	t_process	*current;
@@ -131,7 +84,7 @@ int	expand_words(t_process *processes, t_data *data)
 	{
 		if (expand_words_argv(current->argv, data) != 0)
 			return (-1);
-		if (expand_redirect_words(current->redirects, data) != 0)
+		if (expand_words_redirects(current->redirects, data) != 0)
 			return (-1);
 		if (expand_heredoc_delimiters(current->redirects) != 0)
 			return (-1);

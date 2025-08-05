@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_words_argv.c                                :+:      :+:    :+:   */
+/*   expand_words_redirects.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 02:58:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/08/05 03:39:02 by dagredan         ###   ########.fr       */
+/*   Created: 2025/08/05 03:31:39 by dagredan          #+#    #+#             */
+/*   Updated: 2025/08/05 03:39:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	swap_or_discard_expanded_arg(char **argv, size_t *i, t_word *word)
+static int	swap_expanded_filename(t_redirect *redirect, t_word *word)
 {
-	size_t	j;
-
-	if (word->string)
-	{
-		free(argv[*i]);
-		argv[*i] = ft_strdup(word->string);
-		if (argv[*i] == NULL)
-			return (perror_return("swap_or_discard_expanded_arg: malloc", -1));
-	}
+	free(redirect->filename);
+	if (!word->string)
+		redirect->filename = NULL;
 	else
 	{
-		free(argv[*i]);
-		j = *i;
-		while (argv[j + 1])
-		{
-			argv[j] = argv[j + 1];
-			j++;
-		}
-		argv[j] = NULL;
-		(*i)--;
+		redirect->filename = ft_strdup(word->string);
+		if (redirect->filename == NULL)
+			return (perror_return("swap_expanded_filename: malloc", -1));
 	}
 	return (0);
 }
 
-static int	expand_arg(t_word *word, t_data *data)
+static int	expand_filename(t_word *word, t_data *data)
 {
 	identify_quoted_segments(word);
 	if (contains_parameters(word->string))
@@ -51,27 +39,28 @@ static int	expand_arg(t_word *word, t_data *data)
 	return (0);
 }
 
-int	expand_words_argv(char **argv, t_data *data)
+int	expand_words_redirects(t_redirect *redirects, t_data *data)
 {
-	t_word	word;
-	size_t	i;
+	t_word		word;
+	t_redirect	*current;
 
-	i = 0;
-	while (argv && argv[i])
+	current = redirects;
+	while (current)
 	{
-		if (contains_parameters(argv[i]) || contains_quotes(argv[i]))
+		if (!current->is_heredoc && (contains_parameters(current->filename)
+				|| contains_quotes(current->filename)))
 		{
-			if (init_word(&word, argv[i]) != 0)
+			if (init_word(&word, current->filename) != 0)
 				break ;
-			if (expand_arg(&word, data) != 0)
+			if (expand_filename(&word, data) != 0)
 				break ;
-			if (swap_or_discard_expanded_arg(argv, &i, &word) != 0)
+			if (swap_expanded_filename(current, &word) != 0)
 				break ;
 			free_word(&word);
 		}
-		i++;
+		current = current->next;
 	}
-	if (argv && argv[i])
+	if (current)
 	{
 		free_word(&word);
 		return (-1);
