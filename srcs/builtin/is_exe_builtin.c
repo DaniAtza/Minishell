@@ -50,9 +50,9 @@ int	exe_builtin(char **argv, t_pipeline *pipeline, t_data *data)
 	else if (ft_strcmp(argv[0], "env") == 0)
 		print_env_list(data->env_list, data);
 	else if (ft_strcmp(argv[0], "export") == 0)
-		return (ft_export(argv, data->env_list, data));
+		return (ft_export(argv, &data->env_list, data));
 	else if (ft_strcmp(argv[0], "unset") == 0)
-		ft_unset(argv, data->env_list, data);
+		ft_unset(argv, &data->env_list, data);
 	else if (ft_strcmp(argv[0], "exit") == 0)
 		ft_exit(argv, pipeline, data);
 	return (0);

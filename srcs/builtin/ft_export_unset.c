@@ -45,7 +45,7 @@ static int	validate_variable_name(char *arg)
 	return (0);
 }
 
-int	ft_export(char **argv, t_env *env_list, t_data *data)
+int	ft_export(char **argv, t_env **env_list, t_data *data)
 {
 	size_t	i;
 	int		error_num;
@@ -53,13 +53,13 @@ int	ft_export(char **argv, t_env *env_list, t_data *data)
 
 	flag = 0;
 	if (!argv[1])
-		print_env_list_export(env_list);
+		print_env_list_export(*env_list);
 	i = 1;
 	while (argv[i])
 	{
 		error_num = validate_variable_name(argv[i]);
 		if (error_num == 0)
-			update_env_node(argv[i], &env_list);
+			update_env_node(argv[i], env_list);
 		else if (error_num == -1)
 			return (-1);
 		else if (error_num == -2 && flag == 0)
@@ -73,14 +73,14 @@ int	ft_export(char **argv, t_env *env_list, t_data *data)
 	return (0);
 }
 
-void	ft_unset(char **argv, t_env *env_list, t_data *data)
+void	ft_unset(char **argv, t_env **env_list, t_data *data)
 {
 	int	i;
 
 	i = 1;
 	while (argv[i])
 	{
-		delete_env_node(argv[i], &env_list);
+		delete_env_node(argv[i], env_list);
 		i++;
 	}
 	data->last_exit_status = 0;

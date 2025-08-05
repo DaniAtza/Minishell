@@ -29,29 +29,17 @@ static char	*ft_pathjoin(char *dir, char *cmd_name)
 	return (full_path);
 }
 
-static void	free_path_dirs(char **dirs)
-{
-	int	i;
-
-	if (!dirs)
-		return ;
-	i = 0;
-	while (dirs[i])
-	{
-		free(dirs[i]);
-		i++;
-	}
-	free(dirs);
-}
-
-static char	**get_path_dirs(t_env *env_list)
+static char	**get_path_dirs(t_env *env_list, int *flag)
 {
 	char	*path_env;
 	char	**dirs;
 
 	path_env = search_env("PATH", env_list);
 	if (!path_env)
-		path_env = DEF_PATH;
+	{
+		*flag = 1;
+		return (NULL);
+	}
 	dirs = ft_split(path_env, ':');
 	if (!dirs)
 		return (NULL);
@@ -62,8 +50,12 @@ static int	search_in_path(char *cmd_name, t_env *env_list, t_process *proc)
 {
 	char	**path_dirs;
 	int		i;
+	int		flag;
 
-	path_dirs = get_path_dirs(env_list);
+	flag = 0;
+	path_dirs = get_path_dirs(env_list, &flag);
+	if (flag == 1)
+		return (127);
 	if (!path_dirs)
 		return (perror_return("malloc", -1));
 	i = 0;
@@ -73,14 +65,11 @@ static int	search_in_path(char *cmd_name, t_env *env_list, t_process *proc)
 		if (!proc->pathname)
 			break ;
 		if (access(proc->pathname, F_OK) == 0)
-		{
-			free_path_dirs(path_dirs);
-			return (0);
-		}
+			return (free_env_array(path_dirs), 0);
 		free(proc->pathname);
 		i++;
 	}
-	free_path_dirs(path_dirs);
+	free_env_array(path_dirs);
 	return (127);
 }
 

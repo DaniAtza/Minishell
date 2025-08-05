@@ -24,7 +24,7 @@ void	free_env_node(t_env **node_addr)
 	if (node->value)
 		free(node->value);
 	free(node);
-	node_addr = NULL;
+	*node_addr = NULL;
 }
 
 t_env	*create_env_node(char *env_variable)
