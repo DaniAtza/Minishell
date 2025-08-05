@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 15:51:54 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/26 18:07:21 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:30:34 by datienza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ void	print_env_list_export(t_env *env_list);
 
 char	**env_list_to_array(t_env *env_list);
 char	**create_minimal_env(void);
+int		ensure_essential_env_vars(t_env **env_list_addr);
+char	*create_pwd_var(void);
 
 #endif

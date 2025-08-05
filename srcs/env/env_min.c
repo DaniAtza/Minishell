@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:58:02 by datienza          #+#    #+#             */
-/*   Updated: 2025/08/05 12:34:12 by datienza         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:32:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,6 @@ static char	**create_empty_env_array(void)
 	env_array[3] = NULL;
 	env_array[4] = NULL;
 	return (env_array);
-}
-
-static char	*create_pwd_var(void)
-{
-	char	*pwd;
-	char	*pwd_var;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		pwd = ft_strdup("/");
-	if (!pwd)
-		return (NULL);
-	pwd_var = ft_strjoin("PWD=", pwd);
-	free(pwd);
-	return (pwd_var);
 }
 
 char	**create_minimal_env(void)
@@ -62,4 +47,51 @@ char	**create_minimal_env(void)
 	if (!minimal_env[3])
 		return (free_env_array(minimal_env), NULL);
 	return (minimal_env);
+}
+
+static int	search_var_exists(t_env **env_list_addr, char *name, char *var)
+{
+	char	*path_value;
+
+	path_value = search_env(name, *env_list_addr);
+	if (!path_value)
+	{
+		if (update_env_node(var, env_list_addr) == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+static int	search_pwd_exists(t_env **env_list_addr)
+{
+	char	*pwd_value;
+	char	*pwd_var;
+
+	pwd_value = search_env("PWD", *env_list_addr);
+	if (!pwd_value)
+	{
+		pwd_var = create_pwd_var();
+		if (!pwd_var)
+			return (-1);
+		if (update_env_node(pwd_var, env_list_addr) == -1)
+		{
+			free(pwd_var);
+			return (-1);
+		}
+		free(pwd_var);
+	}
+	return (0);
+}
+
+int	ensure_essential_env_vars(t_env **env_list_addr)
+{
+	if (!env_list_addr)
+		return (-1);
+	if (search_var_exists(env_list_addr, "PATH", DEF_PATH) == -1)
+		return (-1);
+	if (search_var_exists(env_list_addr, "SHLVL", DEF_SHLVL) == -1)
+		return (-1);
+	if (search_pwd_exists(env_list_addr) == -1)
+		return (-1);
+	return (0);
 }
