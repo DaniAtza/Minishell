@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 01:42:47 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/27 01:42:49 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 04:04:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef enum e_segm_type
 {
 	TEXT,		// Regular text segment
 	PARAMETER,	// Parameter segment, like $VAR or $?
-	QUOTE		// Quote character, like ' or "
+	QUOTE,		// Quote character, like ' or "
 }	t_segm_type;
 
 // Segment
@@ -57,8 +57,10 @@ void	identify_quoted_segments(t_word *word);
 // Expand
 
 int		expand_words(t_process *processes, t_data *data);
+int		expand_words_argv(char **argv, t_data *data);
+int		expand_words_redirects(t_redirect *redirects, t_data *data);
+int		expand_words_heredocs(t_redirect *redirects);
 int		expand_parameters(t_word *word, t_data *data);
-void	remove_quotes(t_word *word);
 int		concat_word_segments(t_word *word);
 
 char	*expand_heredoc_line(char *line, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: datienza <datienza@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:56:22 by datienza          #+#    #+#             */
-/*   Updated: 2025/07/26 18:42:18 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:52:37 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	apply_redirects(t_redirect *redir)
 
 	while (redir)
 	{
+		if (redir->filename == NULL)
+			return (print_error_return("ambiguous redirect", -1));
 		fd = open(redir->filename, redir->flags, redir->mode);
 		if (fd == -1)
 			return (perror_return(redir->filename, -1));
