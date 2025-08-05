@@ -20,7 +20,7 @@ SRCS := main.c \
 	$(addprefix parse/, validate.c processes.c redirects.c argv.c parse.c \
 	parse_utils.c) \
 	$(addprefix expand/, segments.c segments_identify.c segments_concat.c \
-	expand.c expand_words_argv.c expand_operations.c expand_utils.c) \
+	expand.c expand_words_argv.c expand_parameters.c expand_utils.c) \
 	$(addprefix pipes/, pipes.c) \
 	$(addprefix builtin/, ft_echo.c ft_pwd.c ft_export_unset.c \
 	ft_exit.c is_exe_builtin.c ft_cd.c ft_cd_update.c) \
