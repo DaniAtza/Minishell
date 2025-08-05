@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   segments.c                                         :+:      :+:    :+:   */
+/*   segments_identify.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:05:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/28 21:06:11 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 04:06:14 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	identify_quoted_segments(t_word *word)
 {
 	t_segm	*current;
 	char	current_quote;
-	char	found_quote;
 
 	current_quote = '\0';
 	current = word->segments;
@@ -97,14 +96,13 @@ void	identify_quoted_segments(t_word *word)
 	{
 		if (current->type == QUOTE)
 		{
-			found_quote = current->string[0];
 			if (current_quote == '\0')
 			{
-				current_quote = found_quote;
+				current_quote = current->string[0];
 				current = current->next;
 				continue ;
 			}
-			else if (found_quote == current_quote)
+			else if (current->string[0] == current_quote)
 				current_quote = '\0';
 		}
 		if (current_quote == '\"')
