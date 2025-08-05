@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 01:42:47 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/27 01:42:49 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:50:41 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	identify_quoted_segments(t_word *word);
 
 int		expand_words(t_process *processes, t_data *data);
 int		expand_parameters(t_word *word, t_data *data);
-void	remove_quotes(t_word *word);
 int		concat_word_segments(t_word *word);
 
 char	*expand_heredoc_line(char *line, t_data *data);

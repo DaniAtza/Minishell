@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:35:08 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/27 14:39:50 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 02:00:58 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	expand_heredoc_delimiters(t_redirect *redirects)
 			if (init_word(&word, current->delimiter) != 0)
 				return (-1);
 			identify_quoted_segments(&word);
-			remove_quotes(&word);
 			if (concat_word_segments(&word) != 0)
 			{
 				free_word(&word);
@@ -98,18 +97,23 @@ static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 					return (-1);
 				}
 			}
-			remove_quotes(&word);
 			if (concat_word_segments(&word) != 0)
 			{
 				free_word(&word);
 				return (-1);
 			}
+			// replace the filename with the expanded word
 			free(current->filename);
-			current->filename = ft_strdup(word.string);
-			if (current->filename == NULL)
+			if (!word.string)
+				current->filename = NULL;
+			else
 			{
-				free_word(&word);
-				return (perror_return("expand_redirect_words: strdup", -1));
+				current->filename = ft_strdup(word.string);
+				if (current->filename == NULL)
+				{
+					free_word(&word);
+					return (perror_return("expand_redirect_words: strdup", -1));
+				}
 			}
 			free_word(&word);
 		}
@@ -117,6 +121,36 @@ static int	expand_redirect_words(t_redirect *redirects, t_data *data)
 	}
 	return (0);
 }
+
+// Insert the expanded word back into the argv array
+static int	insert_expanded_argv_word(char **argv, size_t *i, t_word *word)
+{
+	size_t	j;
+
+	if (word->string == NULL)
+	{
+		free(argv[*i]);
+		// move every argv to the left
+		j = *i;
+		while (argv[j + 1])
+		{
+			argv[j] = argv[j + 1];
+			j++;
+		}
+		argv[j] = NULL;
+		// and move i back
+		(*i)--;
+	}
+	else
+	{
+		free(argv[*i]);
+		argv[*i] = ft_strdup(word->string);
+		if (argv[*i] == NULL)
+			return (perror_return("insert_expanded_argv_word: malloc", -1));
+	}
+	return (0);
+}
+
 
 static int	expand_argv_words(char **argv, t_data *data)
 {
@@ -141,18 +175,15 @@ static int	expand_argv_words(char **argv, t_data *data)
 					return (-1);
 				}
 			}
-			remove_quotes(&word);
 			if (concat_word_segments(&word) != 0)
 			{
 				free_word(&word);
 				return (-1);
 			}
-			free(argv[i]);
-			argv[i] = ft_strdup(word.string);
-			if (argv[i] == NULL)
+			if (insert_expanded_argv_word(argv, &i, &word) != 0)
 			{
 				free_word(&word);
-				return (perror_return("expand_argv_words: strdup", -1));
+				return (-1);
 			}
 			free_word(&word);
 		}

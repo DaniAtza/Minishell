@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_segments.c                                  :+:      :+:    :+:   */
+/*   segments_concat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 13:49:10 by dagredan          #+#    #+#             */
-/*   Updated: 2025/08/02 13:49:12 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:54:15 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_unquoted_quote_segment(t_segm *segment)
+{
+	return (segment->type == QUOTE 
+		&& !segment->single_quoted && !segment->double_quoted);
+}
 
 size_t	get_total_segments_len(t_word *word)
 {
@@ -21,6 +27,11 @@ size_t	get_total_segments_len(t_word *word)
 	current = word->segments;
 	while (current)
 	{
+		if (is_unquoted_quote_segment(current))
+		{
+			current = current->next;
+			continue ;
+		}
 		total_len += ft_strlen(current->string);
 		current = current->next;
 	}
@@ -40,8 +51,21 @@ int	concat_word_segments(t_word *word)
 	current = word->segments;
 	while (current)
 	{
+		if (is_unquoted_quote_segment(current)) 
+		{
+			current = current->next;
+			continue ;
+		}
 		ft_strlcat(new_string, current->string, total_len + 1);
 		current = current->next;
+	}
+	if (ft_strlen(new_string) == 0)
+	{
+		if (word->segments->type == PARAMETER)
+		{
+			free(new_string);
+			new_string = NULL;
+		}
 	}
 	free(word->string);
 	word->string = new_string;

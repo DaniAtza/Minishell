@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_parameters.c                                :+:      :+:    :+:   */
+/*   expand_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:39:55 by dagredan          #+#    #+#             */
-/*   Updated: 2025/07/27 14:54:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:51:20 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,40 +40,4 @@ int	expand_parameters(t_word *word, t_data *data)
 		current = current->next;
 	}
 	return (0);
-}
-
-void	remove_quotes(t_word *word)
-{
-	t_segm	*previous;
-	t_segm	*current;
-	t_segm	*to_free;
-
-	previous = NULL;
-	current = word->segments;
-	while (current)
-	{
-		if (current->type == QUOTE
-			&& !current->single_quoted && !current->double_quoted)
-		{
-			to_free = current;
-			if (previous)
-			{
-				previous->next = current->next;
-				current = current->next;
-				free(to_free->string);
-				free(to_free);
-				continue ;
-			}
-			else
-			{
-				word->segments = current->next;
-				current = current->next;
-				free(to_free->string);
-				free(to_free);
-				continue ;
-			}
-		}
-		previous = current;
-		current = current->next;
-	}
 }
