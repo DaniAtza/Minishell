@@ -18,7 +18,10 @@ int	init_pipeline(t_pipeline *pipeline, t_data *data)
 	if (!pipeline->tokens)
 		return (-1);
 	if (validate_syntax(pipeline) != 0)
+	{
+		free_word_token_values(pipeline->tokens);
 		return (-1);
+	}
 	pipeline->processes = parse_tokens(pipeline->tokens);
 	if (!pipeline->processes)
 		return (-1);
@@ -39,7 +42,7 @@ void	free_pipeline(t_pipeline *pipeline)
 	if (pipeline->line)
 		free(pipeline->line);
 	if (pipeline->tokens)
-		free_tokens(&pipeline->tokens);
+		free_non_word_tokens(&pipeline->tokens);
 	if (pipeline->processes)
 		free_processes(&pipeline->processes);
 	if (pipeline->pipes)

@@ -51,7 +51,7 @@ void	append_token(t_token *new_token, t_token **tokens_addr)
 	}
 }
 
-void	free_tokens(t_token **tokens_addr)
+void	free_non_word_tokens(t_token **tokens_addr)
 {
 	t_token	*current;
 	t_token	*next;
@@ -68,4 +68,22 @@ void	free_tokens(t_token **tokens_addr)
 		current = next;
 	}
 	*tokens_addr = NULL;
+}
+
+void	free_word_token_values(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+
+	if (!tokens)
+		return ;
+	current = tokens;
+	while (current)
+	{
+		next = current->next;
+		if (current->type == WORD)
+			free(current->value);
+		current = next;
+	}
+	tokens = NULL;
 }
