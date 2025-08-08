@@ -57,6 +57,8 @@ void	free_processes(t_process **processes)
 			close(current->pipe_write_fd);
 		if (current->redirects)
 			free_redirects(&current->redirects);
+		if (current->pathname)
+			free(current->pathname);
 		if (current->argv)
 			free_argv(&current->argv);
 		free(current);
