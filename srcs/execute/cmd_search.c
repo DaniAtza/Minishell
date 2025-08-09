@@ -70,6 +70,7 @@ static int	search_in_path(char *cmd_name, t_env *env_list, t_process *proc)
 		i++;
 	}
 	free_env_array(path_dirs);
+	proc->pathname = NULL;
 	return (127);
 }
 

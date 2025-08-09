@@ -85,7 +85,7 @@ t_token	*tokenize_line(char *line)
 			new_token = tokenize_word(&lexer, line);
 		if (!new_token)
 		{
-			free_tokens(&lexer.tokens);
+			free_word_token_values(lexer.tokens);
 			return (NULL);
 		}
 		append_token(new_token, &lexer.tokens);

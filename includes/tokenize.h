@@ -31,7 +31,8 @@ typedef struct s_lexer
 
 t_token	*create_token(char *line, t_lexer *lexer);
 void	append_token(t_token *new_token, t_token **tokens);
-void	free_tokens(t_token **tokens);
+void	free_non_word_tokens(t_token **tokens_addr);
+void	free_word_token_values(t_token *tokens);
 
 // Tokenize
 
